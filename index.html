@@ -570,6 +570,143 @@ input[type=range] { width: 100%; accent-color: var(--ink); cursor: pointer; heig
 
 p { margin-bottom: 12px; }
 p:last-child { margin-bottom: 0; }
+
+/* === DEFINITIONS === */
+.def-search-wrap {
+  position: relative;
+  margin-bottom: 28px;
+}
+.def-search {
+  width: 100%;
+  padding: 14px 18px 14px 44px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  border: 2px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.def-search:focus { border-color: var(--ink); }
+.def-search-icon {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 18px;
+  pointer-events: none;
+}
+.def-filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.def-filter {
+  background: none;
+  border: 1.5px solid var(--rule);
+  color: var(--muted);
+  padding: 6px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.def-filter:hover, .def-filter.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.def-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.def-item {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: 2px 2px 0 var(--rule);
+  transition: border-color 0.15s;
+}
+.def-item:hover { border-color: var(--ink); }
+.def-item.hidden { display: none; }
+.def-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.def-term {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+}
+.def-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.def-tag.physics  { background: #fde8e8; color: var(--red); border: 1px solid #f5c6c6; }
+.def-tag.vectors  { background: #daeeff; color: var(--blue); border: 1px solid #b3d7f5; }
+.def-tag.motion   { background: #e2f5ea; color: var(--green); border: 1px solid #b2dfc2; }
+.def-tag.projectile { background: #fef3e2; color: var(--orange); border: 1px solid #f5d9a8; }
+.def-tag.math     { background: #f3f0ff; color: #5b21b6; border: 1px solid #c4b5fd; }
+.def-chevron { color: var(--muted); font-size: 12px; transition: transform 0.25s; }
+.def-item.open .def-chevron { transform: rotate(180deg); }
+.def-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.def-item.open .def-body { max-height: 600px; }
+.def-body-inner {
+  padding: 0 18px 18px 18px;
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+.def-meaning {
+  font-size: 16px;
+  color: var(--ink2);
+  line-height: 1.85;
+  margin-bottom: 10px;
+}
+.def-analogy {
+  background: var(--highlight);
+  border-left: 3px solid var(--gold);
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--ink2);
+  border-radius: 0 3px 3px 0;
+  margin-bottom: 10px;
+}
+.def-analogy strong { color: var(--gold); }
+.def-formula-line {
+  background: var(--ink);
+  color: #f8f4ed;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 3px;
+  margin-top: 8px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
 </style>
 </head>
 <body>
@@ -582,6 +719,7 @@ p:last-child { margin-bottom: 0; }
 
 <nav class="nav">
   <button class="nbtn active" onclick="show('pg-mne',this)">Mnemonics</button>
+  <button class="nbtn" onclick="show('pg-def',this)">Definitions</button>
   <button class="nbtn" onclick="show('pg-form',this)">All Formulas</button>
   <button class="nbtn" onclick="show('pg-conc',this)">Key Concepts</button>
   <button class="nbtn" onclick="show('pg-proj',this)">Projectile Guide</button>
@@ -589,6 +727,31 @@ p:last-child { margin-bottom: 0; }
   <button class="nbtn" onclick="show('pg-quiz',this)">Quiz</button>
   <button class="nbtn" onclick="show('pg-sim',this)">Simulator</button>
 </nav>
+
+<!-- DEFINITIONS -->
+<div id="pg-def" class="sec">
+<div class="wrap">
+  <div class="sec-title"><span class="num">00</span> Definitions of Terms</div>
+  <p class="sec-desc">Every important word in this chapter, defined in plain language. Start here if anything feels unfamiliar.</p>
+
+  <div class="def-search-wrap">
+    <span class="def-search-icon">&#128269;</span>
+    <input class="def-search" type="text" id="defSearch" placeholder="Search any term..." oninput="filterDefs()">
+  </div>
+
+  <div class="def-filter-row">
+    <button class="def-filter active" onclick="filterCat('all',this)">All Terms</button>
+    <button class="def-filter" onclick="filterCat('physics',this)">Physics</button>
+    <button class="def-filter" onclick="filterCat('vectors',this)">Vectors</button>
+    <button class="def-filter" onclick="filterCat('motion',this)">Motion</button>
+    <button class="def-filter" onclick="filterCat('projectile',this)">Projectile</button>
+    <button class="def-filter" onclick="filterCat('math',this)">Math</button>
+  </div>
+
+  <div class="def-count" id="def-count"></div>
+  <div id="def-list"></div>
+</div>
+</div>
 
 <!-- MNEMONICS -->
 <div id="pg-mne" class="sec active">
@@ -745,41 +908,13 @@ p:last-child { margin-bottom: 0; }
     <div class="card-title"><span class="lbl lbl-b">Section 3.1</span> Position and Velocity</div>
     <table class="ftable">
       <tr><th>Quantity</th><th>Formula</th><th>Plain English</th></tr>
-      <tr>
-        <td>Position vector</td>
-        <td class="mono">r = x*i + y*j + z*k</td>
-        <td class="note">Arrow pointing from origin to particle. Components are the coordinates.</td>
-      </tr>
-      <tr>
-        <td>Displacement</td>
-        <td class="mono">dr = r2 - r1</td>
-        <td class="note">Straight-line arrow from start to end. NOT the path length.</td>
-      </tr>
-      <tr>
-        <td>Average velocity</td>
-        <td class="mono">v_avg = dr / dt</td>
-        <td class="note">Same direction as displacement. Net motion over a time interval.</td>
-      </tr>
-      <tr>
-        <td>Instantaneous velocity</td>
-        <td class="mono">v = dr/dt</td>
-        <td class="danger">ALWAYS tangent to the path at that point</td>
-      </tr>
-      <tr>
-        <td>Velocity components</td>
-        <td class="mono">vx = dx/dt, vy = dy/dt</td>
-        <td class="note">Differentiate each coordinate separately</td>
-      </tr>
-      <tr>
-        <td>Speed (magnitude)</td>
-        <td class="mono">|v| = sqrt(vx^2 + vy^2)</td>
-        <td class="note">Always positive. The number on a speedometer.</td>
-      </tr>
-      <tr>
-        <td>Direction angle</td>
-        <td class="mono">a = arctan(vy / vx)</td>
-        <td class="danger">Always check which quadrant the vector is in!</td>
-      </tr>
+      <tr><td>Position vector</td><td class="mono">r = x*i + y*j + z*k</td><td class="note">Arrow pointing from origin to particle. Components are the coordinates.</td></tr>
+      <tr><td>Displacement</td><td class="mono">dr = r2 - r1</td><td class="note">Straight-line arrow from start to end. NOT the path length.</td></tr>
+      <tr><td>Average velocity</td><td class="mono">v_avg = dr / dt</td><td class="note">Same direction as displacement. Net motion over a time interval.</td></tr>
+      <tr><td>Instantaneous velocity</td><td class="mono">v = dr/dt</td><td class="danger">ALWAYS tangent to the path at that point</td></tr>
+      <tr><td>Velocity components</td><td class="mono">vx = dx/dt, vy = dy/dt</td><td class="note">Differentiate each coordinate separately</td></tr>
+      <tr><td>Speed (magnitude)</td><td class="mono">|v| = sqrt(vx^2 + vy^2)</td><td class="note">Always positive. The number on a speedometer.</td></tr>
+      <tr><td>Direction angle</td><td class="mono">a = arctan(vy / vx)</td><td class="danger">Always check which quadrant the vector is in!</td></tr>
     </table>
   </div>
 
@@ -787,31 +922,11 @@ p:last-child { margin-bottom: 0; }
     <div class="card-title"><span class="lbl lbl-r">Section 3.2</span> Acceleration</div>
     <table class="ftable">
       <tr><th>Quantity</th><th>Formula</th><th>Plain English</th></tr>
-      <tr>
-        <td>Average acceleration</td>
-        <td class="mono">a_avg = dv / dt</td>
-        <td class="note">Same direction as the change in velocity vector</td>
-      </tr>
-      <tr>
-        <td>Instantaneous acceleration</td>
-        <td class="mono">a = dv/dt = d^2r/dt^2</td>
-        <td class="danger">Points toward the inside (concave side) of the curve</td>
-      </tr>
-      <tr>
-        <td>Components</td>
-        <td class="mono">ax = d^2x/dt^2, ay = d^2y/dt^2</td>
-        <td class="note">Second derivative of each position component</td>
-      </tr>
-      <tr>
-        <td>Parallel component (a-par)</td>
-        <td class="mono">tangent to path</td>
-        <td class="note">Changes SPEED. Zero means constant speed.</td>
-      </tr>
-      <tr>
-        <td>Perp. component (a-perp)</td>
-        <td class="mono">normal to path, inward</td>
-        <td class="note">Changes DIRECTION. Zero means straight-line motion.</td>
-      </tr>
+      <tr><td>Average acceleration</td><td class="mono">a_avg = dv / dt</td><td class="note">Same direction as the change in velocity vector</td></tr>
+      <tr><td>Instantaneous acceleration</td><td class="mono">a = dv/dt = d^2r/dt^2</td><td class="danger">Points toward the inside (concave side) of the curve</td></tr>
+      <tr><td>Components</td><td class="mono">ax = d^2x/dt^2, ay = d^2y/dt^2</td><td class="note">Second derivative of each position component</td></tr>
+      <tr><td>Parallel component (a-par)</td><td class="mono">tangent to path</td><td class="note">Changes SPEED. Zero means constant speed.</td></tr>
+      <tr><td>Perp. component (a-perp)</td><td class="mono">normal to path, inward</td><td class="note">Changes DIRECTION. Zero means straight-line motion.</td></tr>
     </table>
   </div>
 
@@ -819,60 +934,18 @@ p:last-child { margin-bottom: 0; }
     <div class="card-title"><span class="lbl lbl-g">Section 3.3</span> Projectile Motion -- Complete Set</div>
     <table class="ftable">
       <tr><th>Quantity</th><th>Formula</th><th>Notes</th></tr>
-      <tr>
-        <td>Accelerations</td>
-        <td class="mono">ax = 0, ay = -9.80 m/s^2</td>
-        <td class="note">Constant throughout the entire flight</td>
-      </tr>
-      <tr>
-        <td>Initial components</td>
-        <td class="mono">vx0 = v0*cos(a0), vy0 = v0*sin(a0)</td>
-        <td class="note">First thing to do: decompose the launch velocity</td>
-      </tr>
-      <tr>
-        <td>Horizontal velocity</td>
-        <td class="mono">vx = v0*cos(a0)</td>
-        <td class="danger">CONSTANT. Never changes for the whole flight.</td>
-      </tr>
-      <tr>
-        <td>Vertical velocity</td>
-        <td class="mono">vy = v0*sin(a0) - g*t</td>
-        <td class="note">Changes every instant due to gravity</td>
-      </tr>
-      <tr>
-        <td>Horizontal position</td>
-        <td class="mono">x = (v0*cos(a0)) * t</td>
-        <td class="note">Linear -- just speed times time</td>
-      </tr>
-      <tr>
-        <td>Vertical position</td>
-        <td class="mono">y = (v0*sin(a0))*t - (g/2)*t^2</td>
-        <td class="note">Quadratic -- produces the parabolic curve</td>
-      </tr>
-      <tr>
-        <td>Trajectory (y as function of x)</td>
-        <td class="mono">y = tan(a0)*x - g*x^2/(2*v0^2*cos^2(a0))</td>
-        <td class="note">Eliminates t. Form y = bx - cx^2 proves it is a parabola.</td>
-      </tr>
-      <tr>
-        <td>Range (same start/end height)</td>
-        <td class="mono">R = v0^2 * sin(2*a0) / g</td>
-        <td class="danger">Only valid if landing height = launch height</td>
-      </tr>
-      <tr>
-        <td>Time to peak</td>
-        <td class="mono">t_peak = v0*sin(a0) / g</td>
-        <td class="note">Set vy = 0 and solve for t</td>
-      </tr>
-      <tr>
-        <td>Maximum height</td>
-        <td class="mono">h = (v0*sin(a0))^2 / (2*g)</td>
-        <td class="note">Substitute t_peak into the y equation</td>
-      </tr>
+      <tr><td>Accelerations</td><td class="mono">ax = 0, ay = -9.80 m/s^2</td><td class="note">Constant throughout the entire flight</td></tr>
+      <tr><td>Initial components</td><td class="mono">vx0 = v0*cos(a0), vy0 = v0*sin(a0)</td><td class="note">First thing to do: decompose the launch velocity</td></tr>
+      <tr><td>Horizontal velocity</td><td class="mono">vx = v0*cos(a0)</td><td class="danger">CONSTANT. Never changes for the whole flight.</td></tr>
+      <tr><td>Vertical velocity</td><td class="mono">vy = v0*sin(a0) - g*t</td><td class="note">Changes every instant due to gravity</td></tr>
+      <tr><td>Horizontal position</td><td class="mono">x = (v0*cos(a0)) * t</td><td class="note">Linear -- just speed times time</td></tr>
+      <tr><td>Vertical position</td><td class="mono">y = (v0*sin(a0))*t - (g/2)*t^2</td><td class="note">Quadratic -- produces the parabolic curve</td></tr>
+      <tr><td>Trajectory (y as function of x)</td><td class="mono">y = tan(a0)*x - g*x^2/(2*v0^2*cos^2(a0))</td><td class="note">Eliminates t. Form y = bx - cx^2 proves it is a parabola.</td></tr>
+      <tr><td>Range (same start/end height)</td><td class="mono">R = v0^2 * sin(2*a0) / g</td><td class="danger">Only valid if landing height = launch height</td></tr>
+      <tr><td>Time to peak</td><td class="mono">t_peak = v0*sin(a0) / g</td><td class="note">Set vy = 0 and solve for t</td></tr>
+      <tr><td>Maximum height</td><td class="mono">h = (v0*sin(a0))^2 / (2*g)</td><td class="note">Substitute t_peak into the y equation</td></tr>
     </table>
-    <div class="tip" style="margin-top:16px;">
-      <strong>Key numbers:</strong> g = 9.80 m/s^2 &nbsp;|&nbsp; Max range at 45 degrees &nbsp;|&nbsp; 30 and 60 degrees give the same range &nbsp;|&nbsp; At peak: vy = 0, vx unchanged, ay = -9.8 still
-    </div>
+    <div class="tip" style="margin-top:16px;"><strong>Key numbers:</strong> g = 9.80 m/s^2 &nbsp;|&nbsp; Max range at 45 degrees &nbsp;|&nbsp; 30 and 60 degrees give the same range &nbsp;|&nbsp; At peak: vy = 0, vx unchanged, ay = -9.8 still</div>
   </div>
 
 </div>
@@ -1015,7 +1088,7 @@ Instantaneous vel. = dr/dt = limit as dt -> 0
       <div class="step">
         <div class="step-content">
           <div class="step-title">Decompose the initial velocity into components</div>
-          <div class="step-desc">vx0 = v0 * cos(angle). &nbsp; vy0 = v0 * sin(angle). &nbsp; Exception: horizontal launch means angle=0, so vx0=v0 and vy0=0.</div>
+          <div class="step-desc">vx0 = v0 * cos(angle). vy0 = v0 * sin(angle). Exception: horizontal launch means angle=0, so vx0=v0 and vy0=0.</div>
         </div>
       </div>
       <div class="step">
@@ -1383,7 +1456,6 @@ function redraw() {
   var sy = (OY - 28) / maxY;
   var sc = Math.min(sx, sy) * 0.9;
   drawBg();
-  // axis numbers
   ctx.fillStyle = '#555';
   ctx.font = '11px JetBrains Mono, monospace';
   var xs = niceStep(maxX, 6);
@@ -1409,12 +1481,10 @@ function redraw() {
     });
     ctx.stroke();
     ctx.restore();
-    // peak dot
     var peak = tr.pts.reduce(function(a,b){ return b.y>a.y?b:a; });
     var pcx = OX+peak.x*sc, pcy = OY-peak.y*sc;
     ctx.beginPath(); ctx.arc(pcx,pcy,5,0,Math.PI*2);
     ctx.fillStyle = tr.col; ctx.fill();
-    // label
     ctx.fillStyle = tr.col;
     ctx.font = '12px JetBrains Mono, monospace';
     ctx.fillText(tr.lbl, pcx+7, pcy-6);
@@ -1456,7 +1526,7 @@ function doLaunch() {
     + sbox('Flight Time', tr.tF+' s', col)
     + sbox('vx (constant)', tr.vx+' m/s', col)
     + sbox('vy at launch', tr.vy0+' m/s', col)
-    + sbox('Time to peak', (tr.tF/2).toFixed ? (parseFloat(tr.tF)/2).toFixed(2)+' s' : '-', col)
+    + sbox('Time to peak', (parseFloat(tr.tF)/2).toFixed(2)+' s', col)
     + '</div>';
 }
 function sbox(l, v, c) {
@@ -1476,8 +1546,103 @@ window.addEventListener('resize', function() {
   }
 });
 
+// ===== DEFINITIONS =====
+var defs = [
+  { term: "Physics", cat: "physics", meaning: "Physics is the science that studies the fundamental rules that govern how the universe behaves -- matter, energy, force, motion, space, and time. It asks the most basic questions: why do things move? Why do they stop? What is light? What holds atoms together? Every other science (chemistry, biology, engineering) is built on top of physics.", analogy: "Think of physics as the rulebook of the universe. Just as a game has rules that every player must follow no matter what, physics describes rules that every object in the universe must obey -- from planets to electrons.", formula: "" },
+  { term: "Kinematics", cat: "physics", meaning: "Kinematics is the branch of physics that describes HOW things move -- their position, velocity, and acceleration -- without asking WHY they move (that is dynamics, which involves forces). Chapter 3 is pure kinematics.", analogy: "Kinematics is like a sports commentator describing the game: 'the ball went up 10 meters, travelled 30 meters horizontally, and hit the ground after 3 seconds.' No mention of who kicked it or how hard.", formula: "" },
+  { term: "Scalar", cat: "math", meaning: "A scalar is a quantity that has only a size (magnitude) -- no direction. You can fully describe it with just one number and a unit. Examples: temperature (25 degrees C), mass (5 kg), time (3 seconds), speed (60 km/h), distance (100 m).", analogy: "Saying 'I walked 5 km' is a scalar. You know how far, but not which way.", formula: "Examples: speed = 10 m/s, mass = 2 kg, time = 5 s" },
+  { term: "Vector", cat: "vectors", meaning: "A vector is a quantity that has both a size (magnitude) AND a direction. You need both pieces of information to fully describe it. Examples: velocity (60 km/h northward), displacement (5 km east), force (10 N downward), acceleration (9.8 m/s^2 downward).", analogy: "Saying 'I walked 5 km north' is a vector. You know both how far AND which direction. Without the direction, it is just a scalar (distance).", formula: "Written as bold r or r with arrow on top\nComponents: r = x*i + y*j + z*k" },
+  { term: "Position Vector (r)", cat: "vectors", meaning: "The position vector r is an arrow drawn from the origin of your coordinate system to wherever the particle currently is. Its components are simply the coordinates (x, y, z) of the particle. As the particle moves, all three components can change with time.", analogy: "Imagine you are standing at the center of a city (the origin). The position vector of your friend is an arrow pointing from you directly to where your friend is right now. If your friend moves, the arrow changes.", formula: "r = x*i + y*j + z*k\nMagnitude: |r| = sqrt(x^2 + y^2 + z^2)" },
+  { term: "Displacement", cat: "vectors", meaning: "Displacement is the change in position -- a straight-line arrow from where you started to where you ended up. It is NOT the total distance you travelled. If you walk in a circle and return to your start, your displacement is zero even though you walked a real distance.", analogy: "If you drive from Manila to Davao via Cebu, your distance is the full road length. Your displacement is just one straight arrow pointing from Manila to Davao -- the net change in position.", formula: "delta_r = r2 - r1 = (x2-x1)*i + (y2-y1)*j" },
+  { term: "Distance", cat: "motion", meaning: "Distance is the total length of the actual path travelled, regardless of direction. It is a scalar (just a number, no direction). It is always zero or positive -- it can never be negative.", analogy: "The odometer in a car measures distance. It keeps counting up no matter which direction you drive.", formula: "Distance = total path length (scalar, always >= 0)" },
+  { term: "Speed", cat: "motion", meaning: "Speed is how fast an object is moving -- the magnitude (size) of the velocity vector. It is a scalar: just a positive number with units of m/s or km/h. It tells you how fast but NOT which direction.", analogy: "The speedometer in a car shows speed. It reads 80 km/h whether you are going north, south, east, or turning a corner.", formula: "speed = |v| = sqrt(vx^2 + vy^2 + vz^2)" },
+  { term: "Velocity (v)", cat: "motion", meaning: "Velocity is a vector that describes both how fast an object is moving AND which direction it is moving. It is the rate of change of position. The magnitude of velocity is speed. Two cars going 60 km/h in opposite directions have the same speed but opposite velocities.", analogy: "A weather report saying 'wind at 20 km/h' gives speed. Saying 'wind at 20 km/h from the northeast' gives velocity -- same number but now includes direction.", formula: "v = dr/dt (instantaneous)\nv_avg = delta_r / delta_t (average)\nComponents: vx = dx/dt, vy = dy/dt" },
+  { term: "Average Velocity", cat: "motion", meaning: "Average velocity is the total displacement divided by the total time taken. It is a single arrow pointing from start position to end position. It ignores everything that happened along the way -- detours, speed changes, curves. It only cares about net change in position.", analogy: "If you leave home at 8am and arrive at school at 8:30am, your average velocity is one arrow from home to school divided by 30 minutes -- regardless of the route you actually took.", formula: "v_avg = delta_r / delta_t = (r2 - r1) / (t2 - t1)" },
+  { term: "Instantaneous Velocity", cat: "motion", meaning: "Instantaneous velocity is the velocity at one exact moment in time -- not over an interval. Mathematically it is the derivative of position with respect to time, which means the limit of average velocity as the time interval shrinks to zero. It is always tangent to the path at that point.", analogy: "The speedometer in a car shows instantaneous speed at this exact moment. GPS navigation shows instantaneous velocity -- both speed and the direction arrow pointing down your current road.", formula: "v = lim[dt->0] (delta_r/delta_t) = dr/dt\nAlways tangent to the path" },
+  { term: "Acceleration (a)", cat: "motion", meaning: "Acceleration is the rate of change of the velocity vector. Because velocity is a vector, acceleration occurs whenever velocity changes in size (speed changes) OR direction (path curves) OR both at once. This means even constant-speed circular motion involves acceleration.", analogy: "Pressing the gas pedal changes your speed -- that is acceleration. Turning the steering wheel changes your direction -- that is also acceleration. Both are real accelerations even though the first feels like 'speeding up' and the second feels like 'turning'.", formula: "a = dv/dt = d^2r/dt^2\na_avg = delta_v / delta_t" },
+  { term: "Average Acceleration", cat: "motion", meaning: "Average acceleration is the change in velocity divided by the time interval. It is a vector pointing in the same direction as the change in velocity (delta_v). It summarizes how much and in what direction the velocity changed over a period of time.", analogy: "If your car velocity changed from 20 m/s north to 30 m/s north over 5 seconds, the average acceleration is 2 m/s^2 northward -- pointing in the direction of velocity increase.", formula: "a_avg = (v2 - v1) / (t2 - t1) = delta_v / delta_t" },
+  { term: "Instantaneous Acceleration", cat: "motion", meaning: "Instantaneous acceleration is the acceleration at one exact moment -- the derivative of velocity with respect to time. For curved motion, it always points toward the concave (inside) of the curve. It can be broken into a parallel component (changes speed) and a perpendicular component (changes direction).", analogy: "When you go over a hump in the road and your stomach drops, you feel instantaneous acceleration pointing downward -- toward the inside of the curved road surface.", formula: "a = dv/dt = d^2r/dt^2\nPoints toward concave (inside) of the curve" },
+  { term: "Parallel Component of Acceleration", cat: "motion", meaning: "The component of acceleration that runs along the direction of motion (tangent to the path). This is the only part of acceleration that changes the particle's speed. If a-parallel is positive, the particle speeds up. If negative, it slows down. If zero, speed is constant.", analogy: "The gas pedal and brake in a car produce parallel acceleration. They make you go faster or slower along the road -- they do not change which way you are pointing.", formula: "a_par = tangent to path\nIf a_par = 0: speed is constant\nIf a_par > 0: speeding up\nIf a_par < 0: slowing down" },
+  { term: "Perpendicular Component of Acceleration", cat: "motion", meaning: "The component of acceleration that runs at 90 degrees to the direction of motion (normal to the path). This is the only part that changes the direction of the particle's motion. It always points toward the inside of the curve. It never changes speed -- only direction.", analogy: "The steering wheel in a car produces perpendicular acceleration. Turning the wheel does not make you go faster or slower -- it only changes which direction you are heading.", formula: "a_perp = normal to path, pointing inward\nIf a_perp = 0: straight-line motion\nIf a_perp != 0: path is curved" },
+  { term: "Unit Vector", cat: "vectors", meaning: "A unit vector is a vector with a magnitude of exactly 1. It has no units -- it simply points in a direction. The standard unit vectors are i (pointing in the +x direction), j (pointing in the +y direction), and k (pointing in the +z direction). They are used to build any other vector by scaling them.", analogy: "Think of i, j, k as arrows that say 'this way is x', 'this way is y', 'this way is z'. They are like compass needles for each axis. To say a position is at (3, 4, 0), you write r = 3*i + 4*j + 0*k.", formula: "i = (1,0,0), j = (0,1,0), k = (0,0,1)\n|i| = |j| = |k| = 1" },
+  { term: "Magnitude", cat: "vectors", meaning: "The magnitude of a vector is its size -- how long the arrow is. It is always a positive number (or zero). For a position vector r = (x, y, z), the magnitude is the straight-line distance from the origin to that point, found using the Pythagorean theorem extended to 3D.", analogy: "If a vector is an arrow, the magnitude is how long the arrow is. A velocity vector of (-3, 4) m/s has direction pointing upper-left, but its magnitude (speed) is sqrt(9+16) = 5 m/s.", formula: "|v| = sqrt(vx^2 + vy^2 + vz^2)\n|r| = sqrt(x^2 + y^2 + z^2)" },
+  { term: "Trajectory", cat: "motion", meaning: "The trajectory is the actual path that a moving object follows through space. For a projectile under ideal conditions (no air resistance), the trajectory is always a parabola. The trajectory equation gives y as a function of x, eliminating time from the equations.", analogy: "The white line that trails behind a plane in the sky shows the trajectory. For a thrown ball, the arc it follows from your hand to the ground is its trajectory.", formula: "y = tan(a0)*x - [g / (2*v0^2*cos^2(a0))] * x^2\nForm: y = b*x - c*x^2  (parabola)" },
+  { term: "Projectile", cat: "projectile", meaning: "A projectile is any object that is given an initial velocity and then left to move freely under the influence of gravity alone -- no engine, no wings, no additional forces. Once it leaves the launcher, only gravity acts on it (ignoring air resistance in this model).", analogy: "A ball thrown through the air, a bullet fired from a gun, a package dropped from a plane, a soccer ball kicked into the air -- all are projectiles the moment they leave contact with whatever launched them.", formula: "ax = 0 (no horizontal force)\nay = -g = -9.80 m/s^2 (gravity only)" },
+  { term: "Range (R)", cat: "projectile", meaning: "Range is the horizontal distance a projectile travels from launch to landing, when it lands at the same height as it was launched. It depends on both the initial speed and the launch angle. Maximum range is achieved at exactly 45 degrees.", analogy: "In a long-jump competition, the range is how far from the take-off board the athlete lands. The athlete wants to maximize range -- which means jumping at close to 45 degrees.", formula: "R = v0^2 * sin(2*a0) / g\nMaximum when a0 = 45 degrees\nR_max = v0^2 / g" },
+  { term: "Launch Angle", cat: "projectile", meaning: "The launch angle is the angle between the initial velocity vector and the horizontal. It determines how the initial speed is split between horizontal and vertical components. A large angle (close to 90 degrees) means mostly going up. A small angle (close to 0 degrees) means mostly going sideways.", analogy: "Think of a garden hose. Aim straight up (90 degrees) -- water goes very high but falls near you. Aim flat (0 degrees) -- water goes far sideways but barely rises. Aim at 45 degrees -- maximum distance.", formula: "vx0 = v0 * cos(a0)  [horizontal component]\nvy0 = v0 * sin(a0)  [vertical component]" },
+  { term: "Initial Velocity (v0)", cat: "projectile", meaning: "The initial velocity is the velocity of the projectile at the exact moment it is launched -- at time t=0. It has both a magnitude (the launch speed) and a direction (the launch angle). After launch, the horizontal part never changes, and the vertical part changes due to gravity.", analogy: "When you kick a soccer ball, the speed and angle of your foot at the moment of contact determines the initial velocity. Everything that happens after that is just physics taking over.", formula: "v0 = launch speed (m/s)\na0 = launch angle (degrees from horizontal)\nvx0 = v0*cos(a0), vy0 = v0*sin(a0)" },
+  { term: "Free Fall", cat: "projectile", meaning: "Free fall is motion under gravity alone, with no other forces acting (ignoring air resistance). An object in free fall accelerates downward at g = 9.80 m/s^2 regardless of its mass or horizontal motion. A projectile is always in free fall after launch.", analogy: "An astronaut floating inside a spacecraft is in free fall -- falling toward Earth but also moving sideways fast enough to keep missing it. A dropped ball is in free fall going straight down.", formula: "ay = -g = -9.80 m/s^2 (downward)\nThis applies throughout projectile flight" },
+  { term: "Derivative", cat: "math", meaning: "A derivative measures how fast something is changing at an exact instant. In physics, the derivative of position with respect to time gives velocity. The derivative of velocity with respect to time gives acceleration. Written as d/dt, it means 'the instantaneous rate of change with respect to time'.", analogy: "If position is like a car's mileage reading, the derivative (velocity) is like the speedometer -- it tells you the instantaneous rate at which the mileage is increasing right now.", formula: "v = dr/dt  (derivative of position = velocity)\na = dv/dt  (derivative of velocity = acceleration)\na = d^2r/dt^2  (second derivative of position)" },
+  { term: "Coordinate System", cat: "math", meaning: "A coordinate system is a framework for specifying the location of any point in space using numbers. In 2D we use x (horizontal) and y (vertical). In 3D we add z (depth). The origin is the reference point (0,0,0). Every position, velocity, and acceleration is expressed relative to this system.", analogy: "A coordinate system is like the grid on a map. Once you agree that the city hall is at (0,0), every other location can be described by two numbers. The choice of origin and axes is yours to make -- choose whatever makes the math easiest.", formula: "Origin at (0,0,0)\n+x: right, +y: up, +z: out of page (typical)\nChoose origin at launch point for projectile problems" },
+  { term: "Tangent", cat: "math", meaning: "A tangent line (or tangent direction) at a point on a curve is the line that just touches the curve at that one point, pointing in the exact direction the curve is heading at that instant. The instantaneous velocity vector is always tangent to the path of motion.", analogy: "Imagine a ball on a string being swung in a circle. If you cut the string, the ball flies off in the tangent direction -- exactly the direction it was heading at that instant. That tangent direction is where the velocity points.", formula: "v = dr/dt is always tangent to the path\nAs delta_t -> 0, the direction of delta_r becomes tangent" },
+  { term: "Parabola", cat: "math", meaning: "A parabola is a curved shape described by an equation of the form y = bx - cx^2. It is symmetric and opens either up or down. The trajectory of every ideal projectile (no air resistance) is a parabola. The negative x^2 term means it always opens downward for projectiles.", analogy: "The arc of a basketball shot, the spray of water from a garden hose, the path of a cliff diver -- all are parabolas. They all have that smooth, symmetric arch that is steeper near the ends and flatter at the top.", formula: "y = tan(a0)*x - [g/(2*v0^2*cos^2(a0))]*x^2\nForm: y = b*x - c*x^2\nThis is the equation of a downward-opening parabola" },
+  { term: "g (Gravitational Acceleration)", cat: "physics", meaning: "g is the magnitude of the acceleration due to gravity near Earth's surface. It equals 9.80 m/s^2 (sometimes approximated as 9.8 or 10 m/s^2). It is always directed downward, toward the center of the Earth. Every freely falling object -- regardless of mass -- accelerates at this same rate.", analogy: "Galileo famously showed that a feather and a hammer dropped on the Moon (no air) hit the ground at the same time. That is because g depends only on the planet, not on the object's mass.", formula: "g = 9.80 m/s^2 (downward)\nay = -g in projectile equations (negative = downward)\nOn Moon: g = 1.62 m/s^2" },
+  { term: "Independence of Motion", cat: "projectile", meaning: "The principle of independence of motion states that horizontal and vertical motions in projectile problems are completely independent of each other. Horizontal velocity does not affect vertical acceleration. Gravity does not affect horizontal motion. You can solve each axis separately and only time t connects them.", analogy: "If you fire a bullet horizontally from a gun and simultaneously drop another bullet from the same height, both bullets hit the ground at exactly the same time. The horizontal speed of the fired bullet has zero effect on how fast it falls.", formula: "Horizontal: ax = 0, vx = constant (independent)\nVertical: ay = -g, vy changes (independent)\nOnly shared variable: time t" },
+];
+
+var currentCat = 'all';
+
+function buildDefs() {
+  var list = document.getElementById('def-list');
+  list.innerHTML = '';
+  defs.forEach(function(d) {
+    var div = document.createElement('div');
+    div.className = 'def-item';
+    div.setAttribute('data-cat', d.cat);
+    div.setAttribute('data-term', d.term.toLowerCase());
+    div.setAttribute('data-meaning', d.meaning.toLowerCase());
+    div.innerHTML =
+      '<div class="def-header" onclick="toggleDef(this)">'
+      + '<div class="def-term">' + d.term + '</div>'
+      + '<span class="def-tag ' + d.cat + '">' + d.cat + '</span>'
+      + '<span class="def-chevron">&#9660;</span>'
+      + '</div>'
+      + '<div class="def-body"><div class="def-body-inner">'
+      + '<div class="def-meaning">' + d.meaning + '</div>'
+      + (d.analogy ? '<div class="def-analogy"><strong>Analogy:</strong> ' + d.analogy + '</div>' : '')
+      + (d.formula ? '<div class="def-formula-line">' + d.formula + '</div>' : '')
+      + '</div></div>';
+    list.appendChild(div);
+  });
+  updateDefCount();
+}
+
+function toggleDef(head) {
+  var item = head.closest('.def-item');
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.def-item.open').forEach(function(el){ el.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+
+function filterDefs() {
+  var q = document.getElementById('defSearch').value.toLowerCase().trim();
+  var items = document.querySelectorAll('.def-item');
+  items.forEach(function(item) {
+    var term = item.getAttribute('data-term') || '';
+    var meaning = item.getAttribute('data-meaning') || '';
+    var cat = item.getAttribute('data-cat') || '';
+    var catMatch = currentCat === 'all' || cat === currentCat;
+    var textMatch = !q || term.includes(q) || meaning.includes(q);
+    item.classList.toggle('hidden', !(catMatch && textMatch));
+  });
+  updateDefCount();
+}
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.def-filter').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  filterDefs();
+}
+
+function updateDefCount() {
+  var visible = document.querySelectorAll('.def-item:not(.hidden)').length;
+  document.getElementById('def-count').textContent = 'Showing ' + visible + ' of ' + defs.length + ' terms';
+}
+
 // Init
 buildQuiz();
+buildDefs();
 updateFC();
 </script>
 </body>
