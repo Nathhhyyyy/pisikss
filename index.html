@@ -3,1121 +3,1482 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physics Midterm Prep</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Physics Chapter 3 -- Exam Survival Guide</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --bg:          #0b0c11;
-  --bg1:         #0f1018;
-  --bg2:         #13141e;
-  --bg3:         #181926;
-  --bg4:         #1e2030;
-  --border:      rgba(255,255,255,0.06);
-  --border2:     rgba(255,255,255,0.11);
-  --border3:     rgba(255,255,255,0.18);
-
-  --blue:        #3b82f6;
-  --blue-bright: #60a5fa;
-  --blue-dim:    rgba(59,130,246,0.15);
-  --blue-glow:   rgba(59,130,246,0.3);
-
-  --purple:      #8b5cf6;
-  --purple-bright:#a78bfa;
-  --purple-dim:  rgba(139,92,246,0.15);
-  --purple-glow: rgba(139,92,246,0.3);
-
-  --cyan:        #22d3ee;
-  --cyan-dim:    rgba(34,211,238,0.12);
-  --cyan-glow:   rgba(34,211,238,0.25);
-
-  --grad:        linear-gradient(135deg, #3b82f6, #8b5cf6);
-  --grad-text:   linear-gradient(135deg, #60a5fa, #a78bfa);
-  --grad-subtle: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.12));
-
-  --green:       #34d399;
-  --green-dim:   rgba(52,211,153,0.12);
-  --red:         #f87171;
-  --red-dim:     rgba(248,113,113,0.12);
-  --amber:       #fbbf24;
-
-  --text:        #e2e8f0;
-  --text2:       #94a3b8;
-  --text3:       #475569;
-  --text4:       #2d3a4a;
-
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'DM Sans', sans-serif;
-  --head: 'Rajdhani', sans-serif;
-  --r:   10px;
-  --r2:  14px;
+  --bg: #f7f3ee;
+  --paper: #fffef9;
+  --ink: #1a1610;
+  --ink2: #3d3525;
+  --muted: #8a7e6a;
+  --red: #c0392b;
+  --blue: #1a5276;
+  --green: #1a6b3a;
+  --orange: #c05a0a;
+  --gold: #b8860b;
+  --rule: #d4c9b0;
+  --highlight: #fff3b0;
+  --highlight2: #d4edff;
+  --highlight3: #d4f5e4;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  min-height: 100vh;
-  overflow-x: hidden;
+  color: var(--ink);
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  line-height: 1.8;
 }
 
-/* ─── BACKGROUND MESH ─── */
-body::before {
+.header {
+  background: var(--ink);
+  color: #fff;
+  padding: 48px 24px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
   content: '';
-  position: fixed; inset: 0; z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 10%, rgba(59,130,246,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(139,92,246,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 60% 30%, rgba(34,211,238,0.03) 0%, transparent 60%);
-  pointer-events: none;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, #f39c12 0, #f39c12 20px, transparent 20px, transparent 24px);
+}
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #f39c12;
+  margin-bottom: 12px;
+}
+.header h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.header h1 em { color: #f39c12; font-style: italic; }
+.header-sub { font-size: 15px; color: #aaa; font-family: 'JetBrains Mono', monospace; }
+
+.nav {
+  background: var(--ink2);
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 3px solid var(--ink);
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nbtn {
+  background: none;
+  border: none;
+  color: #ccc;
+  padding: 14px 20px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  transition: all 0.2s;
+}
+.nbtn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.nbtn.active { color: #f39c12; border-bottom-color: #f39c12; }
+
+.sec { display: none; }
+.sec.active { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.wrap { max-width: 920px; margin: 0 auto; padding: 40px 24px 80px; }
+
+.sec-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sec-title .num {
+  background: var(--ink);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+.sec-desc { color: var(--muted); font-size: 15px; margin-bottom: 32px; }
+
+.card {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 2px 3px 0 var(--rule);
+}
+.card-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 2px;
+}
+.lbl-k { background: var(--ink); }
+.lbl-r { background: var(--red); }
+.lbl-b { background: var(--blue); }
+.lbl-g { background: var(--green); }
+.lbl-o { background: var(--orange); }
+.lbl-d { background: var(--gold); }
+
+.fbox {
+  background: var(--ink);
+  color: #f8f4ed;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  padding: 16px 20px;
+  border-radius: 3px;
+  margin: 12px 0;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.fbox .cm { color: #6a9956; }
+.fbox .hi { color: #f39c12; }
+.fbox .hi2 { color: #5dade2; }
+.fbox .hi3 { color: #58d68d; }
+.fbox .hi4 { color: #ec7063; }
+
+.hl-y { background: var(--highlight); padding: 1px 4px; border-radius: 2px; }
+.hl-b { background: var(--highlight2); padding: 1px 4px; border-radius: 2px; }
+.hl-g { background: var(--highlight3); padding: 1px 4px; border-radius: 2px; }
+
+.mnemonic {
+  border: 2px dashed var(--rule);
+  border-radius: 4px;
+  padding: 22px 24px;
+  background: #fffdf5;
+  margin: 16px 0;
+  position: relative;
+}
+.mne-tag {
+  position: absolute;
+  top: -12px; left: 16px;
+  background: var(--gold);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 2px 10px;
+  text-transform: uppercase;
+}
+.big-word {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 6px;
+  margin: 10px 0 14px;
+}
+.mne-grid {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 2px 8px;
+  margin-top: 8px;
+}
+.mne-l {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--red);
+  text-align: center;
+  padding: 5px 0;
+  border-right: 2px solid var(--rule);
+}
+.mne-r {
+  font-size: 15px;
+  padding: 5px 0 5px 10px;
+  border-bottom: 1px dotted var(--rule);
+  color: var(--ink2);
 }
 
-/* Subtle dot grid */
-body::after {
-  content: '';
-  position: fixed; inset: 0; z-index: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
+.tip {
+  background: #fffbea;
+  border-left: 4px solid var(--gold);
+  padding: 12px 16px;
+  font-size: 15px;
+  margin: 12px 0;
+  color: var(--ink2);
+  border-radius: 0 3px 3px 0;
+}
+.tip strong { color: var(--gold); }
+.warn {
+  background: #fff5f5;
+  border-left: 4px solid var(--red);
+  padding: 12px 16px;
+  font-size: 15px;
+  margin: 12px 0;
+  color: var(--ink2);
+  border-radius: 0 3px 3px 0;
+}
+.warn strong { color: var(--red); }
+
+.ftable { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.ftable th {
+  background: var(--ink);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 14px;
+  text-align: left;
+}
+.ftable td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px;
+  vertical-align: top;
+}
+.ftable tr:nth-child(even) td { background: #faf8f3; }
+.ftable .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--blue); }
+.ftable .note { color: var(--muted); font-size: 13px; font-style: italic; }
+.ftable .danger { color: var(--red); font-weight: 600; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+.col-box { background: var(--paper); border: 1.5px solid var(--rule); border-radius: 3px; padding: 18px; }
+.col-box h4 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.col-box.horiz h4 { color: var(--blue); }
+.col-box.vert h4 { color: var(--red); }
+.col-box ul { list-style: none; }
+.col-box li {
+  font-size: 15px;
+  padding: 4px 0 4px 22px;
+  position: relative;
+}
+.col-box li::before {
+  content: '->';
+  position: absolute; left: 0; top: 6px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
 }
 
-/* ─── SPLASH ─── */
-#splash {
-  position: fixed; inset: 0;
-  background: var(--bg);
+.steps { counter-reset: st; margin: 16px 0; }
+.step { display: flex; gap: 16px; margin-bottom: 18px; align-items: flex-start; }
+.step::before {
+  counter-increment: st;
+  content: counter(st);
+  background: var(--ink);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  min-width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.step-title { font-weight: 700; color: var(--ink); margin-bottom: 3px; font-size: 16px; }
+.step-desc { font-size: 15px; color: var(--ink2); }
+
+.acc {
+  border: 1.5px solid var(--rule);
+  border-radius: 3px;
+  margin-bottom: 8px;
+  background: var(--paper);
+  overflow: hidden;
+}
+.acc-head {
+  padding: 14px 18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+  user-select: none;
+  transition: background 0.15s;
+}
+.acc-head:hover { background: #faf6ee; }
+.acc-arrow { font-size: 11px; color: var(--muted); transition: transform 0.25s; }
+.acc.open .acc-arrow { transform: rotate(180deg); }
+.acc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.acc.open .acc-body { max-height: 1400px; }
+.acc-inner { padding: 16px 18px 20px; border-top: 1px solid var(--rule); font-size: 16px; line-height: 1.85; color: var(--ink2); }
+.acc-inner p { margin-bottom: 12px; }
+.acc-inner p:last-child { margin-bottom: 0; }
+
+.fc-wrap { perspective: 1000px; margin: 20px auto; max-width: 600px; }
+.fc-inner {
+  height: 250px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s ease;
+  cursor: pointer;
+}
+.fc-inner.flipped { transform: rotateY(180deg); }
+.fc-front, .fc-back {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  border-radius: 4px;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  z-index: 1000;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  padding: 30px;
+  text-align: center;
 }
-#splash.hide { opacity: 0; transform: scale(1.03); pointer-events: none; }
-
-.sp-grid-line {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
+.fc-front {
+  background: var(--paper);
+  border: 2px solid var(--rule);
+  box-shadow: 3px 4px 0 var(--rule);
 }
-
-.sp-glow-1 {
-  position: absolute; width: 500px; height: 500px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 65%);
-  top: 50%; left: 50%; transform: translate(-70%, -60%);
-  pointer-events: none; animation: breathe 6s ease-in-out infinite;
-}
-.sp-glow-2 {
-  position: absolute; width: 400px; height: 400px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 65%);
-  top: 50%; left: 50%; transform: translate(-30%, -40%);
-  pointer-events: none; animation: breathe 6s ease-in-out infinite reverse;
-}
-@keyframes breathe {
-  0%, 100% { opacity: 0.7; transform: translate(-70%, -60%) scale(1); }
-  50%       { opacity: 1;   transform: translate(-70%, -60%) scale(1.12); }
-}
-
-.sp-inner { position: relative; z-index: 2; text-align: center; }
-
-.sp-eyebrow {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: var(--text3);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 1.2rem;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-}
-.sp-eyebrow::before,
-.sp-eyebrow::after {
-  content: '';
-  display: inline-block;
-  width: 40px; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5));
-}
-.sp-eyebrow::after {
-  background: linear-gradient(90deg, rgba(139,92,246,0.5), transparent);
-}
-
-.sp-title {
-  font-family: var(--head);
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1;
-  background: var(--grad-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.3rem;
-  filter: drop-shadow(0 0 40px rgba(96,165,250,0.2));
-}
-.sp-sub {
-  font-family: var(--head);
-  font-size: clamp(1.4rem, 4vw, 2.2rem);
-  font-weight: 500;
-  color: var(--text2);
-  letter-spacing: 0.1em;
-  margin-bottom: 2rem;
-}
-
-.sp-chips {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  justify-content: center; margin-bottom: 2.5rem;
-}
-.sp-chip {
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  padding: 5px 14px;
-  font-size: 0.72rem;
-  font-family: var(--mono);
-  color: var(--text3);
-  background: var(--bg2);
-}
-.sp-chip b { color: var(--blue-bright); font-weight: 500; }
-
-.sp-divider {
-  width: 320px; height: 1px; margin: 0 auto 2rem;
-  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.4), rgba(139,92,246,0.4), transparent);
-}
-
-.btn-start {
-  position: relative;
-  background: var(--grad);
-  border: none;
+.fc-back {
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  transform: rotateY(180deg);
   color: #fff;
-  padding: 14px 56px;
-  border-radius: var(--r);
-  font-family: var(--head);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+}
+.fc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
   text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.25s;
-  box-shadow: 0 0 40px rgba(59,130,246,0.25), 0 0 80px rgba(139,92,246,0.1);
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 14px;
 }
-.btn-start::before {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: var(--r);
-  background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
-  pointer-events: none;
+.fc-back .fc-label { color: #888; }
+.fc-q {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.55;
 }
-.btn-start:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 60px rgba(59,130,246,0.4), 0 0 100px rgba(139,92,246,0.2);
+.fc-a {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f39c12;
+  line-height: 1.5;
 }
-.btn-start:active { transform: scale(0.97); }
-
-/* ─── APP ─── */
-#app {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 6rem;
-  position: relative; z-index: 2;
-  display: none;
-  animation: fadeUp 0.4s ease both;
-}
-#app.on { display: block; }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── TOPBAR ─── */
-.topbar {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
-}
-.tb-logo {
-  font-family: var(--head);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text3);
-}
-.tb-logo span {
-  background: var(--grad-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.tb-acts { display: flex; gap: 8px; }
-.btn-ghost {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: var(--r);
-  padding: 7px 15px;
-  font-size: 0.72rem;
-  font-family: var(--mono);
-  color: var(--text3);
-  cursor: pointer;
-  transition: all 0.18s;
-  letter-spacing: 0.04em;
-}
-.btn-ghost:hover {
-  border-color: rgba(59,130,246,0.45);
-  color: var(--blue-bright);
-  background: var(--blue-dim);
-  box-shadow: 0 0 12px rgba(59,130,246,0.12);
-}
-
-/* ─── PROGRESS ─── */
-.prog-wrap { margin-bottom: 1.5rem; }
-.prog-meta {
-  display: flex; justify-content: space-between;
-  font-family: var(--mono); font-size: 0.68rem;
-  color: var(--text3); margin-bottom: 8px;
-}
-.prog-track {
-  height: 3px;
-  background: var(--bg4);
-  border-radius: 99px; overflow: hidden;
-}
-.prog-fill {
-  height: 100%;
-  background: var(--grad);
-  border-radius: 99px;
-  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 0 10px rgba(96,165,250,0.5), 0 0 20px rgba(139,92,246,0.3);
-}
-
-/* ─── SCORE CARDS ─── */
-.sc-row {
-  display: grid; grid-template-columns: repeat(4,1fr);
-  gap: 10px; margin-bottom: 1.8rem;
-}
-.sc-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 14px 16px;
-  position: relative; overflow: hidden;
-  transition: border-color 0.2s;
-}
-.sc-card::after {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--grad);
-  opacity: 0; transition: opacity 0.2s;
-}
-.sc-card:hover { border-color: var(--border2); }
-.sc-card:hover::after { opacity: 1; }
-.sc-lbl {
-  font-family: var(--mono); font-size: 0.6rem;
-  color: var(--text4); letter-spacing: 0.12em;
-  text-transform: uppercase; margin-bottom: 5px;
-}
-.sc-val { font-size: 1.5rem; font-weight: 600; font-family: var(--head); line-height: 1; }
-.v-blue   { color: var(--blue-bright); text-shadow: 0 0 16px var(--blue-glow); }
-.v-green  { color: var(--green); text-shadow: 0 0 14px rgba(52,211,153,0.4); }
-.v-red    { color: var(--red); text-shadow: 0 0 14px rgba(248,113,113,0.35); }
-.v-amber  { color: var(--amber); text-shadow: 0 0 14px rgba(251,191,36,0.35); }
-
-/* ─── FILTER BAR ─── */
-.fil-row {
-  display: flex; gap: 7px; flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-.fil-pill {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 5px 14px;
-  font-size: 0.68rem;
-  font-family: var(--mono);
-  color: var(--text3);
-  cursor: pointer;
-  transition: all 0.18s;
-  letter-spacing: 0.03em;
-}
-.fil-pill:hover {
-  border-color: var(--border2);
-  color: var(--text2);
-}
-.fil-pill.on {
-  border-color: rgba(96,165,250,0.5);
-  color: var(--blue-bright);
-  background: var(--blue-dim);
-  box-shadow: 0 0 10px rgba(59,130,246,0.1);
-}
-.fil-pill.on.purple-on {
-  border-color: rgba(167,139,250,0.5);
-  color: var(--purple-bright);
-  background: var(--purple-dim);
-  box-shadow: 0 0 10px rgba(139,92,246,0.1);
-}
-
-/* ─── QUESTION CARD ─── */
-.qcard {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: var(--r2);
-  padding: 1.8rem 2rem;
-  margin-bottom: 1.5rem;
-  position: relative; overflow: hidden;
-  animation: cardIn 0.35s cubic-bezier(0.4,0,0.2,1) both;
-}
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-/* Accent left border */
-.qcard::before {
-  content: '';
-  position: absolute; top: 0; left: 0; bottom: 0;
-  width: 3px;
-  background: var(--grad);
-  border-radius: 2px 0 0 2px;
-}
-/* Top shimmer line */
-.qcard::after {
-  content: '';
-  position: absolute; top: 0; left: 3px; right: 0; height: 1px;
-  background: linear-gradient(90deg, rgba(59,130,246,0.3), rgba(139,92,246,0.3), transparent);
-}
-
-.qhdr {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 1.2rem; flex-wrap: wrap;
-}
-.qnum {
-  font-family: var(--mono); font-size: 0.62rem;
-  color: var(--text4); letter-spacing: 0.1em;
-}
-.badge {
-  font-size: 0.6rem; font-family: var(--mono);
-  padding: 3px 10px; border-radius: 4px;
-  letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500;
-}
-.bc { background: var(--blue-dim); color: var(--blue-bright); border: 1px solid rgba(96,165,250,0.25); }
-.bp { background: var(--purple-dim); color: var(--purple-bright); border: 1px solid rgba(167,139,250,0.25); }
-.bch {
-  font-size: 0.6rem; font-family: var(--mono);
-  padding: 3px 10px; border-radius: 4px;
-  background: var(--bg3); color: var(--text3);
-  border: 1px solid var(--border);
-  letter-spacing: 0.06em;
-}
-
-.qtxt {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.7;
-  color: var(--text);
-  margin-bottom: 1.4rem;
-  letter-spacing: 0.01em;
-}
-
-/* ─── CHOICES ─── */
-.choices { display: flex; flex-direction: column; gap: 9px; }
-
-.choice {
-  display: flex; align-items: flex-start; gap: 13px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: all 0.16s;
-  position: relative;
-}
-.choice:hover:not(.dis) {
-  border-color: rgba(59,130,246,0.4);
-  background: rgba(59,130,246,0.05);
-  transform: translateX(3px);
-  box-shadow: -3px 0 0 rgba(59,130,246,0.5), 0 0 16px rgba(59,130,246,0.06);
-}
-.choice.dis { cursor: default; }
-.choice.dis:hover { border-color: var(--border); background: var(--bg3); transform: none; box-shadow: none; }
-
-.ckey {
-  flex-shrink: 0;
-  width: 24px; height: 24px;
-  border-radius: 5px;
-  border: 1px solid var(--border2);
-  background: var(--bg4);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 0.62rem;
-  color: var(--text3);
-  transition: all 0.16s;
-}
-.cbdy {
-  font-size: 0.875rem;
+.fc-sub {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
   line-height: 1.6;
-  color: var(--text2);
-  transition: color 0.16s;
-  flex: 1;
 }
-
-/* Answer states */
-.choice.ok {
-  background: var(--green-dim);
-  border-color: rgba(52,211,153,0.45);
-  box-shadow: 0 0 20px rgba(52,211,153,0.07);
-}
-.choice.ok .ckey { background: rgba(52,211,153,0.2); border-color: var(--green); color: var(--green); }
-.choice.ok .cbdy { color: var(--green); }
-
-.choice.no {
-  background: var(--red-dim);
-  border-color: rgba(248,113,113,0.4);
-}
-.choice.no .ckey { background: rgba(248,113,113,0.2); border-color: var(--red); color: var(--red); }
-.choice.no .cbdy { color: var(--red); }
-
-.choice.rv {
-  background: rgba(59,130,246,0.05);
-  border-color: rgba(59,130,246,0.3);
-}
-.choice.rv .ckey { background: var(--blue-dim); border-color: rgba(96,165,250,0.4); color: var(--blue-bright); }
-.choice.rv .cbdy { color: rgba(96,165,250,0.7); }
-
-/* ─── EXPLANATION ─── */
-.exp {
-  margin-top: 1.1rem;
-  background: rgba(59,130,246,0.04);
-  border: 1px solid rgba(59,130,246,0.15);
-  border-left: 2px solid var(--blue);
-  border-radius: 0 var(--r) var(--r) 0;
-  padding: 12px 16px;
-  font-size: 0.8rem;
-  font-family: var(--mono);
-  color: var(--text2);
-  line-height: 1.75;
-  display: none;
-}
-.exp.on { display: block; animation: fadeUp 0.2s ease both; }
-.etag {
-  font-size: 0.58rem;
-  color: var(--blue-bright);
-  letter-spacing: 0.12em;
-  display: block;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-
-/* ─── NAV ─── */
-.nav-row {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-}
-.btn-nav {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: var(--r);
-  padding: 10px 22px;
-  font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
-  color: var(--text2); cursor: pointer;
-  transition: all 0.18s;
-}
-.btn-nav:hover {
-  border-color: rgba(96,165,250,0.45);
-  color: var(--blue-bright);
-  background: var(--blue-dim);
-}
-.btn-nav:active { transform: scale(0.97); }
-.btn-nav.pri {
-  background: var(--grad);
-  border: none; color: #fff;
+.fc-controls { display: flex; justify-content: center; gap: 10px; margin-top: 14px; align-items: center; }
+.fc-btn {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 9px 24px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 0 24px rgba(59,130,246,0.22), 0 0 48px rgba(139,92,246,0.12);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
-.btn-nav.pri:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 36px rgba(59,130,246,0.35), 0 0 60px rgba(139,92,246,0.2);
-}
-
-.jrow {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 0.68rem; color: var(--text3);
-}
-.jin {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: var(--r);
-  padding: 8px 10px; width: 56px;
-  font-family: var(--mono); font-size: 0.76rem;
-  color: var(--text); text-align: center; outline: none;
-  transition: border-color 0.18s;
-}
-.jin:focus { border-color: rgba(96,165,250,0.5); box-shadow: 0 0 10px rgba(59,130,246,0.1); }
-.btn-go {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: var(--r);
-  padding: 8px 12px;
-  font-family: var(--mono); font-size: 0.68rem;
-  color: var(--text3); cursor: pointer;
-  transition: all 0.18s;
-}
-.btn-go:hover { border-color: rgba(96,165,250,0.4); color: var(--blue-bright); }
-
-.nav-ctr {
-  margin-left: auto;
-  font-family: var(--mono); font-size: 0.7rem;
-  color: var(--text3);
+.fc-btn:hover { background: var(--red); }
+.fc-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+  min-width: 80px;
+  text-align: center;
 }
 
-/* ─── KEYBOARD HINTS ─── */
-.kbd-row {
-  display: flex; gap: 14px; flex-wrap: wrap;
-  margin-top: 1.1rem;
-  font-family: var(--mono); font-size: 0.62rem; color: var(--text4);
+.score-bar {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 3px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
   align-items: center;
+  gap: 16px;
 }
-.kbd {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 4px; padding: 2px 7px;
-  font-size: 0.62rem; color: var(--text3);
+.score-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--blue);
+  min-width: 80px;
+}
+.score-track {
+  flex: 1;
+  height: 10px;
+  background: var(--bg);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+}
+.score-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 5px;
+  transition: width 0.4s;
+}
+.reset-btn {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.reset-btn:hover { background: var(--red); }
+
+.quiz-q { font-weight: 700; font-size: 16px; color: var(--ink); margin-bottom: 14px; line-height: 1.6; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+.qopt {
+  background: var(--bg);
+  border: 1.5px solid var(--rule);
+  border-radius: 3px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex; align-items: flex-start; gap: 12px;
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.55;
+}
+.qopt:hover { border-color: var(--blue); background: #f0f7ff; }
+.qopt.correct { background: #eafaf1; border-color: var(--green); color: var(--green); font-weight: 600; }
+.qopt.wrong { background: #fdf2f2; border-color: var(--red); color: var(--red); }
+.qopt.disabled { pointer-events: none; }
+.qopt-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 24px; height: 24px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.qopt.correct .qopt-lbl { background: var(--green); }
+.qopt.wrong .qopt-lbl { background: var(--red); }
+.qfeedback {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 3px;
+  font-size: 15px;
+  display: none;
+  line-height: 1.7;
+}
+.qfeedback.show { display: block; }
+.qfeedback.good { background: #eafaf1; border: 1px solid var(--green); color: #1a5c35; }
+.qfeedback.bad { background: #fdf2f2; border: 1px solid var(--red); color: #922b21; }
+
+.sim-controls {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.sim-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
+.sim-label { display: block; font-size: 15px; font-weight: 600; color: var(--ink2); margin-bottom: 8px; }
+.sim-val { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-weight: 700; }
+input[type=range] { width: 100%; accent-color: var(--ink); cursor: pointer; height: 6px; }
+.launch-btn {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-right: 10px;
+}
+.launch-btn:hover { background: var(--red); }
+.clear-btn {
+  background: none;
+  border: 1.5px solid var(--rule);
+  color: var(--muted);
+  padding: 12px 24px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.clear-btn:hover { border-color: var(--ink); color: var(--ink); }
+.canvas-wrap {
+  background: #0d1117;
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  width: 100%;
+}
+#simCanvas { display: block; width: 100%; }
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.stat-box {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 3px;
+  padding: 14px;
+  text-align: center;
+}
+.stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 700; }
+.stat-lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+@media (max-width: 620px) {
+  .two-col, .sim-row, .stat-grid { grid-template-columns: 1fr; }
 }
 
-/* ─── RESULTS ─── */
-#results {
-  display: none; text-align: center;
-  padding: 4rem 1rem;
-  position: relative; z-index: 2;
-}
-#results.on { display: block; animation: fadeUp 0.5s ease both; }
-
-.r-bg {
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(59,130,246,0.06) 0%, transparent 70%);
-}
-
-.r-label {
-  font-family: var(--mono); font-size: 0.68rem;
-  color: var(--text3); letter-spacing: 0.18em;
-  text-transform: uppercase; margin-bottom: 0.8rem;
-  position: relative;
-}
-.r-score {
-  font-family: var(--head);
-  font-size: clamp(5rem, 14vw, 8rem);
-  font-weight: 700; line-height: 1;
-  background: var(--grad-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 40px rgba(96,165,250,0.3));
-  position: relative; margin-bottom: 0.4rem;
-}
-.r-divider {
-  width: 240px; height: 1px; margin: 1.5rem auto;
-  background: linear-gradient(90deg, transparent, rgba(96,165,250,0.4), rgba(167,139,250,0.4), transparent);
-}
-.r-stats {
-  display: flex; justify-content: center; gap: 3rem;
-  flex-wrap: wrap; margin-bottom: 2rem; position: relative;
-}
-.rs .rn { font-family: var(--head); font-size: 2.5rem; font-weight: 700; line-height: 1; }
-.rs .rl { font-family: var(--mono); font-size: 0.62rem; color: var(--text3); margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase; }
-.r-msg {
-  font-size: 0.95rem; color: var(--text2);
-  max-width: 400px; margin: 0 auto 2.5rem;
-  line-height: 1.8; position: relative;
-}
-.r-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; position: relative; }
-
-/* ─── TOAST ─── */
-.toast {
-  position: fixed; bottom: 2rem; left: 50%;
-  transform: translateX(-50%) translateY(16px);
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 99px; padding: 9px 22px;
-  font-family: var(--mono); font-size: 0.72rem;
-  color: var(--text2);
-  opacity: 0; transition: all 0.25s;
-  pointer-events: none; z-index: 9999;
-  white-space: nowrap;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-}
-.toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
-.toast.tok  { border-color: rgba(52,211,153,0.4); color: var(--green); }
-.toast.terr { border-color: rgba(248,113,113,0.4); color: var(--red); }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(96,165,250,0.3); }
-
-@media(max-width:580px) {
-  .sc-row { grid-template-columns: repeat(2,1fr); }
-  .qcard  { padding: 1.25rem 1.25rem; }
-  .qtxt   { font-size: 0.9rem; }
-}
+p { margin-bottom: 12px; }
+p:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="sp-grid-line"></div>
-  <div class="sp-glow-1"></div>
-  <div class="sp-glow-2"></div>
-
-  <div class="sp-inner">
-    <div class="sp-eyebrow">PHYS 101 &nbsp;&bull;&nbsp; MIDTERM PREP &nbsp;&bull;&nbsp; 2026</div>
-
-    <div class="sp-title">PHYSICS</div>
-    <div class="sp-sub">MIDTERM EXAMINATION</div>
-
-    <div class="sp-divider"></div>
-
-    <div class="sp-chips">
-      <span class="sp-chip">Ch. 1 &mdash; Units &amp; Vectors</span>
-      <span class="sp-chip">Ch. 2 &mdash; Kinematics</span>
-      <span class="sp-chip">Ch. 3 &mdash; Projectile Motion</span>
-      <span class="sp-chip"><b>80</b> Conceptual</span>
-      <span class="sp-chip"><b>70</b> Problem Solving</span>
-      <span class="sp-chip"><b>150</b> Verified Items</span>
-    </div>
-
-    <button class="btn-start" onclick="startQuiz()">BEGIN REVIEW</button>
-  </div>
+<div class="header">
+  <div class="eyebrow">BES112 -- Chapter 3 -- Exam Prep</div>
+  <h1>Motion in <em>2D &amp; 3D</em></h1>
+  <div class="header-sub">Position &middot; Velocity &middot; Acceleration &middot; Projectile Motion</div>
 </div>
 
-<!-- APP -->
-<div id="app">
-  <div class="topbar">
-    <div class="tb-logo">PHYS &nbsp;<span>MIDTERM</span>&nbsp; MAR 17 2026</div>
-    <div class="tb-acts">
-      <button class="btn-ghost" onclick="shuffleQ()">Shuffle</button>
-      <button class="btn-ghost" onclick="restartAll()">Restart</button>
+<nav class="nav">
+  <button class="nbtn active" onclick="show('pg-mne',this)">Mnemonics</button>
+  <button class="nbtn" onclick="show('pg-form',this)">All Formulas</button>
+  <button class="nbtn" onclick="show('pg-conc',this)">Key Concepts</button>
+  <button class="nbtn" onclick="show('pg-proj',this)">Projectile Guide</button>
+  <button class="nbtn" onclick="show('pg-fc',this)">Flashcards</button>
+  <button class="nbtn" onclick="show('pg-quiz',this)">Quiz</button>
+  <button class="nbtn" onclick="show('pg-sim',this)">Simulator</button>
+</nav>
+
+<!-- MNEMONICS -->
+<div id="pg-mne" class="sec active">
+<div class="wrap">
+  <div class="sec-title"><span class="num">01</span> Memory Tricks &amp; Mnemonics</div>
+  <p class="sec-desc">Learn these 7 hooks and you will have the whole chapter locked in memory. Each one maps directly to exam problems.</p>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-k">Start Here</span> The Big Picture -- One Paragraph</div>
+    <p>A particle moving through space has a <strong>position vector r</strong> (an arrow from the origin to where it is). As it moves, r changes -- the rate of that change is <strong>velocity v</strong> (always pointing along the path it travels, tangent to the curve). If the path curves or the particle speeds up, v itself changes -- the rate of that change is <strong>acceleration a</strong> (always pointing toward the inside of the curve).</p>
+    <p>The entire chapter is this: <span class="hl-y">r to v to a = differentiate</span> and <span class="hl-b">a to v to r = integrate</span>. That's it.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-r">Mnemonic 1</span> The Derivative Chain -- "Rabbits vs Ants"</div>
+    <div class="mnemonic">
+      <span class="mne-tag">Remember This</span>
+      <div class="big-word">R &rarr; V &rarr; A</div>
+      <p style="color:var(--muted); font-size:15px; margin-bottom:12px;">Say: "Position R, Velocity V, Acceleration A -- each one is the derivative of the one before it"</p>
+      <div class="mne-grid">
+        <div class="mne-l">R</div>
+        <div class="mne-r"><strong>r</strong> = Position vector. Where is the particle right now?</div>
+        <div class="mne-l">d/dt</div>
+        <div class="mne-r">Differentiate with respect to time to get the next one</div>
+        <div class="mne-l">V</div>
+        <div class="mne-r"><strong>v = dr/dt</strong> = Velocity. Which direction and how fast? Always tangent to the path.</div>
+        <div class="mne-l">d/dt</div>
+        <div class="mne-r">Differentiate again</div>
+        <div class="mne-l">A</div>
+        <div class="mne-r"><strong>a = dv/dt</strong> = Acceleration. How is velocity changing? Points to the inside of the curve.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Tip:</strong> Go backwards by integrating: integrate a to get v, integrate v to get r. This is exactly how all projectile equations are derived.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-b">Mnemonic 2</span> Velocity Direction -- "V Hugs the Road"</div>
+    <div class="mnemonic">
+      <span class="mne-tag">Golden Rule</span>
+      <p style="font-family:'Libre Baskerville',serif; font-size:1.3rem; font-weight:700; color:var(--blue); margin:10px 0;">Velocity is ALWAYS tangent to the path</p>
+      <div class="mne-grid">
+        <div class="mne-l">V</div>
+        <div class="mne-r">Velocity hugs the curve -- it points exactly where the particle is heading at that instant</div>
+        <div class="mne-l">A</div>
+        <div class="mne-r">Acceleration points toward the INSIDE (concave side) of any curve</div>
+        <div class="mne-l">Rule</div>
+        <div class="mne-r">Constant speed + curved path: v is tangent, a is purely perpendicular -- they are 90 degrees apart</div>
+      </div>
+    </div>
+    <div class="warn"><strong>Common trap:</strong> Students think acceleration = 0 if speed is constant. Wrong! A car at constant speed rounding a curve still accelerates because its direction keeps changing.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-g">Mnemonic 3</span> Acceleration Components -- "GPS" (Gas, Perpendicular, Steering)</div>
+    <div class="mnemonic">
+      <span class="mne-tag">Mnemonic</span>
+      <div class="big-word">GPS</div>
+      <div class="mne-grid">
+        <div class="mne-l">G</div>
+        <div class="mne-r"><strong>Gas pedal = a-parallel:</strong> tangent to path, changes SPEED. Zero means constant speed.</div>
+        <div class="mne-l">P</div>
+        <div class="mne-r"><strong>Perpendicular = a-perp:</strong> normal to path, changes DIRECTION. Always points inward on a curve.</div>
+        <div class="mne-l">S</div>
+        <div class="mne-r"><strong>Steering rule:</strong> if speed is constant, ALL of a is steering (a-parallel = 0). All acceleration is perpendicular.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Skier problem shortcut:</strong> Speeding up = a tilts forward of the normal. Maximum speed = a is purely normal (perpendicular). Slowing down = a tilts backward of the normal.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-o">Mnemonic 4</span> Projectile Motion -- "HAVE" (Horizontal Always, Vertical Ever-changing)</div>
+    <div class="mnemonic">
+      <span class="mne-tag">Projectile</span>
+      <div class="big-word">HAVE</div>
+      <div class="mne-grid">
+        <div class="mne-l">H</div>
+        <div class="mne-r"><strong>Horizontal:</strong> zero acceleration (ax = 0). No force acts sideways.</div>
+        <div class="mne-l">A</div>
+        <div class="mne-r"><strong>Always constant horizontal velocity:</strong> vx = v0 * cos(angle). Never changes for the whole flight.</div>
+        <div class="mne-l">V</div>
+        <div class="mne-r"><strong>Vertical:</strong> constant downward acceleration, ay = -g = -9.8 m/s^2. Always.</div>
+        <div class="mne-l">E</div>
+        <div class="mne-r"><strong>Ever-changing vertical velocity:</strong> vy = v0*sin(angle) - g*t. Gets smaller going up, zero at peak, negative coming down.</div>
+      </div>
+    </div>
+    <div class="warn"><strong>Critical warning:</strong> At the peak, vy = 0 BUT acceleration is still -9.8 m/s^2 downward. Acceleration is NEVER zero during flight.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-d">Mnemonic 5</span> Trig Components -- "CASH" (Cos = Adjacent Side = Horizontal)</div>
+    <div class="mnemonic">
+      <span class="mne-tag">Trig Trick</span>
+      <div class="big-word">CASH</div>
+      <div class="mne-grid">
+        <div class="mne-l">C</div>
+        <div class="mne-r"><strong>Cosine</strong> gives you the...</div>
+        <div class="mne-l">A</div>
+        <div class="mne-r"><strong>Adjacent</strong> side of the right triangle, which is the...</div>
+        <div class="mne-l">S</div>
+        <div class="mne-r"><strong>Side</strong> that runs along the...</div>
+        <div class="mne-l">H</div>
+        <div class="mne-r"><strong>Horizontal.</strong> So: vx = v0 * cos(angle), and vy = v0 * sin(angle)</div>
+      </div>
     </div>
   </div>
 
-  <div class="prog-wrap">
-    <div class="prog-meta">
-      <span id="p-lbl">Question 1 of 150</span>
-      <span id="p-pct">0%</span>
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-k">Mnemonic 6</span> Problem-Solving Order -- "TPVR" (Time, Position, Velocity, Result)</div>
+    <div class="mnemonic">
+      <span class="mne-tag">Strategy</span>
+      <div class="big-word">TPVR</div>
+      <div class="mne-grid">
+        <div class="mne-l">T</div>
+        <div class="mne-r"><strong>Time first.</strong> t is the bridge between x and y. Always find it from the vertical equation first.</div>
+        <div class="mne-l">P</div>
+        <div class="mne-r"><strong>Position.</strong> Once you have t, find x = vx*t and y = vy0*t - 0.5*g*t^2</div>
+        <div class="mne-l">V</div>
+        <div class="mne-r"><strong>Velocity.</strong> vx = vx0 (unchanged!), vy = vy0 - g*t</div>
+        <div class="mne-l">R</div>
+        <div class="mne-r"><strong>Result.</strong> Combine: speed = sqrt(vx^2 + vy^2), angle = arctan(vy/vx). Check quadrant!</div>
+      </div>
     </div>
-    <div class="prog-track">
-      <div class="prog-fill" id="p-fill" style="width:0%"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-r">Mnemonic 7</span> Skier Points -- "Straight, Ahead, Normal, Behind" (SANB)</div>
+    <div class="mnemonic">
+      <span class="mne-tag">Skier Problem</span>
+      <p style="margin-bottom:12px; font-size:15px; color:var(--muted);">For the ski-jump ramp problem (points B, D, E, F), remember acceleration direction at each point:</p>
+      <div class="mne-grid">
+        <div class="mne-l">B</div>
+        <div class="mne-r">Straight ramp + speeding up: a is <strong>parallel to path (forward/tangent direction)</strong></div>
+        <div class="mne-l">D</div>
+        <div class="mne-r">Curved + speeding up: a points <strong>ahead of the normal (inward and forward)</strong></div>
+        <div class="mne-l">E</div>
+        <div class="mne-r">Curved + max speed (dv/dt = 0): a is <strong>purely normal -- perpendicular, pointing inward</strong></div>
+        <div class="mne-l">F</div>
+        <div class="mne-r">Curved + slowing down: a points <strong>behind the normal (inward and backward)</strong></div>
+      </div>
     </div>
+    <div class="tip"><strong>Hook:</strong> B = Straight along path. D = Ahead of normal. E = Normal only. F = Behind normal. "B D E F = Straight, Ahead, Normal, Behind"</div>
   </div>
 
-  <div class="sc-row">
-    <div class="sc-card"><div class="sc-lbl">Progress</div><div class="sc-val v-blue"  id="s-prog">0/150</div></div>
-    <div class="sc-card"><div class="sc-lbl">Correct</div><div class="sc-val v-green" id="s-ok">0</div></div>
-    <div class="sc-card"><div class="sc-lbl">Wrong</div><div class="sc-val v-red"   id="s-bad">0</div></div>
-    <div class="sc-card"><div class="sc-lbl">Score</div><div class="sc-val v-amber" id="s-score">—</div></div>
-  </div>
-
-  <div class="fil-row">
-    <button class="fil-pill on"  data-f="all"        onclick="setF('all',this)">All (150)</button>
-    <button class="fil-pill"     data-f="conceptual"  onclick="setF('conceptual',this)">Conceptual</button>
-    <button class="fil-pill"     data-f="problem"     onclick="setF('problem',this)">Problem Solving</button>
-    <button class="fil-pill"     data-f="ch1"         onclick="setF('ch1',this)">Chapter 1</button>
-    <button class="fil-pill"     data-f="ch2"         onclick="setF('ch2',this)">Chapter 2</button>
-    <button class="fil-pill"     data-f="ch3"         onclick="setF('ch3',this)">Chapter 3</button>
-    <button class="fil-pill"     data-f="wrong"       onclick="setF('wrong',this)">Review Wrong</button>
-  </div>
-
-  <div id="qbox"></div>
-
-  <div class="nav-row">
-    <button class="btn-nav" onclick="goP()">Prev</button>
-    <button class="btn-nav pri" onclick="goN()">Next</button>
-    <div class="jrow">
-      <span>go to</span>
-      <input class="jin" id="ji" type="number" min="1" max="150" placeholder="#">
-      <button class="btn-go" onclick="doJump()">Go</button>
-    </div>
-    <span class="nav-ctr" id="nav-ctr"></span>
-  </div>
-
-  <div class="kbd-row">
-    <span><kbd class="kbd">A</kbd> <kbd class="kbd">B</kbd> <kbd class="kbd">C</kbd> <kbd class="kbd">D</kbd> &nbsp;select answer</span>
-    <span><kbd class="kbd">Right</kbd> <kbd class="kbd">Left</kbd> &nbsp;navigate</span>
-    <span><kbd class="kbd">E</kbd> &nbsp;toggle explanation</span>
-  </div>
+</div>
 </div>
 
-<!-- RESULTS -->
-<div id="results">
-  <div class="r-bg"></div>
-  <div class="r-label">Final Score</div>
-  <div class="r-score" id="r-pct">0%</div>
-  <div class="r-divider"></div>
-  <div class="r-stats">
-    <div class="rs"><div class="rn" style="color:var(--green)" id="r-ok">0</div><div class="rl">Correct</div></div>
-    <div class="rs"><div class="rn" style="color:var(--red)"   id="r-bad">0</div><div class="rl">Wrong</div></div>
-    <div class="rs"><div class="rn" style="color:var(--text3)" id="r-skip">0</div><div class="rl">Skipped</div></div>
+<!-- FORMULAS -->
+<div id="pg-form" class="sec">
+<div class="wrap">
+  <div class="sec-title"><span class="num">02</span> All Formulas -- Master Sheet</div>
+  <p class="sec-desc">Every equation you need, with plain-English explanations. Understand the meaning, not just the symbols.</p>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-b">Section 3.1</span> Position and Velocity</div>
+    <table class="ftable">
+      <tr><th>Quantity</th><th>Formula</th><th>Plain English</th></tr>
+      <tr>
+        <td>Position vector</td>
+        <td class="mono">r = x*i + y*j + z*k</td>
+        <td class="note">Arrow pointing from origin to particle. Components are the coordinates.</td>
+      </tr>
+      <tr>
+        <td>Displacement</td>
+        <td class="mono">dr = r2 - r1</td>
+        <td class="note">Straight-line arrow from start to end. NOT the path length.</td>
+      </tr>
+      <tr>
+        <td>Average velocity</td>
+        <td class="mono">v_avg = dr / dt</td>
+        <td class="note">Same direction as displacement. Net motion over a time interval.</td>
+      </tr>
+      <tr>
+        <td>Instantaneous velocity</td>
+        <td class="mono">v = dr/dt</td>
+        <td class="danger">ALWAYS tangent to the path at that point</td>
+      </tr>
+      <tr>
+        <td>Velocity components</td>
+        <td class="mono">vx = dx/dt, vy = dy/dt</td>
+        <td class="note">Differentiate each coordinate separately</td>
+      </tr>
+      <tr>
+        <td>Speed (magnitude)</td>
+        <td class="mono">|v| = sqrt(vx^2 + vy^2)</td>
+        <td class="note">Always positive. The number on a speedometer.</td>
+      </tr>
+      <tr>
+        <td>Direction angle</td>
+        <td class="mono">a = arctan(vy / vx)</td>
+        <td class="danger">Always check which quadrant the vector is in!</td>
+      </tr>
+    </table>
   </div>
-  <div class="r-msg" id="r-msg"></div>
-  <div class="r-btns">
-    <button class="btn-nav" onclick="reviewWrong()">Review Wrong Answers</button>
-    <button class="btn-nav pri" onclick="restartAll()">Try Again</button>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-r">Section 3.2</span> Acceleration</div>
+    <table class="ftable">
+      <tr><th>Quantity</th><th>Formula</th><th>Plain English</th></tr>
+      <tr>
+        <td>Average acceleration</td>
+        <td class="mono">a_avg = dv / dt</td>
+        <td class="note">Same direction as the change in velocity vector</td>
+      </tr>
+      <tr>
+        <td>Instantaneous acceleration</td>
+        <td class="mono">a = dv/dt = d^2r/dt^2</td>
+        <td class="danger">Points toward the inside (concave side) of the curve</td>
+      </tr>
+      <tr>
+        <td>Components</td>
+        <td class="mono">ax = d^2x/dt^2, ay = d^2y/dt^2</td>
+        <td class="note">Second derivative of each position component</td>
+      </tr>
+      <tr>
+        <td>Parallel component (a-par)</td>
+        <td class="mono">tangent to path</td>
+        <td class="note">Changes SPEED. Zero means constant speed.</td>
+      </tr>
+      <tr>
+        <td>Perp. component (a-perp)</td>
+        <td class="mono">normal to path, inward</td>
+        <td class="note">Changes DIRECTION. Zero means straight-line motion.</td>
+      </tr>
+    </table>
   </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-g">Section 3.3</span> Projectile Motion -- Complete Set</div>
+    <table class="ftable">
+      <tr><th>Quantity</th><th>Formula</th><th>Notes</th></tr>
+      <tr>
+        <td>Accelerations</td>
+        <td class="mono">ax = 0, ay = -9.80 m/s^2</td>
+        <td class="note">Constant throughout the entire flight</td>
+      </tr>
+      <tr>
+        <td>Initial components</td>
+        <td class="mono">vx0 = v0*cos(a0), vy0 = v0*sin(a0)</td>
+        <td class="note">First thing to do: decompose the launch velocity</td>
+      </tr>
+      <tr>
+        <td>Horizontal velocity</td>
+        <td class="mono">vx = v0*cos(a0)</td>
+        <td class="danger">CONSTANT. Never changes for the whole flight.</td>
+      </tr>
+      <tr>
+        <td>Vertical velocity</td>
+        <td class="mono">vy = v0*sin(a0) - g*t</td>
+        <td class="note">Changes every instant due to gravity</td>
+      </tr>
+      <tr>
+        <td>Horizontal position</td>
+        <td class="mono">x = (v0*cos(a0)) * t</td>
+        <td class="note">Linear -- just speed times time</td>
+      </tr>
+      <tr>
+        <td>Vertical position</td>
+        <td class="mono">y = (v0*sin(a0))*t - (g/2)*t^2</td>
+        <td class="note">Quadratic -- produces the parabolic curve</td>
+      </tr>
+      <tr>
+        <td>Trajectory (y as function of x)</td>
+        <td class="mono">y = tan(a0)*x - g*x^2/(2*v0^2*cos^2(a0))</td>
+        <td class="note">Eliminates t. Form y = bx - cx^2 proves it is a parabola.</td>
+      </tr>
+      <tr>
+        <td>Range (same start/end height)</td>
+        <td class="mono">R = v0^2 * sin(2*a0) / g</td>
+        <td class="danger">Only valid if landing height = launch height</td>
+      </tr>
+      <tr>
+        <td>Time to peak</td>
+        <td class="mono">t_peak = v0*sin(a0) / g</td>
+        <td class="note">Set vy = 0 and solve for t</td>
+      </tr>
+      <tr>
+        <td>Maximum height</td>
+        <td class="mono">h = (v0*sin(a0))^2 / (2*g)</td>
+        <td class="note">Substitute t_peak into the y equation</td>
+      </tr>
+    </table>
+    <div class="tip" style="margin-top:16px;">
+      <strong>Key numbers:</strong> g = 9.80 m/s^2 &nbsp;|&nbsp; Max range at 45 degrees &nbsp;|&nbsp; 30 and 60 degrees give the same range &nbsp;|&nbsp; At peak: vy = 0, vx unchanged, ay = -9.8 still
+    </div>
+  </div>
+
+</div>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- CONCEPTS -->
+<div id="pg-conc" class="sec">
+<div class="wrap">
+  <div class="sec-title"><span class="num">03</span> Key Concepts -- Deeply Explained</div>
+  <p class="sec-desc">These are the conceptual questions that separate high marks from average marks. Read each one carefully.</p>
+
+  <div class="acc open">
+    <div class="acc-head" onclick="tAcc(this)">Why is instantaneous velocity ALWAYS tangent to the path?<span class="acc-arrow">&#9660;</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p>Picture two points P1 and P2 on the curve. The average velocity points in the same direction as the displacement vector (straight arrow from P1 to P2).</p>
+      <p>Now shrink the time interval: slide P2 toward P1 along the curve. The straight arrow from P1 to P2 keeps rotating until it lines up perfectly with the tangent at P1. In the mathematical limit as delta-t approaches zero, that is your instantaneous velocity.</p>
+      <div class="fbox">v = lim[dt->0] (delta_r / delta_t) = dr/dt
+<span class="cm">// This limit IS the tangent direction at P1</span></div>
+      <p><strong>Exam application:</strong> If a question shows a curved path and asks which way the particle is moving at a specific point -- draw the tangent line at that point. The velocity vector points along that tangent.</p>
+    </div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-head" onclick="tAcc(this)">Why can a particle accelerate at CONSTANT speed?<span class="acc-arrow">&#9660;</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p>Acceleration means the velocity vector is changing. A vector has two parts: its size (speed) AND its direction. Acceleration changes when either part changes.</p>
+      <p>When a car drives a roundabout at constant 40 km/h, the speedometer doesn't move. But the direction of the car keeps changing -- the velocity vector keeps rotating. A rotating vector is a changing vector. Change per unit time is acceleration.</p>
+      <div class="fbox">Speed constant  ->  a_parallel = 0  (no speed change)
+Curved path     ->  a_perp != 0   (direction is changing)
+Total accel     ->  NOT zero!     (it just has no "gas pedal" component)</div>
+      <p><strong>Rule to remember:</strong> Constant speed never means no acceleration when the path is curved.</p>
+    </div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-head" onclick="tAcc(this)">How do we prove the projectile path is a parabola?<span class="acc-arrow">&#9660;</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p>Start with both position equations:</p>
+      <div class="fbox">x = (v0*cos(a0)) * t     ... (1)
+y = (v0*sin(a0))*t - (1/2)*g*t^2  ... (2)</div>
+      <p>From equation (1), isolate t: &nbsp; t = x / (v0*cos(a0))</p>
+      <p>Substitute into equation (2):</p>
+      <div class="fbox">y = (v0*sin(a0)) * [x / (v0*cos(a0))] - (1/2)*g * [x/(v0*cos(a0))]^2
+
+Simplify sin(a)/cos(a) = tan(a):
+y = tan(a0)*x  -  [g / (2*v0^2*cos^2(a0))] * x^2</div>
+      <p>This has the form <strong>y = B*x - C*x^2</strong> where B and C are just constants. That is a quadratic equation in x -- which is a <span class="hl-y">parabola opening downward</span>.</p>
+    </div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-head" onclick="tAcc(this)">The Monkey and Zookeeper -- why does the dart ALWAYS hit?<span class="acc-arrow">&#9660;</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p>A monkey hangs at distance d. A dart is aimed directly at the monkey. The monkey drops the instant the dart is fired. Why does it always get hit?</p>
+      <p><strong>Core insight:</strong> Gravity pulls both objects down by the same amount at the same time.</p>
+      <div class="fbox">Without gravity: dart travels straight line directly to monkey's start position.
+
+With gravity: BOTH fall by exactly (1/2)*g*t^2 below their "no gravity" positions.
+
+y_dart   = d*tan(a0) - (1/2)*g*t^2
+y_monkey = H         - (1/2)*g*t^2   [where H = d*tan(a0)]
+
+The -(1/2)*g*t^2 term is IDENTICAL for both.
+They are always at the same height. They always meet.</div>
+      <p>The dart speed only affects WHEN they meet (sooner or later) -- not WHETHER they meet.</p>
+    </div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-head" onclick="tAcc(this)">Sled at the crest of a hill -- which way does acceleration point?<span class="acc-arrow">&#9660;</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p>The sled slows going up, is fastest at the crest, then speeds up going down. At the crest, the speed is at its maximum value -- meaning it is momentarily not increasing or decreasing.</p>
+      <div class="fbox">At the crest:
+  dv/dt = 0   ->   a_parallel = 0   (speed not changing at this instant)
+  path curves downward (concave down)
+  ->   a_perp points toward center of curvature = STRAIGHT DOWN</div>
+      <p>Answer: acceleration points <strong>straight downward</strong> at the crest (vector 7 in the textbook).</p>
+      <div class="tip"><strong>Why straight down and not at an angle?</strong> Because a_parallel = 0 exactly at the crest (speed is at a local maximum -- neither increasing nor decreasing). The only remaining acceleration is the centripetal one pointing to the inside of the curve, which at the top of a hill is directly downward.</div>
+    </div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-head" onclick="tAcc(this)">Average vs. Instantaneous velocity -- what is the real difference?<span class="acc-arrow">&#9660;</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="fbox">Average velocity   = (total displacement) / (total time)
+                       = points from start to end position
+                       = ignores what happened along the way
+
+Instantaneous vel. = dr/dt = limit as dt -> 0
+                       = tangent to path at that exact moment
+                       = what a speedometer + compass shows right now</div>
+      <p>They are almost never equal during curved motion. Average velocity only cares about where you started and where you ended up. Instantaneous velocity tells you the exact direction and speed at one single moment.</p>
+      <div class="tip"><strong>Exam language guide:</strong> "at t = 2.0 s" means instantaneous. "between t = 0 and t = 2.0 s" means average.</div>
+    </div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- PROJECTILE GUIDE -->
+<div id="pg-proj" class="sec">
+<div class="wrap">
+  <div class="sec-title"><span class="num">04</span> Projectile Motion -- Complete Playbook</div>
+  <p class="sec-desc">Three problem types. Master these and you can solve any projectile question on the exam.</p>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-b">Foundation</span> The Two Independent Motions</div>
+    <div class="two-col">
+      <div class="col-box horiz">
+        <h4>Horizontal (x-axis)</h4>
+        <ul>
+          <li>ax = 0 -- no horizontal force</li>
+          <li>vx = v0*cos(angle) -- constant, never changes</li>
+          <li>x = vx * t -- just speed times time</li>
+          <li>Equal x-distances every second</li>
+        </ul>
+      </div>
+      <div class="col-box vert">
+        <h4>Vertical (y-axis)</h4>
+        <ul>
+          <li>ay = -g = -9.80 m/s^2 -- always</li>
+          <li>vy = v0*sin(angle) - g*t</li>
+          <li>y = vy0*t - (g/2)*t^2</li>
+          <li>vy = 0 only at the peak</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip"><strong>The bridge:</strong> Time t is shared between both axes. Find t from the vertical equation, then plug it into the horizontal equation.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-r">Steps</span> Universal Problem-Solving Approach</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <div class="step-title">Draw a clear diagram and list all known values</div>
+          <div class="step-desc">Origin at launch point. +x right, +y up. Write down: v0, launch angle, starting height, landing height, any given time.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <div class="step-title">Decompose the initial velocity into components</div>
+          <div class="step-desc">vx0 = v0 * cos(angle). &nbsp; vy0 = v0 * sin(angle). &nbsp; Exception: horizontal launch means angle=0, so vx0=v0 and vy0=0.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <div class="step-title">Identify the target: position, velocity, time, or range?</div>
+          <div class="step-desc">Write the target variable explicitly before choosing an equation. This prevents picking the wrong one.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <div class="step-title">Find time from the vertical equation (almost always first)</div>
+          <div class="step-desc">Set y = final height. If landing at same height: t_total = 2*vy0/g. If different height: solve the quadratic -- take only the positive root.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <div class="step-title">Use t in the horizontal equation</div>
+          <div class="step-desc">x = vx0 * t. That is all there is for horizontal position. It is always this simple.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <div class="step-title">Find velocity components and combine them</div>
+          <div class="step-desc">vx = vx0 (same as always). vy = vy0 - g*t. Speed = sqrt(vx^2 + vy^2). Angle = arctan(vy/vx) -- verify the correct quadrant!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-g">Case 1</span> Horizontal Launch (Thrown off a cliff)</div>
+    <p>Object launched perfectly horizontally. Launch angle = 0 degrees. Example: motorcycle off a cliff, package dropped from plane.</p>
+    <div class="fbox"><span class="hi">Given:</span> v0 (horizontal speed), height H above ground
+
+<span class="hi">Setup:</span>  vx0 = v0,   vy0 = 0   (no vertical component at launch)
+
+<span class="hi2">Find time to hit ground (y = -H):</span>
+  -H = 0 - (1/2)*g*t^2
+  t = sqrt(2H / g)
+
+<span class="hi3">Find horizontal distance:</span>
+  x = v0 * t = v0 * sqrt(2H/g)
+
+<span class="hi4">Find velocity at impact:</span>
+  vx = v0  (unchanged the whole way down)
+  vy = -g*t  (negative means downward)
+  speed = sqrt(vx^2 + vy^2)</div>
+    <div class="tip"><strong>Example numbers:</strong> v0=9.0 m/s, t=0.5s: x = 9.0*0.5 = 4.5m, y = -0.5*9.8*0.25 = -1.2m (below the cliff)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-o">Case 2</span> Symmetric Launch (Lands at same height)</div>
+    <p>Launched at angle a0, lands at the same height. Perfect parabola. Example: baseball, football, soccer kick.</p>
+    <div class="fbox"><span class="hi">Decompose:</span>  vx0 = v0*cos(a0),   vy0 = v0*sin(a0)
+
+<span class="hi2">Time to peak (set vy = 0):</span>
+  t_peak = vy0 / g
+
+<span class="hi2">Max height:</span>
+  h = vy0^2 / (2*g)
+
+<span class="hi3">Total flight time (symmetric path):</span>
+  t_total = 2 * t_peak
+
+<span class="hi3">Range:</span>
+  R = vx0 * t_total
+  OR: R = v0^2 * sin(2*a0) / g   (shortcut formula)
+
+<span class="cm">// 45 degrees maximizes R because sin(2*45) = sin(90) = 1 (maximum)
+// 30 and 60 degrees: sin(60) = sin(120) = same value, so same R</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="lbl lbl-r">Case 3</span> Different Landing Height (Quadratic needed)</div>
+    <p>Lands at a different height than launch. Requires quadratic formula. Example: grasshopper off a cliff, projectile over a wall.</p>
+    <div class="fbox"><span class="hi">Set up:</span>  y_final = vy0*t - (1/2)*g*t^2
+
+<span class="hi">Rearrange to standard form:</span>
+  (1/2)*g*t^2 - vy0*t - y_final = 0
+  <span class="cm">// if landing below: y_final is negative, so -y_final is positive</span>
+
+<span class="hi2">Use quadratic formula:</span>
+  t = [vy0 +/- sqrt(vy0^2 + 2*g*|y_final|)] / g
+
+<span class="hi4">IMPORTANT: Take only the POSITIVE root.</span>
+<span class="cm">// Negative time is physically impossible. Discard it.</span>
+
+<span class="hi3">Then find horizontal distance:</span>
+  x = vx0 * t</div>
+    <div class="warn"><strong>Most common mistake:</strong> Students forget there are two roots from the quadratic formula and pick the wrong one. Always check -- you want the positive time value.</div>
+  </div>
+
+</div>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="pg-fc" class="sec">
+<div class="wrap">
+  <div class="sec-title"><span class="num">05</span> Flashcards</div>
+  <p class="sec-desc">Click the card to flip it and see the answer. Use the buttons to move between all 14 cards. Say the answer out loud before flipping.</p>
+
+  <div class="fc-wrap">
+    <div class="fc-inner" id="fc" onclick="flipCard()">
+      <div class="fc-front">
+        <div class="fc-label">Click to flip -- Question</div>
+        <div class="fc-q" id="fcq">What direction does the instantaneous velocity vector always point?</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-a" id="fca">Tangent to the path at that point</div>
+        <div class="fc-sub" id="fcsub">v = dr/dt -- as dt approaches zero, delta_r becomes the tangent direction</div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="prevCard()">Prev</button>
+    <div class="fc-count" id="fcc">1 / 14</div>
+    <button class="fc-btn" onclick="nextCard()">Next</button>
+  </div>
+</div>
+</div>
+
+<!-- QUIZ -->
+<div id="pg-quiz" class="sec">
+<div class="wrap">
+  <div class="sec-title"><span class="num">06</span> Quick Quiz</div>
+  <p class="sec-desc">8 exam-style questions. Try to answer before clicking. Read every explanation -- even for correct answers.</p>
+
+  <div class="score-bar">
+    <div class="score-num" id="score-num">0 / 0</div>
+    <div class="score-track"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+    <button class="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-area"></div>
+</div>
+</div>
+
+<!-- SIMULATOR -->
+<div id="pg-sim" class="sec">
+<div class="wrap">
+  <div class="sec-title"><span class="num">07</span> Projectile Simulator</div>
+  <p class="sec-desc">Adjust speed and angle, then click Launch. Try launching at 30 and 60 degrees -- notice they land at the same spot. Try 45 degrees for maximum range.</p>
+
+  <div class="sim-controls">
+    <div class="sim-row">
+      <div>
+        <label class="sim-label">Launch Speed v0: <span class="sim-val" id="v0lbl">25 m/s</span></label>
+        <input type="range" id="v0r" min="5" max="45" value="25" oninput="document.getElementById('v0lbl').textContent=this.value+' m/s'">
+      </div>
+      <div>
+        <label class="sim-label">Launch Angle: <span class="sim-val" id="anglbl">45 deg</span></label>
+        <input type="range" id="angr" min="1" max="89" value="45" oninput="document.getElementById('anglbl').textContent=this.value+' deg'">
+      </div>
+    </div>
+    <button class="launch-btn" onclick="doLaunch()">Launch</button>
+    <button class="clear-btn" onclick="doClear()">Clear All</button>
+  </div>
+
+  <div class="canvas-wrap" id="canvasWrap">
+    <canvas id="simCanvas" height="340"></canvas>
+  </div>
+
+  <div id="stat-area"></div>
+</div>
+</div>
 
 <script>
-// ═══════════════════════════════════════════
-// 150 QUESTIONS — ALL ANSWERS VERIFIED
-// t:"c"=conceptual, "p"=problem
-// a: 0-indexed correct answer
-// ═══════════════════════════════════════════
-const BANK = [
-// ── CH1 CONCEPTUAL (40) ──
-{t:"c",ch:"1",q:"Which of the following is an SI base unit?",c:["Newton","Joule","Meter","Pascal"],a:2,e:"SI base units: meter (length), kilogram (mass), second (time), ampere, kelvin, mole, candela. Newton and Pascal are derived units."},
-{t:"c",ch:"1",q:"How many significant figures are in 0.00340?",c:["2","3","4","5"],a:1,e:"Leading zeros are never significant. Digits 3, 4, and the trailing zero each count — 3 significant figures."},
-{t:"c",ch:"1",q:"The dot product A·B produces:",c:["A vector perpendicular to both","A scalar quantity","A vector parallel to A","A unit vector"],a:1,e:"A·B = AB cosθ is a scalar (a real number). The cross product, not the dot product, gives a perpendicular vector."},
-{t:"c",ch:"1",q:"Vector with Ax = 3, Ay = 4. Its magnitude:",c:["7","1","5","25"],a:2,e:"|A| = √(3² + 4²) = √25 = 5. Classic 3-4-5 right triangle."},
-{t:"c",ch:"1",q:"Unit vectors î, ĵ, k̂ each have magnitude:",c:["0","1","Depends on direction","π"],a:1,e:"By definition, unit vectors have magnitude exactly 1 and carry directional information only."},
-{t:"c",ch:"1",q:"The cross product of two parallel vectors is:",c:["Maximum = AB","Zero","Equal to their dot product","Undefined"],a:1,e:"|A×B| = AB sinθ. For parallel vectors θ = 0°, and sin 0° = 0, so the cross product is zero."},
-{t:"c",ch:"1",q:"5.00 km converted to meters:",c:["0.500 m","50.0 m","500 m","5000 m"],a:3,e:"1 km = 1000 m, so 5.00 × 1000 = 5000 m = 5.00 × 10³ m."},
-{t:"c",ch:"1",q:"Which of these is a vector quantity?",c:["Speed","Distance","Mass","Displacement"],a:3,e:"Displacement has both magnitude and direction, making it a vector. Speed, distance, and mass are scalars."},
-{t:"c",ch:"1",q:"A × B produces:",c:["A scalar","A vector parallel to A","A vector perpendicular to both A and B","Always zero"],a:2,e:"The cross product yields a vector perpendicular to the plane containing A and B, with magnitude AB sinθ."},
-{t:"c",ch:"1",q:"Significant figures in 2500 (no decimal point):",c:["4","3","Ambiguous — 2 or 4","1"],a:2,e:"Without a decimal point, trailing zeros in whole numbers are ambiguous. The number is conventionally taken to have 2 sig figs."},
-{t:"c",ch:"1",q:"Which is NOT an SI base unit?",c:["Kilogram","Second","Newton","Kelvin"],a:2,e:"Newton (kg·m/s²) is a derived SI unit. Kilogram, second, and kelvin are all base units."},
-{t:"c",ch:"1",q:"Two vectors are equal if they have the same:",c:["Starting point","Magnitude only","Direction only","Magnitude AND direction"],a:3,e:"Vector equality requires identical magnitude and direction, regardless of starting position."},
-{t:"c",ch:"1",q:"The scalar triple product A·(B×C) gives:",c:["A vector","A scalar","Zero always","A unit vector"],a:1,e:"B×C is a vector; taking the dot product of A with that vector yields a scalar — the signed volume of the parallelepiped."},
-{t:"c",ch:"1",q:"Correct unit-vector notation for a 2D vector:",c:["A = Ax · Ay","A = Ax + Ay","A = Axî + Ayĵ","A = Ax / Ay · k̂"],a:2,e:"A = Axî + Ayĵ in 2D; A = Axî + Ayĵ + Azk̂ in 3D."},
-{t:"c",ch:"1",q:"In the tip-to-tail graphical method, vectors are placed:",c:["Tail-to-tail","Head-to-head","Head-to-tail","Always at 90°"],a:2,e:"The tip-to-tail (polygon) method places the tail of each vector at the head of the previous one."},
-{t:"c",ch:"1",q:"The angle θ of a vector from the +x axis is found using:",c:["arcsin(Ay/Ax)","arctan(Ay/Ax)","arccos(Ay/Ax)","arctan(Ax/Ay)"],a:1,e:"θ = arctan(Ay/Ax) — inverse tangent of the y-component divided by the x-component."},
-{t:"c",ch:"1",q:"Random measurement errors are reduced by:",c:["Using better theory","Averaging many repeated trials","Changing unit systems","One-time calibration"],a:1,e:"Random errors are statistical. Taking many measurements and averaging reduces their effect on the result."},
-{t:"c",ch:"1",q:"The x-component of A (magnitude A, angle θ from +x axis) is:",c:["A sinθ","A tanθ","A cosθ","A / cosθ"],a:2,e:"Ax = A cosθ — the projection of the vector onto the x-axis."},
-{t:"c",ch:"1",q:"Correct dimensional formula for velocity:",c:["[m·s]","[m/s²]","[m/s]","[m²/s]"],a:2,e:"velocity = displacement / time → [length] / [time] = m/s. Acceleration is m/s²."},
-{t:"c",ch:"1",q:"If A·B = 0 and neither vector is zero, the vectors are:",c:["Parallel","Perpendicular","Of equal magnitude","Anti-parallel"],a:1,e:"A·B = AB cosθ = 0 → cosθ = 0 → θ = 90°. Non-zero vectors with zero dot product are perpendicular."},
-{t:"c",ch:"1",q:"Every physical quantity is classified as:",c:["Real or imaginary","Fundamental or derived","Scalar or vector","Static or kinematic"],a:2,e:"All physical quantities are either scalars (magnitude only) or vectors (magnitude + direction)."},
-{t:"c",ch:"1",q:"Dimensional formula for acceleration:",c:["[L/T]","[L²/T]","[LT²]","[L/T²]"],a:3,e:"a = Δv/Δt → (m/s)/s = m/s². Dimensional formula: [LT⁻²] or [L/T²]."},
-{t:"c",ch:"1",q:"Vector subtraction A − B is equivalent to:",c:["A + (−B)","(−A) + B","A / B","B − A"],a:0,e:"Subtracting B is the same as adding its negative: A − B = A + (−B)."},
-{t:"c",ch:"1",q:"By for B = 10 at 53° from +x axis (sin 53° ≈ 0.800):",c:["6.00","8.00","10.0","4.00"],a:1,e:"By = B sin 53° = 10 × 0.800 = 8.00. And Bx = 10 × 0.600 = 6.00."},
-{t:"c",ch:"1",q:"Result of 2.5 × 3.1 reported correctly:",c:["7.8 (2 sig figs)","7.80 (3 sig figs)","7.8175 (exact)","8 (1 sig fig)"],a:0,e:"Multiplication: take the minimum sig figs of the factors. Both have 2 → answer is 7.8."},
-{t:"c",ch:"1",q:"1.000 × 10⁻³ m is equal to:",c:["1 centimeter","1 millimeter","1 micrometer","1 nanometer"],a:1,e:"10⁻³ m = 1 mm. 1 cm = 10⁻² m; 1 μm = 10⁻⁶ m; 1 nm = 10⁻⁹ m."},
-{t:"c",ch:"1",q:"A·A (dot product of a vector with itself) equals:",c:["Zero","|A|","|A|²","2|A|"],a:2,e:"A·A = A² cos 0° = A² = |A|². Equals the square of the vector's magnitude."},
-{t:"c",ch:"1",q:"|A × B| is maximum when the angle between them is:",c:["0°","45°","90°","180°"],a:2,e:"|A×B| = AB sinθ. Maximum at θ = 90° where sinθ = 1. Zero at 0° and 180°."},
-{t:"c",ch:"1",q:"Systematic errors in measurement:",c:["Average out over many trials","Consistently bias all readings in one direction","Are always very small","Are eliminated by repeating the measurement"],a:1,e:"Systematic errors reproducibly push all readings too high or too low. Repeating the measurement does not fix them."},
-{t:"c",ch:"1",q:"A + (−A) equals:",c:["2A","|A|","The zero vector","−2A"],a:2,e:"Adding a vector to its negative gives the zero vector: A + (−A) = 0."},
-{t:"c",ch:"1",q:"î · î equals:",c:["0","1","2","|î|"],a:1,e:"Same-axis unit vectors: î·î = ĵ·ĵ = k̂·k̂ = 1. Different axes: î·ĵ = î·k̂ = ĵ·k̂ = 0."},
-{t:"c",ch:"1",q:"î × ĵ equals:",c:["Zero vector","1","k̂","−k̂"],a:2,e:"Right-hand rule for Cartesian unit vectors: î×ĵ = k̂, ĵ×k̂ = î, k̂×î = ĵ. Reverse order flips sign."},
-{t:"c",ch:"1",q:"The number 6.02 × 10²³ has how many significant figures?",c:["1","3","23","24"],a:1,e:"Digits 6, 0, 2 are significant → 3 sig figs. The exponent 23 is not counted."},
-{t:"c",ch:"1",q:"|A| for A = Axî + Ayĵ + Azk̂:",c:["Ax + Ay + Az","(Ax + Ay + Az)²","√(Ax + Ay + Az)","√(Ax² + Ay² + Az²)"],a:3,e:"3D Pythagorean theorem: |A| = √(Ax² + Ay² + Az²)."},
-{t:"c",ch:"1",q:"F = ma with mass in kg and acceleration in m/s². Unit of F:",c:["kg·m","kg/m·s²","kg·m/s²","m/s²"],a:2,e:"[kg][m/s²] = kg·m/s² = 1 Newton (N). Confirms dimensional consistency of Newton's 2nd law."},
-{t:"c",ch:"1",q:"Correctly converting 1 hour to seconds:",c:["1 h × 60","1 h × (60 min/h) × (60 s/min)","1 h × 100 s","1 h ÷ 3600"],a:1,e:"1 h × (60 min/h) × (60 s/min) = 3600 s. Use unit fractions to cancel old units."},
-{t:"c",ch:"1",q:"The component method of vector addition involves:",c:["Drawing graphical triangles","Decomposing vectors into components, adding like components, then finding the resultant","Multiplying magnitudes directly","Using only the dot product"],a:1,e:"Analytic method: decompose each vector, sum all x-components and all y-components separately, then compute |R| and direction."},
-{t:"c",ch:"1",q:"A 2D vector with equal x and y components points at:",c:["0° from +x","30°","45°","90°"],a:2,e:"If Ax = Ay: θ = arctan(Ay/Ax) = arctan(1) = 45°."},
-{t:"c",ch:"1",q:"The commutative property applies to:",c:["A×B = B×A","A·B = B·A","Vector subtraction","None of the above"],a:1,e:"Dot product is commutative: A·B = B·A. Cross product is anti-commutative: A×B = −(B×A)."},
-{t:"c",ch:"1",q:"Multiplying a vector by a negative scalar:",c:["Increases its magnitude","Same direction, different size","Reverses its direction (180°)","Produces zero magnitude"],a:2,e:"A negative scalar flips the vector's direction by 180° and scales its magnitude by the absolute value of the scalar."},
+// ===== TAB =====
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.nbtn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'pg-sim') { setTimeout(initSim, 30); }
+}
 
-// ── CH2 CONCEPTUAL (25) ──
-{t:"c",ch:"2",q:"Average velocity is defined as:",c:["Total distance / elapsed time","Speed averaged over time","Displacement / elapsed time","Change in speed / distance"],a:2,e:"v_avg = Δx/Δt = (x_f − x_i) / (t_f − t_i). It is a vector in the direction of displacement."},
-{t:"c",ch:"2",q:"Instantaneous velocity is:",c:["Always equal to average velocity","lim(Δt→0) Δx/Δt = dx/dt","Total distance / total time","Acceleration × time"],a:1,e:"v = lim(Δt→0) Δx/Δt = dx/dt. The derivative of position with respect to time."},
-{t:"c",ch:"2",q:"Object with negative velocity AND negative acceleration. Its speed:",c:["Decreases (slowing down)","Increases (speeding up)","Stays constant","Is zero"],a:1,e:"Speed increases when velocity and acceleration point in the same direction. Both are negative (same direction) → object speeds up."},
-{t:"c",ch:"2",q:"The slope of a position-time (x-t) graph represents:",c:["Acceleration","Average velocity","Instantaneous velocity","Displacement"],a:2,e:"Slope of x-t graph = dx/dt = instantaneous velocity."},
-{t:"c",ch:"2",q:"The slope of a velocity-time (v-t) graph represents:",c:["Position","Displacement","Speed","Acceleration"],a:3,e:"Slope of v-t graph = dv/dt = acceleration."},
-{t:"c",ch:"2",q:"Best kinematic equation when time is unknown:",c:["x = x₀ + v₀t + ½at²","v = v₀ + at","v² = v₀² + 2aΔx","x = ½(v₀ + v)t"],a:2,e:"v² = v₀² + 2aΔx contains no time variable — the ideal choice when t is absent."},
-{t:"c",ch:"2",q:"Free-fall acceleration near Earth's surface is approximately:",c:["10.0 m/s (not m/s²)","9.80 m/s² downward","9.80 m/s² upward","Depends on the object's mass"],a:1,e:"g ≈ 9.80 m/s² directed downward, independent of mass (Galileo's principle)."},
-{t:"c",ch:"2",q:"At the highest point of a vertically thrown object, velocity is:",c:["Maximum","Equal to initial speed","Zero","Equal to g"],a:2,e:"At the apex, the object momentarily stops: v = 0. Gravitational acceleration g still acts downward."},
-{t:"c",ch:"2",q:"The area under a velocity-time curve represents:",c:["Acceleration","Speed","Displacement","Power"],a:2,e:"∫v dt = displacement. The area between the v-t curve and the time axis equals displacement."},
-{t:"c",ch:"2",q:"For constant acceleration, average velocity equals:",c:["The final velocity","The initial velocity","(v₀ + v) / 2","Twice the initial velocity"],a:2,e:"v_avg = (v₀ + v) / 2 — this formula is valid ONLY for uniform (constant) acceleration."},
-{t:"c",ch:"2",q:"Ball thrown up and caught at same height. True statement:",c:["Time ascending equals time descending","Catch speed is greater than launch speed","Acceleration is zero at the peak","Total displacement equals total distance"],a:0,e:"Under constant g (no air resistance), the trajectory is symmetric: time up = time down, and catch speed = launch speed."},
-{t:"c",ch:"2",q:"Car moving in the +x direction and decelerating. Acceleration direction:",c:["Positive (+x direction)","Negative (−x direction)","Zero","Undefined"],a:1,e:"Deceleration means acceleration opposes motion. Moving in +x and slowing down → acceleration is in the −x direction."},
-{t:"c",ch:"2",q:"Displacement differs from distance because displacement:",c:["Is always larger","Is a vector that can be negative or zero","Is always positive","Uses different SI units"],a:1,e:"Displacement is a vector from start to finish — can be negative or zero. Distance is a non-negative scalar path length."},
-{t:"c",ch:"2",q:"In a vacuum, objects dropped from rest at the same height:",c:["Hit ground at different times based on mass","Hit the ground at the same time","The heavier one hits first","The lighter one hits first"],a:1,e:"No air resistance → all objects fall with the same g regardless of mass (Galileo's experiment)."},
-{t:"c",ch:"2",q:"Integrating acceleration with respect to time gives:",c:["Position","Jerk","Velocity","Power"],a:2,e:"∫a dt = v + C. Integrating acceleration yields velocity (plus an integration constant)."},
-{t:"c",ch:"2",q:"The standard kinematic equations are valid only when:",c:["Velocity is constant","Acceleration is constant (uniform)","Displacement is positive","Time exceeds 1 second"],a:1,e:"The 'big four' kinematic equations assume uniform (constant) acceleration throughout the motion."},
-{t:"c",ch:"2",q:"A horizontal line on a position-time graph means:",c:["Constant non-zero velocity","Positive acceleration","The object is at rest (v = 0)","Negative velocity"],a:2,e:"Horizontal x-t line → slope = 0 → velocity = 0 → object is stationary."},
-{t:"c",ch:"2",q:"A horizontal line on a velocity-time graph (v ≠ 0) indicates:",c:["Zero acceleration (constant velocity)","Non-zero constant acceleration","Object is at rest","Increasing velocity"],a:0,e:"Horizontal v-t line → slope = 0 → a = dv/dt = 0. Constant velocity, zero acceleration."},
-{t:"c",ch:"2",q:"x(t) = 5t³ − 3t. Acceleration at t = 1 s:",c:["12 m/s²","2 m/s²","30 m/s²","15 m/s²"],a:2,e:"v = 15t² − 3. a = dv/dt = 30t. At t = 1 s: a = 30(1) = 30 m/s²."},
-{t:"c",ch:"2",q:"An object with constant positive velocity has an x-t graph that is:",c:["A horizontal line","An upward parabola","A straight line with positive slope","A decreasing curve"],a:2,e:"x = x₀ + vt (v constant, positive) is linear in t → a straight line with positive slope."},
-{t:"c",ch:"2",q:"'Deceleration' means the object is:",c:["Moving backward","Slowing down (speed decreasing)","Speeding up","At rest"],a:1,e:"Deceleration = decreasing speed. The acceleration vector opposes the velocity vector."},
-{t:"c",ch:"2",q:"With v₀ = 0 and constant acceleration, displacement grows as:",c:["x ∝ t (linear)","x ∝ t³ (cubic)","x ∝ t² (quadratic)","x ∝ 1/t"],a:2,e:"x = ½at² → displacement is proportional to t². Parabolic (quadratic) growth."},
-{t:"c",ch:"2",q:"At the apex of a vertically thrown ball, acceleration is:",c:["Zero","9.80 m/s² upward","9.80 m/s² downward","Same as at the instant of launch"],a:2,e:"g = 9.80 m/s² downward acts at ALL times during free flight, including at the apex. Only velocity is zero there."},
-{t:"c",ch:"2",q:"Speed differs from velocity because speed is:",c:["A vector","Always negative","A scalar with magnitude only and no direction","Measured in different SI units"],a:2,e:"Speed = |v|, a scalar. Velocity is a vector. They share units (m/s) but velocity carries direction."},
-{t:"c",ch:"2",q:"The second derivative of position with respect to time gives:",c:["Velocity","Jerk","Speed","Acceleration"],a:3,e:"d²x/dt² = d(dx/dt)/dt = dv/dt = acceleration."},
+// ===== ACCORDION =====
+function tAcc(head) { head.closest('.acc').classList.toggle('open'); }
 
-// ── CH3 CONCEPTUAL (15) ──
-{t:"c",ch:"3",q:"Horizontal acceleration in projectile motion (no air resistance):",c:["g downward","g/2 downward","Zero","Variable over time"],a:2,e:"No horizontal force acts (neglecting air resistance), so ax = 0. Horizontal velocity remains constant throughout."},
-{t:"c",ch:"3",q:"The trajectory of a projectile with no air resistance is:",c:["A straight line","A circle","A parabola","A hyperbola"],a:2,e:"Constant horizontal velocity combined with uniformly accelerated vertical motion produces a parabolic path."},
-{t:"c",ch:"3",q:"For maximum range on level ground, the launch angle should be:",c:["30°","45°","60°","90°"],a:1,e:"R = v₀² sin(2θ)/g is maximized when sin(2θ) = 1 → 2θ = 90° → θ = 45°."},
-{t:"c",ch:"3",q:"Which velocity component is constant in projectile motion?",c:["Vertical (vy)","Both components","Neither","Horizontal (vx)"],a:3,e:"ax = 0 → vx = v₀ cosθ = constant. vy changes continuously due to gravity."},
-{t:"c",ch:"3",q:"The position vector r in 2D is written as:",c:["r = x + y","r = xî + yĵ","r = (x · y)k̂","r = x / î"],a:1,e:"r = xî + yĵ in 2D; r = xî + yĵ + zk̂ in 3D."},
-{t:"c",ch:"3",q:"Instantaneous acceleration is defined as:",c:["Δv/Δt over a large interval","lim(Δt→0) Δv/Δt = dv/dt","Average velocity divided by time","Change in position divided by t²"],a:1,e:"a = lim(Δt→0) Δv/Δt = dv/dt — the derivative of velocity with respect to time."},
-{t:"c",ch:"3",q:"A monkey drops the instant a hunter fires horizontally at it. The bullet:",c:["Passes above the monkey","Hits the monkey","Passes below the monkey","Always misses"],a:1,e:"Both the bullet and the monkey fall the same vertical distance under the same g. The bullet hits regardless of muzzle speed (classic monkey-gun problem)."},
-{t:"c",ch:"3",q:"Two projectiles launched at same speed at complementary angles (e.g. 30° and 60°) have:",c:["The same range","The same time of flight","The same maximum height","Different ranges"],a:0,e:"R = v₀² sin(2θ)/g. For θ and (90°−θ): sin(2θ) = sin(180°−2θ). Example: sin 60° = sin 120° = √3/2 → equal range."},
-{t:"c",ch:"3",q:"If launch speed is doubled (same angle), the range:",c:["Doubles","Stays the same","Quadruples","Halves"],a:2,e:"R ∝ v₀². Doubling v₀ multiplies R by 2² = 4."},
-{t:"c",ch:"3",q:"The vertical velocity at time t (taking up as positive) is:",c:["vy = v₀ cosθ","vy = v₀ sinθ − gt","vy = v₀ sinθ + gt","vy = −gt"],a:1,e:"vy = v₀y − gt = v₀ sinθ − gt. Gravity decelerates upward motion and accelerates downward motion."},
-{t:"c",ch:"3",q:"At the highest point of a projectile's trajectory, its speed equals:",c:["Zero","Maximum","vx = v₀ cosθ (horizontal component only)","g"],a:2,e:"At the apex: vy = 0. Speed = |v| = vx = v₀ cosθ — the minimum speed during flight (not zero unless launched vertically)."},
-{t:"c",ch:"3",q:"Which quantity changes throughout projectile motion?",c:["Horizontal velocity vx","Gravitational acceleration g","Vertical velocity vy","Horizontal acceleration ax"],a:2,e:"vy = v₀ sinθ − gt changes continuously. vx, ax (= 0), and g all remain constant."},
-{t:"c",ch:"3",q:"Total flight time of a projectile on level ground is:",c:["v₀ sinθ / g","v₀ cosθ / g","2v₀ sinθ / g","v₀² sin(2θ) / g"],a:2,e:"Time to peak = v₀ sinθ / g. By symmetry, total time T = 2v₀ sinθ / g."},
-{t:"c",ch:"3",q:"Vertical displacement of a horizontally launched projectile after time t:",c:["y = v₀t","y = gt","y = ½gt²","y = v₀t − ½gt²"],a:2,e:"Horizontal launch: v₀y = 0. Vertical: y = ½gt² (taking downward as positive)."},
-{t:"c",ch:"3",q:"The acceleration vector of a projectile always points:",c:["Tangent to the trajectory","Along the velocity vector","Vertically downward","Perpendicular to velocity, upward"],a:2,e:"Only gravity acts: a = −gĵ. Always points straight down regardless of the velocity direction."},
-
-// ── CH1 PROBLEM SOLVING (25) ──
-{t:"p",ch:"1",q:"A = 6î + 8ĵ. The angle it makes with the +x axis:",c:["37°","45°","53°","60°"],a:2,e:"θ = arctan(8/6) = arctan(1.333) ≈ 53.1°. (6-8-10 triangle: sin 53° ≈ 0.8, cos 53° ≈ 0.6.)"},
-{t:"p",ch:"1",q:"A = 3î + 4ĵ, B = î − 2ĵ. A + B =",c:["2î + 6ĵ","4î + 2ĵ","4î + 6ĵ","3î − 2ĵ"],a:1,e:"A + B = (3+1)î + (4−2)ĵ = 4î + 2ĵ."},
-{t:"p",ch:"1",q:"A = 2î + 3ĵ, B = 4î − ĵ. A·B =",c:["5","11","8","−5"],a:0,e:"A·B = (2)(4) + (3)(−1) = 8 − 3 = 5."},
-{t:"p",ch:"1",q:"Convert 72 km/h to m/s:",c:["20 m/s","0.72 m/s","7.2 m/s","200 m/s"],a:0,e:"72 × 1000 / 3600 = 20.0 m/s."},
-{t:"p",ch:"1",q:"50 N force at 37°. Vertical component (sin 37° ≈ 0.600):",c:["40.0 N","30.0 N","25.0 N","50.0 N"],a:1,e:"Fy = F sin θ = 50 × 0.600 = 30.0 N."},
-{t:"p",ch:"1",q:"|A| for A = 5î − 12ĵ:",c:["7","13","17","√119"],a:1,e:"|A| = √(5² + 12²) = √169 = 13. (5-12-13 Pythagorean triple.)"},
-{t:"p",ch:"1",q:"Round 3.4567 to 3 significant figures:",c:["3.46","3.45","3.40","3.50"],a:0,e:"First 3 sig figs: 3, 4, 5. Next digit 6 ≥ 5 → round up → 3.46."},
-{t:"p",ch:"1",q:"A = 4î + 3ĵ, B = −4î − 3ĵ. |A + B| =",c:["0","10","1","5"],a:0,e:"A + B = 0î + 0ĵ = zero vector. |0| = 0. B = −A exactly."},
-{t:"p",ch:"1",q:"10 N force at 60° from +x axis. x-component:",c:["5.00 N","8.66 N","10.0 N","2.00 N"],a:0,e:"Fx = 10 cos 60° = 10 × 0.500 = 5.00 N."},
-{t:"p",ch:"1",q:"A·A for A = 3î + 4ĵ:",c:["0","7","25","5"],a:2,e:"A·A = 3² + 4² = 9 + 16 = 25 = |A|²."},
-{t:"p",ch:"1",q:"A = 5, B = 5, A·B = 12.5. Angle between them:",c:["30°","45°","60°","90°"],a:2,e:"cos θ = (A·B)/(AB) = 12.5/25 = 0.500 → θ = 60°."},
-{t:"p",ch:"1",q:"|A × B|: |A| = 5, |B| = 4, θ = 30°:",c:["10","20","17.3","8.66"],a:0,e:"|A×B| = AB sinθ = (5)(4) sin 30° = 20 × 0.500 = 10."},
-{t:"p",ch:"1",q:"Unit vector Â for A = 6î + 8ĵ:",c:["0.6î + 0.8ĵ","6î + 8ĵ","0.8î + 0.6ĵ","0.5î + 0.5ĵ"],a:0,e:"|A| = √(36+64) = 10. Â = A/|A| = (6î + 8ĵ)/10 = 0.6î + 0.8ĵ."},
-{t:"p",ch:"1",q:"Two perpendicular vectors of magnitude 3 and 4. Resultant:",c:["1","7","5","12"],a:2,e:"R = √(3² + 4²) = √25 = 5. (3-4-5 right triangle.)"},
-{t:"p",ch:"1",q:"A: Ax = −3, Ay = 4. Angle from +x axis (CCW):",c:["−53°","127°","53°","143°"],a:1,e:"Vector is in Quadrant II. Reference angle = arctan(4/3) ≈ 53.1°. θ = 180° − 53.1° ≈ 127°."},
-{t:"p",ch:"1",q:"A·B = AB implies the angle between them is:",c:["90°","45°","0°","180°"],a:2,e:"A·B = AB cosθ = AB → cosθ = 1 → θ = 0°. The vectors are parallel."},
-{t:"p",ch:"1",q:"Express 0.000456 in scientific notation (3 sig figs):",c:["4.56 × 10⁻⁴","45.6 × 10⁻⁵","4.56 × 10⁴","4.560 × 10⁻⁴"],a:0,e:"0.000456 = 4.56 × 10⁻⁴. Move decimal 4 places right; digits 4, 5, 6 → 3 sig figs."},
-{t:"p",ch:"1",q:"A = 3î − 2ĵ, B = −3î + 2ĵ. A + B =",c:["6î − 4ĵ","Zero vector","î + ĵ","3î + 2ĵ"],a:1,e:"(3−3)î + (−2+2)ĵ = 0. B = −A."},
-{t:"p",ch:"1",q:"Fx = 8 N, Fy = 6 N. |F| =",c:["14 N","2 N","10 N","√28 N"],a:2,e:"|F| = √(64 + 36) = √100 = 10 N."},
-{t:"p",ch:"1",q:"Convert 5.0 m/s to km/h:",c:["18 km/h","50 km/h","0.0014 km/h","5.0 km/h"],a:0,e:"5.0 × 3600 / 1000 = 18 km/h."},
-{t:"p",ch:"1",q:"A = î + ĵ + k̂, B = î − ĵ + 2k̂. A·B =",c:["2","0","4","3"],a:0,e:"(1)(1) + (1)(−1) + (1)(2) = 1 − 1 + 2 = 2."},
-{t:"p",ch:"1",q:"|A| = 10, θ = 53°. Find Ax and Ay (sin 53° ≈ 0.8, cos 53° ≈ 0.6):",c:["Ax = 8, Ay = 6","Ax = 6, Ay = 8","Ax = 10, Ay = 0","Ax = 5, Ay = 5"],a:1,e:"Ax = 10 cos 53° = 10 × 0.6 = 6. Ay = 10 sin 53° = 10 × 0.8 = 8."},
-{t:"p",ch:"1",q:"Angle between A = 2î and B = 2ĵ:",c:["0°","45°","90°","180°"],a:2,e:"î · ĵ = 0 → A·B = 0 → cosθ = 0 → θ = 90°. The x and y axes are perpendicular."},
-{t:"p",ch:"1",q:"Express 3.50 × 10⁴ in standard notation:",c:["350","3500","35000","350000"],a:2,e:"3.50 × 10⁴ = 35000. Move decimal 4 places to the right."},
-{t:"p",ch:"1",q:"(2.0 × 10³) + (3.0 × 10²) in proper notation:",c:["2300","2.3 × 10³","5.0 × 10³","23 × 10²"],a:1,e:"2000 + 300 = 2300 = 2.3 × 10³. Precision limited to hundreds place → 2 sig figs."},
-
-// ── CH2 PROBLEM SOLVING (25) ──
-{t:"p",ch:"2",q:"0 to 30 m/s in 6.0 s. Acceleration:",c:["5.0 m/s²","180 m/s²","0.20 m/s²","6.0 m/s²"],a:0,e:"a = Δv/Δt = 30 / 6.0 = 5.0 m/s²."},
-{t:"p",ch:"2",q:"From rest, a = 4.0 m/s² for 5.0 s. Distance:",c:["10 m","20 m","40 m","50 m"],a:3,e:"x = ½at² = ½(4.0)(25) = 50 m."},
-{t:"p",ch:"2",q:"Ball dropped from 80 m (g = 10 m/s²). Time to ground:",c:["2.0 s","4.0 s","8.0 s","16 s"],a:1,e:"80 = ½(10)t² → t² = 16 → t = 4.0 s."},
-{t:"p",ch:"2",q:"20 m/s, decelerates at 2.0 m/s². Distance to stop:",c:["100 m","200 m","50 m","40 m"],a:0,e:"v² = v₀² + 2aΔx → 0 = 400 + 2(−2.0)Δx → Δx = 100 m."},
-{t:"p",ch:"2",q:"v₀ = 5.0 m/s, a = 3.0 m/s², t = 3.0 s. Final velocity:",c:["14 m/s","8.0 m/s","9.0 m/s","2.0 m/s"],a:0,e:"v = v₀ + at = 5.0 + (3.0)(3.0) = 14 m/s."},
-{t:"p",ch:"2",q:"Stone thrown up at 20 m/s (g = 10 m/s²). Max height:",c:["10 m","20 m","40 m","200 m"],a:1,e:"v² = v₀² − 2gh → 0 = 400 − 20h → h = 20 m."},
-{t:"p",ch:"2",q:"x(t) = 3t² − 2t + 1. Velocity at t = 2.0 s:",c:["10 m/s","6.0 m/s","4.0 m/s","14 m/s"],a:0,e:"v = dx/dt = 6t − 2. At t = 2: v = 12 − 2 = 10 m/s."},
-{t:"p",ch:"2",q:"Δx = 100 m in 5.0 s with v₀ = 10 m/s. Acceleration:",c:["4.0 m/s²","2.0 m/s²","8.0 m/s²","1.0 m/s²"],a:0,e:"100 = (10)(5) + ½a(25) → 50 = 12.5a → a = 4.0 m/s²."},
-{t:"p",ch:"2",q:"v₀ = 0, a = 5.0 m/s², Δx = 20 m. Final velocity:",c:["10 m/s","14.1 m/s","20 m/s","5.0 m/s"],a:1,e:"v² = 2(5.0)(20) = 200 → v = √200 ≈ 14.1 m/s."},
-{t:"p",ch:"2",q:"Object hits ground at 30 m/s from rest (g = 10). Drop height:",c:["45 m","30 m","90 m","15 m"],a:0,e:"v² = 2gh → 900 = 20h → h = 45 m."},
-{t:"p",ch:"2",q:"x(t) = 2t³. Velocity at t = 3.0 s:",c:["6.0 m/s","18 m/s","54 m/s","27 m/s"],a:2,e:"v = dx/dt = 6t². At t = 3: v = 6(9) = 54 m/s."},
-{t:"p",ch:"2",q:"a = 6t, v₀ = 0. Velocity at t = 4.0 s (integration):",c:["24 m/s","96 m/s","48 m/s","12 m/s"],a:2,e:"v = ∫6t dt = 3t² + C. C = 0 (v₀ = 0). v(4) = 3(16) = 48 m/s."},
-{t:"p",ch:"2",q:"v₀ = 4.0 m/s, a = −2.0 m/s², t = 3.0 s. Displacement:",c:["3.0 m","6.0 m","9.0 m","12 m"],a:0,e:"Δx = v₀t + ½at² = (4)(3) + ½(−2)(9) = 12 − 9 = 3.0 m."},
-{t:"p",ch:"2",q:"30 m/s, decelerates at 5.0 m/s². Time to stop:",c:["5.0 s","6.0 s","10 s","3.0 s"],a:1,e:"0 = 30 − 5.0t → t = 6.0 s."},
-{t:"p",ch:"2",q:"Rocket from rest, a = 20 m/s², t = 10 s. Final speed:",c:["2.0 m/s","200 m/s","100 m/s","20 m/s"],a:1,e:"v = 0 + (20)(10) = 200 m/s."},
-{t:"p",ch:"2",q:"x(t) = 10 + 5t − t². Acceleration:",c:["5.0 m/s²","−2.0 m/s²","10 m/s²","−t m/s²"],a:1,e:"v = 5 − 2t. a = dv/dt = −2.0 m/s² (constant)."},
-{t:"p",ch:"2",q:"80 m in 4.0 s then 120 m in 6.0 s. Average speed:",c:["20 m/s","25 m/s","30 m/s","10 m/s"],a:0,e:"Total distance = 200 m, total time = 10 s. Average speed = 200/10 = 20 m/s."},
-{t:"p",ch:"2",q:"Ball thrown up at 15 m/s. Velocity after 2.0 s (g = 10):",c:["5.0 m/s upward","5.0 m/s downward","25 m/s upward","10 m/s downward"],a:1,e:"v = 15 − (10)(2) = −5.0 m/s → magnitude 5.0 m/s, directed downward."},
-{t:"p",ch:"2",q:"Fall from rest through 122.5 m (g = 9.80 m/s²). Time:",c:["2.5 s","5.0 s","25 s","12.5 s"],a:1,e:"122.5 = ½(9.80)t² → t² = 25.0 → t = 5.0 s."},
-{t:"p",ch:"2",q:"v₀ = 10 m/s, v = 20 m/s, t = 5.0 s. Displacement using x = ½(v₀ + v)t:",c:["25 m","50 m","75 m","100 m"],a:2,e:"x = ½(10 + 20)(5) = ½(30)(5) = 75 m."},
-{t:"p",ch:"2",q:"x₀ = 5.0 m, v = 3.0 m/s (constant). Position at t = 4.0 s:",c:["7.0 m","12 m","17 m","20 m"],a:2,e:"x = 5.0 + (3.0)(4.0) = 5.0 + 12 = 17 m."},
-{t:"p",ch:"2",q:"Car B starts from rest, a = 4.0 m/s². Time to reach 20 m/s:",c:["4.0 s","5.0 s","8.0 s","10 s"],a:1,e:"20 = 0 + (4.0)t → t = 5.0 s."},
-{t:"p",ch:"2",q:"v₀ = 10 m/s, a = 3.0 m/s², Δx = 10 m. Final velocity:",c:["√160 ≈ 12.6 m/s","10 m/s","20 m/s","√200 ≈ 14.1 m/s"],a:0,e:"v² = 100 + 2(3.0)(10) = 160 → v = √160 ≈ 12.6 m/s."},
-{t:"p",ch:"2",q:"Uniform deceleration from 36 m/s to 0 in 9.0 s. Distance:",c:["162 m","324 m","81 m","180 m"],a:0,e:"Δx = ½(v₀ + v)t = ½(36 + 0)(9) = 162 m."},
-{t:"p",ch:"2",q:"Ball thrown downward at 5.0 m/s. Speed after 3.0 s (g = 10):",c:["15 m/s","25 m/s","35 m/s","30 m/s"],a:2,e:"v = v₀ + gt = 5.0 + (10)(3.0) = 35 m/s (downward)."},
-
-// ── CH3 PROBLEM SOLVING (20) ──
-{t:"p",ch:"3",q:"v₀ = 20 m/s at 30°. Horizontal component (cos 30° ≈ 0.866):",c:["10.0 m/s","17.3 m/s","20.0 m/s","5.00 m/s"],a:1,e:"vx = 20 cos 30° = 20 × 0.866 = 17.3 m/s."},
-{t:"p",ch:"3",q:"v₀ = 25 m/s at 53°. Vertical component (sin 53° ≈ 0.800):",c:["15.0 m/s","20.0 m/s","25.0 m/s","10.0 m/s"],a:1,e:"vy₀ = 25 × 0.800 = 20.0 m/s."},
-{t:"p",ch:"3",q:"vx = 15 m/s, vy₀ = 20 m/s. Launch speed:",c:["25.0 m/s","35.0 m/s","5.00 m/s","17.5 m/s"],a:0,e:"v₀ = √(15² + 20²) = √(225 + 400) = √625 = 25.0 m/s."},
-{t:"p",ch:"3",q:"θ = 45°, v₀ = 20 m/s, g = 10 m/s². Range R = v₀² sin(2θ)/g:",c:["20 m","40 m","10 m","80 m"],a:1,e:"R = (400) sin 90° / 10 = 400/10 = 40 m."},
-{t:"p",ch:"3",q:"Horizontal launch at 10 m/s. Horizontal distance in 3.0 s:",c:["30 m","10 m","90 m","3.0 m"],a:0,e:"x = vx × t = (10)(3.0) = 30 m. Horizontal velocity is constant."},
-{t:"p",ch:"3",q:"Horizontal throw from 20 m height (g = 10 m/s²). Time to ground:",c:["2.0 s","4.0 s","1.0 s","√2 s"],a:0,e:"20 = ½(10)t² → t² = 4 → t = 2.0 s."},
-{t:"p",ch:"3",q:"v₀ = 40 m/s at 30°. Time to reach maximum height (g = 10):",c:["2.0 s","4.0 s","8.0 s","1.0 s"],a:0,e:"vy₀ = 40 sin 30° = 20 m/s. At peak vy = 0: t = 20/10 = 2.0 s."},
-{t:"p",ch:"3",q:"For a horizontally launched projectile, vertical displacement after t is:",c:["y = v₀t","y = gt","y = ½gt²","y = v₀t − ½gt²"],a:2,e:"With v₀y = 0: y = ½gt² (taking downward as positive)."},
-{t:"p",ch:"3",q:"r = (4t)î + (3t − 5t²)ĵ m. y-coordinate at t = 0.30 s:",c:["0.450 m","0.900 m","0 m","0.300 m"],a:0,e:"y = 3(0.3) − 5(0.3)² = 0.90 − 5(0.09) = 0.90 − 0.45 = 0.450 m."},
-{t:"p",ch:"3",q:"v = (3î − 4ĵ) m/s. Speed of the particle:",c:["7.0 m/s","−1.0 m/s","5.0 m/s","1.0 m/s"],a:2,e:"|v| = √(9 + 16) = √25 = 5.0 m/s."},
-{t:"p",ch:"3",q:"Horizontal launch at 15 m/s from 45 m cliff (g = 10). Horizontal range:",c:["45 m","30 m","15 m","60 m"],a:0,e:"t = √(2 × 45/10) = √9 = 3.0 s. x = 15 × 3 = 45 m."},
-{t:"p",ch:"3",q:"v₀ = 50 m/s at 37° (sin 37° ≈ 0.600), g = 10. Maximum height:",c:["45.0 m","90.0 m","22.5 m","30.0 m"],a:0,e:"vy₀ = 50 × 0.6 = 30 m/s. h = vy₀²/(2g) = 900/20 = 45.0 m."},
-{t:"p",ch:"3",q:"v₀ = 20 m/s at 60°, g = 10 (sin 120° ≈ 0.866). Range:",c:["20.0 m","34.6 m","40.0 m","17.3 m"],a:1,e:"R = (400) sin 120° / 10 = 40 × 0.866 ≈ 34.6 m."},
-{t:"p",ch:"3",q:"v₀ = 14.1 m/s at 45° (sin 45° ≈ 0.707), g = 10. Time to peak:",c:["1.0 s","2.0 s","0.50 s","1.4 s"],a:0,e:"vy₀ = 14.1 × 0.707 ≈ 10.0 m/s. t = 10.0/10 = 1.0 s."},
-{t:"p",ch:"3",q:"vx = 8 m/s, vy = 6 m/s. Resultant speed:",c:["2.0 m/s","10 m/s","14 m/s","48 m/s"],a:1,e:"|v| = √(64 + 36) = √100 = 10 m/s."},
-{t:"p",ch:"3",q:"Horizontal launch; vy = 20 m/s downward after some time (g = 10). Elapsed time:",c:["1.0 s","2.0 s","4.0 s","10 s"],a:1,e:"vy = gt → 20 = 10t → t = 2.0 s."},
-{t:"p",ch:"3",q:"v₀ = 30 m/s at 53° (sin 53° ≈ 0.800), g = 10. Total flight time:",c:["2.4 s","4.8 s","6.0 s","3.0 s"],a:1,e:"vy₀ = 30 × 0.8 = 24 m/s. T = 2(24)/10 = 4.8 s."},
-{t:"p",ch:"3",q:"Horizontal launch from 5.0 m height at 10 m/s (g = 10). Range:",c:["10 m","7.07 m","5.0 m","20 m"],a:0,e:"t = √(2 × 5.0/10) = √1 = 1.0 s. x = 10 × 1.0 = 10 m."},
-{t:"p",ch:"3",q:"r(t) = (5t)î + (10t − 5t²)ĵ. When does y return to 0?",c:["t = 1.0 s","t = 2.0 s","t = 5.0 s","t = 0.5 s"],a:1,e:"y = 0: t(10 − 5t) = 0 → t = 0 (launch) or t = 2.0 s."},
-{t:"p",ch:"3",q:"v₀ = 20 m/s at 30°, g = 10 (sin 60° ≈ 0.866). Range:",c:["20.0 m","34.6 m","40.0 m","17.3 m"],a:1,e:"R = (400) sin 60° / 10 = 40 × 0.866 ≈ 34.6 m."}
+// ===== FLASHCARDS =====
+var fcData = [
+  { q: "What direction does the instantaneous velocity vector always point?", a: "Tangent to the path at that point", s: "v = dr/dt -- as dt -> 0, delta_r aligns with the tangent direction" },
+  { q: "What direction does the acceleration vector point for any curved motion?", a: "Toward the inside (concave side) of the curve", s: "The perpendicular component a_perp always points inward toward the center of curvature" },
+  { q: "What is the horizontal acceleration of a projectile during flight?", a: "ax = 0 (exactly zero)", s: "No horizontal force exists, so horizontal velocity vx never changes throughout the flight" },
+  { q: "What is the vertical acceleration throughout the entire projectile flight?", a: "ay = -g = -9.80 m/s squared, constant, always downward", s: "This never changes -- not at launch, not at the peak, not at landing" },
+  { q: "At the very peak of a projectile path, what is the vertical velocity vy?", a: "vy = 0 (zero) -- but acceleration is still -9.8 m/s^2!", s: "This is the most common trap. vy = 0 only at the peak, but ay is NEVER zero." },
+  { q: "What launch angle gives the maximum horizontal range?", a: "45 degrees", s: "R = v0^2 * sin(2*a0) / g is maximized when sin(2*a0) = 1, giving 2*a0 = 90, so a0 = 45" },
+  { q: "Formula for horizontal range when landing at the same height?", a: "R = v0^2 * sin(2 * angle) / g", s: "Only valid when y_final = y_initial = 0 (symmetric flight)" },
+  { q: "What single variable connects the x and y equations in projectile problems?", a: "Time t -- it is shared by both the horizontal and vertical equations", s: "Always find t first from the vertical equation, then substitute it into the horizontal one" },
+  { q: "What does the parallel component of acceleration (a_par) do?", a: "Changes the speed (magnitude) of the velocity", s: "a_par = 0 means constant speed. a_par forward means speeding up. a_par backward means slowing." },
+  { q: "What does the perpendicular component of acceleration (a_perp) do?", a: "Changes the direction of motion -- it is the turning acceleration", s: "a_perp = 0 means straight-line motion. a_perp inward means turning." },
+  { q: "If launch angles are 30 degrees and 60 degrees with the same initial speed, how do ranges compare?", a: "They are equal -- complementary angles (30+60=90) always give the same range", s: "sin(2*30) = sin(60) and sin(2*60) = sin(120) = sin(60). Same sine value, same R." },
+  { q: "Why do a dropped ball and a horizontally thrown ball hit the ground at the same time?", a: "Their vertical motions are identical -- horizontal speed has zero effect on vertical acceleration", s: "ax = 0 means x and y are completely independent. Both fall with ay = -g regardless." },
+  { q: "In the Mars Rover problem at t=2.0s, velocity angle is 128 degrees. Why not -52 degrees?", a: "vx = -1.0 m/s (negative) and vy = +1.3 m/s -- this is the second quadrant, so add 180", s: "arctan(1.3 / -1.0) = -52 degrees but that is 4th quadrant. Since vx<0, vy>0: 180 + (-52) = 128" },
+  { q: "What is the formula for average velocity, and what direction does it point?", a: "v_avg = delta_r / delta_t, and it points in the same direction as the displacement delta_r", s: "Dividing a vector by a positive scalar does not change its direction. It points from start to end." },
 ];
+var fcIdx = 0;
+function updateFC() {
+  var c = fcData[fcIdx];
+  document.getElementById('fcq').textContent = c.q;
+  document.getElementById('fca').textContent = c.a;
+  document.getElementById('fcsub').textContent = c.s;
+  document.getElementById('fcc').textContent = (fcIdx+1) + ' / ' + fcData.length;
+  document.getElementById('fc').classList.remove('flipped');
+}
+function flipCard() { document.getElementById('fc').classList.toggle('flipped'); }
+function nextCard() { fcIdx = (fcIdx+1) % fcData.length; updateFC(); }
+function prevCard() { fcIdx = (fcIdx-1+fcData.length) % fcData.length; updateFC(); }
 
-// ─── STATE ───
-let Qs = [...BANK], idx = 0, ans = {}, fMode = 'all', filt = [];
-
-function getFilt() {
-  switch(fMode) {
-    case 'conceptual': return Qs.map((_,i)=>i).filter(i=>Qs[i].t==='c');
-    case 'problem':    return Qs.map((_,i)=>i).filter(i=>Qs[i].t==='p');
-    case 'ch1':        return Qs.map((_,i)=>i).filter(i=>Qs[i].ch==='1');
-    case 'ch2':        return Qs.map((_,i)=>i).filter(i=>Qs[i].ch==='2');
-    case 'ch3':        return Qs.map((_,i)=>i).filter(i=>Qs[i].ch==='3');
-    case 'wrong':      return Qs.map((_,i)=>i).filter(i=>ans[i]!==undefined&&ans[i]!==Qs[i].a);
-    default:           return Qs.map((_,i)=>i);
+// ===== QUIZ =====
+var qdata = [
+  {
+    q: "A particle moves along a curved path at constant speed. The acceleration vector must be:",
+    opts: ["Zero everywhere", "Parallel to velocity (tangent to path)", "Perpendicular to velocity (normal to path)", "In the opposite direction to velocity"],
+    ans: 2,
+    exp: "If speed is constant, a_parallel = 0 (no speed change). The only remaining acceleration is a_perp, which is perpendicular and points inward to the curve. The particle still accelerates because its direction keeps changing."
+  },
+  {
+    q: "A projectile is launched at 30 m/s at 60 degrees. What is the horizontal velocity component at the peak?",
+    opts: ["0 m/s", "15 m/s (which is 30 * cos 60)", "26 m/s (which is 30 * sin 60)", "30 m/s"],
+    ans: 1,
+    exp: "Horizontal velocity vx = v0 * cos(angle) = 30 * cos(60) = 30 * 0.5 = 15 m/s. This value NEVER changes throughout the flight -- not even at the peak."
+  },
+  {
+    q: "A sled reaches maximum speed at the crest of a snowy hill. At that instant, acceleration points:",
+    opts: ["Forward, tangent to path", "Backward, against direction of motion", "Straight downward", "Zero, because speed is not changing at that instant"],
+    ans: 2,
+    exp: "At maximum speed: dv/dt = 0, so a_parallel = 0. The path curves downward (concave), so a_perp points toward the center of curvature -- which is straight down. There is still acceleration pointing downward."
+  },
+  {
+    q: "Average velocity v_avg always points in the same direction as which vector?",
+    opts: ["Instantaneous velocity at t1", "Displacement vector delta_r", "Acceleration vector", "Position vector r"],
+    ans: 1,
+    exp: "v_avg = delta_r / delta_t. Dividing by a positive scalar (time) preserves direction. So v_avg always points in exactly the same direction as delta_r, from start position to end position."
+  },
+  {
+    q: "Which launch angle gives the greatest horizontal range when landing at the same height?",
+    opts: ["30 degrees", "60 degrees", "90 degrees", "45 degrees"],
+    ans: 3,
+    exp: "R = v0^2 * sin(2*angle) / g. The sine function reaches its maximum of 1 when its argument is 90 degrees. So 2*angle = 90, meaning angle = 45 degrees. This gives R_max = v0^2 / g."
+  },
+  {
+    q: "A ball is thrown horizontally off a cliff at 10 m/s. After 2 seconds, what is its vertical velocity?",
+    opts: ["-9.8 m/s", "-19.6 m/s", "0 m/s", "10 m/s"],
+    ans: 1,
+    exp: "vy = vy0 - g*t = 0 - 9.8*2 = -19.6 m/s. Negative means downward. Meanwhile, the horizontal velocity stays at vx = 10 m/s the whole time -- it does not change."
+  },
+  {
+    q: "Projectiles launched at 20 degrees and 70 degrees with the same initial speed. Which is true?",
+    opts: ["20 degrees gives greater range", "70 degrees gives greater range", "They land at the same horizontal distance", "They reach the same maximum height"],
+    ans: 2,
+    exp: "20 + 70 = 90 degrees, so they are complementary. sin(2*20) = sin(40) and sin(2*70) = sin(140) = sin(40). Same sine value means same range formula result. Note: 70 degrees reaches a much higher peak but the same horizontal distance."
+  },
+  {
+    q: "In the Monkey and Zookeeper problem, the dart always hits because:",
+    opts: ["The dart speed perfectly compensates for gravity", "Both the dart and monkey fall the same amount (half*g*t^2) due to gravity", "The zookeeper calculates the exact landing spot", "Air resistance affects both objects equally"],
+    ans: 1,
+    exp: "Without gravity, the dart would travel straight to the monkey's start position. With gravity, BOTH fall exactly (1/2)*g*t^2 below their no-gravity positions. y_dart = d*tan(a) - (1/2)*g*t^2 and y_monkey = H - (1/2)*g*t^2 where H = d*tan(a). The gravity terms are identical, so they are always at the same height."
   }
+];
+var qscore = { c: 0, t: 0 };
+function buildQuiz() {
+  var area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+  qdata.forEach(function(q, i) {
+    var d = document.createElement('div');
+    d.className = 'card';
+    d.style.marginBottom = '20px';
+    var html = '<div class="quiz-q">Q' + (i+1) + '. ' + q.q + '</div><div class="quiz-opts">';
+    q.opts.forEach(function(opt, j) {
+      html += '<div class="qopt" onclick="checkQ(this,' + i + ',' + j + ')">'
+        + '<span class="qopt-lbl">' + 'ABCD'[j] + '</span>' + opt + '</div>';
+    });
+    html += '</div><div class="qfeedback" id="qf' + i + '"></div>';
+    d.innerHTML = html;
+    area.appendChild(d);
+  });
 }
-
-function startQuiz() {
-  document.getElementById('splash').classList.add('hide');
-  setTimeout(() => {
-    document.getElementById('splash').style.display = 'none';
-    document.getElementById('app').classList.add('on');
-    render();
-  }, 550);
-}
-
-function render() {
-  filt = getFilt();
-  if (!filt.length) {
-    document.getElementById('qbox').innerHTML = '<div class="qcard"><div class="qtxt">No questions match this filter.</div></div>';
-    return;
+function checkQ(el, qi, oi) {
+  var q = qdata[qi];
+  var opts = el.closest('.quiz-opts').querySelectorAll('.qopt');
+  opts.forEach(function(o){ o.classList.add('disabled'); });
+  var fb = document.getElementById('qf' + qi);
+  if (oi === q.ans) {
+    el.classList.add('correct');
+    fb.innerHTML = '<strong>Correct!</strong> ' + q.exp;
+    fb.className = 'qfeedback good show';
+    qscore.c++;
+  } else {
+    el.classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    fb.innerHTML = '<strong>Incorrect.</strong> ' + q.exp;
+    fb.className = 'qfeedback bad show';
   }
-  if (idx >= filt.length) idx = filt.length - 1;
-  if (idx < 0) idx = 0;
-
-  const qi = filt[idx], q = Qs[qi];
-  const L = ['A','B','C','D'];
-  const was = ans[qi] !== undefined;
-  const total = filt.length;
-  const done = filt.filter(i => ans[i] !== undefined).length;
-  const pct = Math.round(done / total * 100);
-
-  document.getElementById('p-fill').style.width = pct + '%';
-  document.getElementById('p-lbl').textContent = `Question ${idx+1} of ${total}`;
-  document.getElementById('p-pct').textContent = pct + '%';
-  document.getElementById('s-prog').textContent = `${done}/${total}`;
-  document.getElementById('nav-ctr').textContent = `${idx+1} / ${total}`;
-
-  let ok = 0, bad = 0;
-  Object.keys(ans).forEach(k => {
-    const n = parseInt(k);
-    ans[n] === Qs[n].a ? ok++ : bad++;
-  });
-  document.getElementById('s-ok').textContent = ok;
-  document.getElementById('s-bad').textContent = bad;
-  document.getElementById('s-score').textContent = (ok + bad > 0) ? Math.round(ok / (ok + bad) * 100) + '%' : '—';
-
-  let html = '';
-  q.c.forEach((ch, i) => {
-    let cls = 'choice';
-    if (was) {
-      cls += ' dis';
-      if (i === q.a) cls += ' rv';
-      if (i === ans[qi] && ans[qi] !== q.a) cls += ' no';
-      if (i === ans[qi] && ans[qi] === q.a) cls += ' ok';
-    }
-    html += `<div class="${cls}" onclick="pick(${qi},${i})"><span class="ckey">${L[i]}</span><span class="cbdy">${ch}</span></div>`;
-  });
-
-  document.getElementById('qbox').innerHTML = `
-    <div class="qcard">
-      <div class="qhdr">
-        <span class="qnum">Q${qi+1} / 150</span>
-        <span class="badge ${q.t==='c'?'bc':'bp'}">${q.t==='c'?'Conceptual':'Problem Solving'}</span>
-        <span class="bch">Ch. ${q.ch}</span>
-      </div>
-      <div class="qtxt">${q.q}</div>
-      <div class="choices">${html}</div>
-      <div class="exp${was?' on':''}"><span class="etag">EXPLANATION</span>${q.e}</div>
-    </div>`;
+  qscore.t++;
+  document.getElementById('score-num').textContent = qscore.c + ' / ' + qscore.t;
+  document.getElementById('score-fill').style.width = (qscore.t ? qscore.c/qscore.t*100 : 0) + '%';
+}
+function resetQuiz() {
+  qscore = { c: 0, t: 0 };
+  document.getElementById('score-num').textContent = '0 / 0';
+  document.getElementById('score-fill').style.width = '0%';
+  buildQuiz();
 }
 
-function pick(qi, chosen) {
-  if (ans[qi] !== undefined) return;
-  ans[qi] = chosen;
-  const correct = chosen === Qs[qi].a;
-  toast(correct ? 'Correct' : 'Incorrect — check the explanation', correct ? 'tok' : 'terr');
-  render();
-  if (Object.keys(ans).length === Qs.length) setTimeout(showResults, 600);
+// ===== SIMULATOR =====
+var cvs = null, ctx = null, trajs = [], palIdx = 0;
+var pal = ['#e74c3c','#2980b9','#27ae60','#e67e22','#8e44ad','#16a085','#c0392b','#1a5276'];
+var simOk = false;
+
+function initSim() {
+  cvs = document.getElementById('simCanvas');
+  ctx = cvs.getContext('2d');
+  var wrap = document.getElementById('canvasWrap');
+  var w = wrap.offsetWidth || 700;
+  cvs.width = w;
+  cvs.height = 340;
+  simOk = true;
+  drawBg();
 }
 
-function goN() {
-  filt = getFilt();
-  if (idx < filt.length - 1) { idx++; render(); }
-  else if (fMode === 'all' && Object.keys(ans).length > 0) showResults();
-  else toast('Last question in this filter', '');
-}
-function goP() { if (idx > 0) { idx--; render(); } }
-
-function doJump() {
-  filt = getFilt();
-  const v = parseInt(document.getElementById('ji').value);
-  if (v >= 1 && v <= filt.length) { idx = v - 1; render(); document.getElementById('ji').value = ''; }
-  else toast('Invalid question number', '');
-}
-
-function setF(mode, el) {
-  fMode = mode;
-  document.querySelectorAll('.fil-pill').forEach(p => p.classList.remove('on'));
-  if (el) el.classList.add('on');
-  idx = 0; render();
-}
-
-function shuffleQ() {
-  for (let i = Qs.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [Qs[i], Qs[j]] = [Qs[j], Qs[i]];
+function drawBg() {
+  if (!simOk) return;
+  var W = cvs.width, H = cvs.height;
+  var OX = 58, OY = H - 44;
+  ctx.fillStyle = '#0d1117';
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 1;
+  for (var gx = OX; gx < W-8; gx += 55) {
+    ctx.beginPath(); ctx.moveTo(gx, 18); ctx.lineTo(gx, OY); ctx.stroke();
   }
-  ans = {}; idx = 0; render();
-  toast('Questions shuffled', '');
+  for (var gy = OY; gy > 18; gy -= 48) {
+    ctx.beginPath(); ctx.moveTo(OX, gy); ctx.lineTo(W-8, gy); ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(OX, 18); ctx.lineTo(OX, OY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(OX, OY); ctx.lineTo(W-8, OY); ctx.stroke();
+  ctx.fillStyle = '#666';
+  ctx.font = '12px JetBrains Mono, monospace';
+  ctx.fillText('x (m)', W-50, OY+18);
+  ctx.fillText('y (m)', OX-48, 22);
+  ctx.fillText('O', OX-16, OY+16);
 }
 
-function restartAll() {
-  Qs = [...BANK]; ans = {}; idx = 0; fMode = 'all';
-  document.querySelectorAll('.fil-pill').forEach(p => p.classList.remove('on'));
-  document.querySelector('[data-f="all"]').classList.add('on');
-  document.getElementById('results').classList.remove('on');
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('app').classList.add('on');
-  render();
+function niceStep(max, n) {
+  var r = max / n;
+  var e = Math.pow(10, Math.floor(Math.log10(r)));
+  var s = [1,2,5,10];
+  for (var i=0;i<s.length;i++) if (s[i]*e >= r) return s[i]*e;
+  return e*10;
 }
 
-function reviewWrong() {
-  document.getElementById('results').classList.remove('on');
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('app').classList.add('on');
-  setF('wrong', document.querySelector('[data-f="wrong"]'));
-  idx = 0; render();
-}
-
-function showResults() {
-  let ok = 0, bad = 0, skip = 0;
-  Qs.forEach((q, i) => {
-    if (ans[i] === undefined) skip++;
-    else if (ans[i] === q.a) ok++;
-    else bad++;
+function redraw() {
+  if (!simOk) return;
+  if (trajs.length === 0) { drawBg(); return; }
+  var W = cvs.width, H = cvs.height;
+  var OX = 58, OY = H - 44;
+  var maxX=1, maxY=1;
+  trajs.forEach(function(tr) {
+    tr.pts.forEach(function(p){ if(p.x>maxX) maxX=p.x; if(p.y>maxY) maxY=p.y; });
   });
-  const pct = Math.round(ok / Qs.length * 100);
-  document.getElementById('r-pct').textContent = pct + '%';
-  document.getElementById('r-ok').textContent = ok;
-  document.getElementById('r-bad').textContent = bad;
-  document.getElementById('r-skip').textContent = skip;
-  const msgs = [
-    [90, 'Outstanding. You are well-prepared for the midterm. A final pass through your wrong answers and you are ready.'],
-    [75, 'Strong performance. Focus on reviewing the questions you missed and you should be in great shape.'],
-    [60, 'Decent start. Identify the chapters where you struggled most and revisit the explanations.'],
-    [0,  'Keep going. Work through each explanation carefully, then retake the quiz to measure your improvement.']
-  ];
-  document.getElementById('r-msg').textContent = msgs.find(m => pct >= m[0])[1];
-  document.getElementById('app').classList.remove('on');
-  const r = document.getElementById('results');
-  r.style.display = 'block'; r.classList.add('on');
+  var sx = (W - OX - 20) / maxX;
+  var sy = (OY - 28) / maxY;
+  var sc = Math.min(sx, sy) * 0.9;
+  drawBg();
+  // axis numbers
+  ctx.fillStyle = '#555';
+  ctx.font = '11px JetBrains Mono, monospace';
+  var xs = niceStep(maxX, 6);
+  for (var tx=xs; tx<=maxX*1.05; tx+=xs) {
+    var px = OX + tx*sc; if (px > W-10) break;
+    ctx.fillText(Math.round(tx), px-10, OY+16);
+  }
+  var ys = niceStep(maxY, 5);
+  for (var ty=ys; ty<=maxY*1.05; ty+=ys) {
+    var py = OY - ty*sc; if (py < 18) break;
+    ctx.fillText(Math.round(ty), OX-46, py+4);
+  }
+  trajs.forEach(function(tr) {
+    ctx.save();
+    ctx.strokeStyle = tr.col;
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = tr.col;
+    ctx.shadowBlur = 5;
+    ctx.beginPath();
+    tr.pts.forEach(function(p,i) {
+      var cx = OX + p.x*sc, cy = OY - p.y*sc;
+      if (i===0) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+    });
+    ctx.stroke();
+    ctx.restore();
+    // peak dot
+    var peak = tr.pts.reduce(function(a,b){ return b.y>a.y?b:a; });
+    var pcx = OX+peak.x*sc, pcy = OY-peak.y*sc;
+    ctx.beginPath(); ctx.arc(pcx,pcy,5,0,Math.PI*2);
+    ctx.fillStyle = tr.col; ctx.fill();
+    // label
+    ctx.fillStyle = tr.col;
+    ctx.font = '12px JetBrains Mono, monospace';
+    ctx.fillText(tr.lbl, pcx+7, pcy-6);
+  });
 }
 
-function toast(msg, cls) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast ' + cls + ' on';
-  clearTimeout(t._t);
-  t._t = setTimeout(() => t.classList.remove('on'), 2400);
+function doLaunch() {
+  if (!simOk) initSim();
+  var v0 = parseFloat(document.getElementById('v0r').value);
+  var deg = parseFloat(document.getElementById('angr').value);
+  var rad = deg * Math.PI / 180;
+  var g = 9.8;
+  var vx = v0 * Math.cos(rad);
+  var vy0 = v0 * Math.sin(rad);
+  var tF = 2 * vy0 / g;
+  var pts = [];
+  for (var i=0; i<=120; i++) {
+    var t = tF * i / 120;
+    var y = vy0*t - 0.5*g*t*t;
+    pts.push({ x: vx*t, y: Math.max(0, y) });
+  }
+  pts.push({ x: vx*tF, y: 0 });
+  var col = pal[palIdx % pal.length]; palIdx++;
+  trajs.push({
+    pts: pts, col: col,
+    lbl: v0+'m/s @'+deg+'deg',
+    range: (vx*tF).toFixed(1),
+    hMax: (vy0*vy0/(2*g)).toFixed(1),
+    tF: tF.toFixed(2),
+    vx: vx.toFixed(1),
+    vy0: vy0.toFixed(1)
+  });
+  redraw();
+  var tr = trajs[trajs.length-1];
+  document.getElementById('stat-area').innerHTML =
+    '<div class="stat-grid">'
+    + sbox('Range', tr.range+' m', col)
+    + sbox('Max Height', tr.hMax+' m', col)
+    + sbox('Flight Time', tr.tF+' s', col)
+    + sbox('vx (constant)', tr.vx+' m/s', col)
+    + sbox('vy at launch', tr.vy0+' m/s', col)
+    + sbox('Time to peak', (tr.tF/2).toFixed ? (parseFloat(tr.tF)/2).toFixed(2)+' s' : '-', col)
+    + '</div>';
+}
+function sbox(l, v, c) {
+  return '<div class="stat-box"><div class="stat-val" style="color:'+c+'">'+v+'</div><div class="stat-lbl">'+l+'</div></div>';
+}
+function doClear() {
+  trajs=[]; palIdx=0;
+  if (simOk) drawBg();
+  document.getElementById('stat-area').innerHTML='';
 }
 
-document.addEventListener('keydown', e => {
-  if (document.getElementById('app').classList.contains('on')) {
-    if (e.key === 'ArrowRight') goN();
-    else if (e.key === 'ArrowLeft') goP();
-    else if (e.key === 'e' || e.key === 'E') {
-      const x = document.querySelector('.exp');
-      if (x) x.classList.toggle('on');
-    }
-    const map = {a:0,A:0,b:1,B:1,c:2,C:2,d:3,D:3};
-    if (map[e.key] !== undefined) {
-      filt = getFilt();
-      const qi = filt[idx];
-      if (qi !== undefined && ans[qi] === undefined) pick(qi, map[e.key]);
-    }
+window.addEventListener('resize', function() {
+  if (simOk) {
+    var w = document.getElementById('canvasWrap').offsetWidth || 700;
+    cvs.width = w; cvs.height = 340;
+    redraw();
   }
 });
+
+// Init
+buildQuiz();
+updateFC();
 </script>
 </body>
 </html>
