@@ -1,1649 +1,1171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physics Chapter 3 -- Exam Survival Guide</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CPE 114 — OOP Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 :root {
-  --bg: #f7f3ee;
-  --paper: #fffef9;
-  --ink: #1a1610;
-  --ink2: #3d3525;
-  --muted: #8a7e6a;
-  --red: #c0392b;
-  --blue: #1a5276;
-  --green: #1a6b3a;
-  --orange: #c05a0a;
-  --gold: #b8860b;
-  --rule: #d4c9b0;
-  --highlight: #fff3b0;
-  --highlight2: #d4edff;
-  --highlight3: #d4f5e4;
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2333;
+  --border: #30363d;
+  --border2: #21262d;
+  --accent: #58a6ff;
+  --accent2: #3fb950;
+  --accent3: #f78166;
+  --accent4: #d2a8ff;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --text3: #6e7681;
+  --correct: #1a7f37;
+  --correct-bg: #0d2a17;
+  --correct-border: #238636;
+  --wrong: #b62324;
+  --wrong-bg: #2d1217;
+  --wrong-border: #da3633;
+  --answered: #1f3a5f;
+  --answered-border: #1f6feb;
 }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Outfit', sans-serif;
-  font-size: 17px;
-  line-height: 1.8;
-}
-
+/* HEADER */
 .header {
-  background: var(--ink);
-  color: #fff;
-  padding: 48px 24px 40px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 2rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
 }
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 4px;
-  background: repeating-linear-gradient(90deg, #f39c12 0, #f39c12 20px, transparent 20px, transparent 24px);
+.header-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.1rem; font-weight: 600;
+  color: var(--accent); letter-spacing: 0.04em;
 }
-.eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #f39c12;
-  margin-bottom: 12px;
+.header-sub { font-size: 0.82rem; color: var(--text2); }
+.header-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+.tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem; padding: 0.18rem 0.55rem;
+  border-radius: 4px; border: 1px solid;
 }
-.header h1 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.15;
-  margin-bottom: 10px;
-}
-.header h1 em { color: #f39c12; font-style: italic; }
-.header-sub { font-size: 15px; color: #aaa; font-family: 'JetBrains Mono', monospace; }
+.tag-blue  { color: var(--accent);  border-color: var(--accent);  background: rgba(88,166,255,0.08); }
+.tag-green { color: var(--accent2); border-color: var(--accent2); background: rgba(63,185,80,0.08); }
+.tag-red   { color: var(--accent3); border-color: var(--accent3); background: rgba(247,129,102,0.08); }
+.tag-purple{ color: var(--accent4); border-color: var(--accent4); background: rgba(210,168,255,0.08); }
 
-.nav {
-  background: var(--ink2);
-  display: flex;
-  overflow-x: auto;
-  border-bottom: 3px solid var(--ink);
-  scrollbar-width: none;
+/* STICKY BAR */
+.sticky-bar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(13,17,23,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border2);
+  padding: 0.7rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
 }
-.nav::-webkit-scrollbar { display: none; }
-.nbtn {
-  background: none;
-  border: none;
-  color: #ccc;
-  padding: 14px 20px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -3px;
-  transition: all 0.2s;
+.prog-wrap { display: flex; align-items: center; gap: 0.8rem; flex: 1; min-width: 200px; }
+.prog-text { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--text2); white-space: nowrap; }
+.prog-bar { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.3s; width: 0%; }
+.bar-actions { display: flex; gap: 0.6rem; }
+.btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.76rem; font-weight: 600;
+  padding: 0.42rem 1rem; border-radius: 6px;
+  border: 1px solid; cursor: pointer; transition: all 0.15s;
+  letter-spacing: 0.02em;
 }
-.nbtn:hover { color: #fff; background: rgba(255,255,255,0.05); }
-.nbtn.active { color: #f39c12; border-bottom-color: #f39c12; }
+.btn-primary { background: var(--accent); color: #0d1117; border-color: var(--accent); }
+.btn-primary:hover { background: #79c0ff; border-color: #79c0ff; }
+.btn-ghost { background: transparent; color: var(--text2); border-color: var(--border); }
+.btn-ghost:hover { color: var(--text); border-color: var(--text2); background: var(--surface2); }
 
-.sec { display: none; }
-.sec.active { display: block; animation: fadeUp 0.3s ease; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+/* MAIN */
+.main { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.2rem 5rem; }
 
-.wrap { max-width: 920px; margin: 0 auto; padding: 40px 24px 80px; }
+/* SECTION */
+.sec-head {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin: 2rem 0 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border2);
+}
+.sec-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem; font-weight: 600;
+  padding: 0.2rem 0.55rem; border-radius: 4px;
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text2); white-space: nowrap;
+}
+.sec-title { font-size: 0.9rem; font-weight: 500; color: var(--text2); }
 
-.sec-title {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.7rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.sec-title .num {
-  background: var(--ink);
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  padding: 3px 10px;
-  border-radius: 2px;
-}
-.sec-desc { color: var(--muted); font-size: 15px; margin-bottom: 32px; }
-
-.card {
-  background: var(--paper);
-  border: 1.5px solid var(--rule);
-  border-radius: 4px;
-  padding: 28px;
-  margin-bottom: 20px;
-  box-shadow: 2px 3px 0 var(--rule);
-}
-.card-title {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.lbl {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  padding: 2px 8px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #fff;
-  border-radius: 2px;
-}
-.lbl-k { background: var(--ink); }
-.lbl-r { background: var(--red); }
-.lbl-b { background: var(--blue); }
-.lbl-g { background: var(--green); }
-.lbl-o { background: var(--orange); }
-.lbl-d { background: var(--gold); }
-
-.fbox {
-  background: var(--ink);
-  color: #f8f4ed;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  padding: 16px 20px;
-  border-radius: 3px;
-  margin: 12px 0;
-  line-height: 1.9;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.fbox .cm { color: #6a9956; }
-.fbox .hi { color: #f39c12; }
-.fbox .hi2 { color: #5dade2; }
-.fbox .hi3 { color: #58d68d; }
-.fbox .hi4 { color: #ec7063; }
-
-.hl-y { background: var(--highlight); padding: 1px 4px; border-radius: 2px; }
-.hl-b { background: var(--highlight2); padding: 1px 4px; border-radius: 2px; }
-.hl-g { background: var(--highlight3); padding: 1px 4px; border-radius: 2px; }
-
-.mnemonic {
-  border: 2px dashed var(--rule);
-  border-radius: 4px;
-  padding: 22px 24px;
-  background: #fffdf5;
-  margin: 16px 0;
-  position: relative;
-}
-.mne-tag {
-  position: absolute;
-  top: -12px; left: 16px;
-  background: var(--gold);
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  padding: 2px 10px;
-  text-transform: uppercase;
-}
-.big-word {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: var(--red);
-  letter-spacing: 6px;
-  margin: 10px 0 14px;
-}
-.mne-grid {
-  display: grid;
-  grid-template-columns: 38px 1fr;
-  gap: 2px 8px;
-  margin-top: 8px;
-}
-.mne-l {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--red);
-  text-align: center;
-  padding: 5px 0;
-  border-right: 2px solid var(--rule);
-}
-.mne-r {
-  font-size: 15px;
-  padding: 5px 0 5px 10px;
-  border-bottom: 1px dotted var(--rule);
-  color: var(--ink2);
-}
-
-.tip {
-  background: #fffbea;
-  border-left: 4px solid var(--gold);
-  padding: 12px 16px;
-  font-size: 15px;
-  margin: 12px 0;
-  color: var(--ink2);
-  border-radius: 0 3px 3px 0;
-}
-.tip strong { color: var(--gold); }
-.warn {
-  background: #fff5f5;
-  border-left: 4px solid var(--red);
-  padding: 12px 16px;
-  font-size: 15px;
-  margin: 12px 0;
-  color: var(--ink2);
-  border-radius: 0 3px 3px 0;
-}
-.warn strong { color: var(--red); }
-
-.ftable { width: 100%; border-collapse: collapse; margin: 12px 0; }
-.ftable th {
-  background: var(--ink);
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 10px 14px;
-  text-align: left;
-}
-.ftable td {
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--rule);
-  font-size: 15px;
-  vertical-align: top;
-}
-.ftable tr:nth-child(even) td { background: #faf8f3; }
-.ftable .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--blue); }
-.ftable .note { color: var(--muted); font-size: 13px; font-style: italic; }
-.ftable .danger { color: var(--red); font-weight: 600; }
-
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
-.col-box { background: var(--paper); border: 1.5px solid var(--rule); border-radius: 3px; padding: 18px; }
-.col-box h4 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1rem;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--rule);
-}
-.col-box.horiz h4 { color: var(--blue); }
-.col-box.vert h4 { color: var(--red); }
-.col-box ul { list-style: none; }
-.col-box li {
-  font-size: 15px;
-  padding: 4px 0 4px 22px;
-  position: relative;
-}
-.col-box li::before {
-  content: '->';
-  position: absolute; left: 0; top: 6px;
-  color: var(--muted);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-}
-
-.steps { counter-reset: st; margin: 16px 0; }
-.step { display: flex; gap: 16px; margin-bottom: 18px; align-items: flex-start; }
-.step::before {
-  counter-increment: st;
-  content: counter(st);
-  background: var(--ink);
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  min-width: 30px; height: 30px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-.step-title { font-weight: 700; color: var(--ink); margin-bottom: 3px; font-size: 16px; }
-.step-desc { font-size: 15px; color: var(--ink2); }
-
-.acc {
-  border: 1.5px solid var(--rule);
-  border-radius: 3px;
-  margin-bottom: 8px;
-  background: var(--paper);
-  overflow: hidden;
-}
-.acc-head {
-  padding: 14px 18px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  font-size: 16px;
-  user-select: none;
-  transition: background 0.15s;
-}
-.acc-head:hover { background: #faf6ee; }
-.acc-arrow { font-size: 11px; color: var(--muted); transition: transform 0.25s; }
-.acc.open .acc-arrow { transform: rotate(180deg); }
-.acc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-.acc.open .acc-body { max-height: 1400px; }
-.acc-inner { padding: 16px 18px 20px; border-top: 1px solid var(--rule); font-size: 16px; line-height: 1.85; color: var(--ink2); }
-.acc-inner p { margin-bottom: 12px; }
-.acc-inner p:last-child { margin-bottom: 0; }
-
-.fc-wrap { perspective: 1000px; margin: 20px auto; max-width: 600px; }
-.fc-inner {
-  height: 250px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.55s ease;
-  cursor: pointer;
-}
-.fc-inner.flipped { transform: rotateY(180deg); }
-.fc-front, .fc-back {
-  position: absolute; inset: 0;
-  backface-visibility: hidden;
-  border-radius: 4px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 30px;
-  text-align: center;
-}
-.fc-front {
-  background: var(--paper);
-  border: 2px solid var(--rule);
-  box-shadow: 3px 4px 0 var(--rule);
-}
-.fc-back {
-  background: var(--ink);
-  border: 2px solid var(--ink);
-  transform: rotateY(180deg);
-  color: #fff;
-}
-.fc-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-.fc-back .fc-label { color: #888; }
-.fc-q {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.55;
-}
-.fc-a {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #f39c12;
-  line-height: 1.5;
-}
-.fc-sub {
-  font-size: 13px;
-  color: #aaa;
-  margin-top: 10px;
-  font-family: 'JetBrains Mono', monospace;
-  line-height: 1.6;
-}
-.fc-controls { display: flex; justify-content: center; gap: 10px; margin-top: 14px; align-items: center; }
-.fc-btn {
-  background: var(--ink);
-  color: #fff;
-  border: none;
-  padding: 9px 24px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.fc-btn:hover { background: var(--red); }
-.fc-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  color: var(--muted);
-  min-width: 80px;
-  text-align: center;
-}
-
-.score-bar {
-  background: var(--paper);
-  border: 1.5px solid var(--rule);
-  border-radius: 3px;
-  padding: 16px 20px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.score-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--blue);
-  min-width: 80px;
-}
-.score-track {
-  flex: 1;
-  height: 10px;
-  background: var(--bg);
-  border-radius: 5px;
-  overflow: hidden;
-  border: 1px solid var(--rule);
-}
-.score-fill {
-  height: 100%;
-  background: var(--green);
-  border-radius: 5px;
-  transition: width 0.4s;
-}
-.reset-btn {
-  background: var(--ink);
-  color: #fff;
-  border: none;
-  padding: 8px 18px;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  border-radius: 3px;
-  cursor: pointer;
-}
-.reset-btn:hover { background: var(--red); }
-
-.quiz-q { font-weight: 700; font-size: 16px; color: var(--ink); margin-bottom: 14px; line-height: 1.6; }
-.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
-.qopt {
-  background: var(--bg);
-  border: 1.5px solid var(--rule);
-  border-radius: 3px;
-  padding: 12px 16px;
-  cursor: pointer;
-  font-size: 15px;
-  display: flex; align-items: flex-start; gap: 12px;
-  transition: border-color 0.15s, background 0.15s;
-  line-height: 1.55;
-}
-.qopt:hover { border-color: var(--blue); background: #f0f7ff; }
-.qopt.correct { background: #eafaf1; border-color: var(--green); color: var(--green); font-weight: 600; }
-.qopt.wrong { background: #fdf2f2; border-color: var(--red); color: var(--red); }
-.qopt.disabled { pointer-events: none; }
-.qopt-lbl {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  min-width: 24px; height: 24px;
-  background: var(--ink);
-  color: #fff;
-  border-radius: 2px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.qopt.correct .qopt-lbl { background: var(--green); }
-.qopt.wrong .qopt-lbl { background: var(--red); }
-.qfeedback {
-  margin-top: 12px;
-  padding: 12px 16px;
-  border-radius: 3px;
-  font-size: 15px;
-  display: none;
-  line-height: 1.7;
-}
-.qfeedback.show { display: block; }
-.qfeedback.good { background: #eafaf1; border: 1px solid var(--green); color: #1a5c35; }
-.qfeedback.bad { background: #fdf2f2; border: 1px solid var(--red); color: #922b21; }
-
-.sim-controls {
-  background: var(--paper);
-  border: 1.5px solid var(--rule);
-  border-radius: 4px;
-  padding: 24px;
-  margin-bottom: 16px;
-}
-.sim-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
-.sim-label { display: block; font-size: 15px; font-weight: 600; color: var(--ink2); margin-bottom: 8px; }
-.sim-val { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-weight: 700; }
-input[type=range] { width: 100%; accent-color: var(--ink); cursor: pointer; height: 6px; }
-.launch-btn {
-  background: var(--ink);
-  color: #fff;
-  border: none;
-  padding: 12px 32px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background 0.15s;
-  margin-right: 10px;
-}
-.launch-btn:hover { background: var(--red); }
-.clear-btn {
-  background: none;
-  border: 1.5px solid var(--rule);
-  color: var(--muted);
-  padding: 12px 24px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 3px;
-  cursor: pointer;
-}
-.clear-btn:hover { border-color: var(--ink); color: var(--ink); }
-.canvas-wrap {
-  background: #0d1117;
-  border: 1.5px solid var(--rule);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 16px;
-  width: 100%;
-}
-#simCanvas { display: block; width: 100%; }
-.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.stat-box {
-  background: var(--paper);
-  border: 1.5px solid var(--rule);
-  border-radius: 3px;
-  padding: 14px;
-  text-align: center;
-}
-.stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 700; }
-.stat-lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
-
-@media (max-width: 620px) {
-  .two-col, .sim-row, .stat-grid { grid-template-columns: 1fr; }
-}
-
-p { margin-bottom: 12px; }
-p:last-child { margin-bottom: 0; }
-
-/* === DEFINITIONS === */
-.def-search-wrap {
-  position: relative;
-  margin-bottom: 28px;
-}
-.def-search {
-  width: 100%;
-  padding: 14px 18px 14px 44px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 16px;
-  border: 2px solid var(--rule);
-  border-radius: 4px;
-  background: var(--paper);
-  color: var(--ink);
-  outline: none;
+/* QUESTION CARD */
+.q {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 1.2rem 1.35rem;
+  margin-bottom: 0.75rem;
   transition: border-color 0.2s;
 }
-.def-search:focus { border-color: var(--ink); }
-.def-search-icon {
-  position: absolute;
-  left: 14px; top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 18px;
-  pointer-events: none;
+.q:hover { border-color: var(--border); }
+.q.answered { border-color: var(--answered-border); background: linear-gradient(135deg, var(--surface) 0%, var(--answered) 200%); }
+.q.correct { border-color: var(--correct-border); background: var(--correct-bg); }
+.q.wrong   { border-color: var(--wrong-border);   background: var(--wrong-bg); }
+
+.q-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.67rem; color: var(--accent); font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.45rem;
 }
-.def-filter-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
+.q-text { font-size: 0.93rem; line-height: 1.65; color: var(--text); margin-bottom: 0.85rem; }
+.q-text strong { color: var(--accent4); font-weight: 600; }
+code {
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--surface2); color: #79c0ff;
+  padding: 0.1rem 0.32rem; border-radius: 4px;
+  font-size: 0.82em; border: 1px solid var(--border2);
 }
-.def-filter {
-  background: none;
-  border: 1.5px solid var(--rule);
-  color: var(--muted);
-  padding: 6px 14px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.15s;
+pre {
+  font-family: 'IBM Plex Mono', monospace;
+  background: #010409; border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.95rem 1.1rem;
+  font-size: 0.79rem; line-height: 1.7;
+  overflow-x: auto; margin: 0.5rem 0 0.9rem;
+  color: #c9d1d9;
 }
-.def-filter:hover, .def-filter.active {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
+.kw { color: #ff7b72; }
+.str { color: #a5d6ff; }
+.cm  { color: #8b949e; font-style: italic; }
+.cls { color: #ffa657; }
+.fn  { color: #d2a8ff; }
+.num { color: #79c0ff; }
+
+/* OPTIONS */
+.opts { display: flex; flex-direction: column; gap: 0.4rem; }
+.opt {
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  border: 1px solid var(--border2); border-radius: 8px;
+  padding: 0.6rem 0.9rem; cursor: pointer;
+  transition: all 0.13s; user-select: none;
 }
-.def-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 16px;
+.opt:hover { background: var(--surface2); border-color: var(--border); }
+.opt input { margin-top: 0.19rem; accent-color: var(--accent); flex-shrink: 0; cursor: pointer; }
+.opt label { font-size: 0.89rem; line-height: 1.5; cursor: pointer; color: var(--text2); }
+.opt:hover label { color: var(--text); }
+.opt.opt-correct { background: rgba(63,185,80,0.1); border-color: var(--correct-border); }
+.opt.opt-correct label { color: #3fb950; font-weight: 600; }
+.opt.opt-wrong { background: rgba(218,54,51,0.1); border-color: var(--wrong-border); }
+.opt.opt-wrong label { color: #f85149; }
+.opt.opt-selected { border-color: var(--accent); background: rgba(88,166,255,0.06); }
+.opt.opt-selected label { color: var(--text); }
+
+/* T/F */
+.tf-row { display: flex; gap: 0.6rem; }
+.tf-btn {
+  flex: 1; padding: 0.55rem; border-radius: 8px;
+  border: 1px solid var(--border2); background: var(--surface2);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.83rem; font-weight: 600; cursor: pointer;
+  color: var(--text2); transition: all 0.13s;
 }
-.def-item {
-  background: var(--paper);
-  border: 1.5px solid var(--rule);
-  border-radius: 4px;
-  margin-bottom: 10px;
-  overflow: hidden;
-  box-shadow: 2px 2px 0 var(--rule);
-  transition: border-color 0.15s;
+.tf-btn:hover { border-color: var(--border); color: var(--text); background: var(--surface); }
+.tf-btn.sel { border-color: var(--accent); color: var(--accent); background: rgba(88,166,255,0.08); }
+.tf-btn.tf-correct { border-color: var(--correct-border); color: #3fb950; background: rgba(63,185,80,0.08); }
+.tf-btn.tf-wrong   { border-color: var(--wrong-border);   color: #f85149; background: rgba(218,54,51,0.08); }
+
+/* SHORT / ESSAY */
+.short-in, .essay-in {
+  width: 100%; padding: 0.65rem 0.85rem;
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem; color: var(--text); resize: vertical;
 }
-.def-item:hover { border-color: var(--ink); }
-.def-item.hidden { display: none; }
-.def-header {
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  user-select: none;
+.short-in { min-height: 68px; }
+.essay-in { min-height: 110px; }
+.short-in:focus, .essay-in:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(88,166,255,0.12);
 }
-.def-term {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--ink);
-  flex: 1;
+
+/* FEEDBACK */
+.fb { margin-top: 0.7rem; padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.83rem; line-height: 1.55; display: none; }
+.fb.show { display: block; }
+.fb.fc { background: rgba(63,185,80,0.08); border: 1px solid var(--correct-border); color: #56d364; }
+.fb.fw { background: rgba(218,54,51,0.08); border: 1px solid var(--wrong-border);   color: #f85149; }
+.fb.fi { background: rgba(88,166,255,0.06); border: 1px solid #1f6feb; color: #79c0ff; }
+
+/* RESULTS */
+.result {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 2rem 1.5rem; text-align: center;
+  margin-top: 2rem; display: none;
 }
-.def-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 3px 9px;
-  border-radius: 20px;
-  white-space: nowrap;
+.result.show { display: block; }
+.r-big { font-family: 'IBM Plex Mono', monospace; font-size: 3rem; font-weight: 600; color: var(--accent); line-height: 1; }
+.r-label { font-size: 0.85rem; color: var(--text2); margin: 0.3rem 0 0.7rem; }
+.r-remark { font-size: 1rem; font-weight: 500; margin-bottom: 1.3rem; }
+.r-stats { display: flex; justify-content: center; gap: 1.8rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.r-stat strong { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 1.3rem; font-weight: 600; color: var(--text); }
+.r-stat span { font-size: 0.8rem; color: var(--text3); }
+.r-note { font-size: 0.82rem; color: var(--text3); margin-bottom: 1.3rem; }
+.btn-new {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem; font-weight: 600;
+  padding: 0.6rem 1.8rem; border-radius: 8px;
+  background: transparent; color: var(--accent2); border: 1px solid var(--accent2);
+  cursor: pointer; transition: all 0.15s;
 }
-.def-tag.physics  { background: #fde8e8; color: var(--red); border: 1px solid #f5c6c6; }
-.def-tag.vectors  { background: #daeeff; color: var(--blue); border: 1px solid #b3d7f5; }
-.def-tag.motion   { background: #e2f5ea; color: var(--green); border: 1px solid #b2dfc2; }
-.def-tag.projectile { background: #fef3e2; color: var(--orange); border: 1px solid #f5d9a8; }
-.def-tag.math     { background: #f3f0ff; color: #5b21b6; border: 1px solid #c4b5fd; }
-.def-chevron { color: var(--muted); font-size: 12px; transition: transform 0.25s; }
-.def-item.open .def-chevron { transform: rotate(180deg); }
-.def-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease;
+.btn-new:hover { background: rgba(63,185,80,0.1); }
+
+/* WELCOME SCREEN */
+.welcome {
+  max-width: 620px; margin: 4rem auto; padding: 0 1.2rem; text-align: center;
 }
-.def-item.open .def-body { max-height: 600px; }
-.def-body-inner {
-  padding: 0 18px 18px 18px;
-  border-top: 1px solid var(--rule);
-  padding-top: 14px;
+.welcome h1 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.5rem; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;
 }
-.def-meaning {
-  font-size: 16px;
-  color: var(--ink2);
-  line-height: 1.85;
-  margin-bottom: 10px;
+.welcome p { font-size: 0.92rem; color: var(--text2); line-height: 1.7; margin-bottom: 1.5rem; }
+.welcome-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 2rem;
 }
-.def-analogy {
-  background: var(--highlight);
-  border-left: 3px solid var(--gold);
-  padding: 10px 14px;
-  font-size: 14px;
-  color: var(--ink2);
-  border-radius: 0 3px 3px 0;
-  margin-bottom: 10px;
+.wstat {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 1rem;
 }
-.def-analogy strong { color: var(--gold); }
-.def-formula-line {
-  background: var(--ink);
-  color: #f8f4ed;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  padding: 10px 16px;
-  border-radius: 3px;
-  margin-top: 8px;
-  line-height: 1.7;
-  white-space: pre-wrap;
+.wstat strong { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 1.5rem; font-weight: 600; color: var(--accent); }
+.wstat span { font-size: 0.78rem; color: var(--text3); }
+.btn-start {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem; font-weight: 600;
+  padding: 0.8rem 2.5rem; border-radius: 8px;
+  background: var(--accent); color: #0d1117; border: none;
+  cursor: pointer; transition: all 0.15s;
 }
+.btn-start:hover { background: #79c0ff; transform: translateY(-1px); }
 </style>
 </head>
 <body>
 
+<!-- WELCOME -->
+<div class="welcome" id="welcome-screen">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">CPE 114 · Object-Oriented Programming</div>
+  <h1>Conceptual Exam</h1>
+  <p>A pool of <strong style="color:var(--text)">150 questions</strong> covering all lecture topics. Each session randomly selects <strong style="color:var(--text)">50 questions</strong> — you'll never see the exact same exam twice.</p>
+  <div class="welcome-stats">
+    <div class="wstat"><strong>150</strong><span>Question pool</span></div>
+    <div class="wstat"><strong>50</strong><span>Per session</span></div>
+    <div class="wstat"><strong>7</strong><span>Topics covered</span></div>
+  </div>
+  <button class="btn-start" onclick="startExam()">Start Exam →</button>
+</div>
+
+<!-- EXAM -->
+<div id="exam-screen" style="display:none;">
 <div class="header">
-  <div class="eyebrow">BES112 -- Chapter 3 -- Exam Prep</div>
-  <h1>Motion in <em>2D &amp; 3D</em></h1>
-  <div class="header-sub">Position &middot; Velocity &middot; Acceleration &middot; Projectile Motion</div>
-</div>
-
-<nav class="nav">
-  <button class="nbtn active" onclick="show('pg-mne',this)">Mnemonics</button>
-  <button class="nbtn" onclick="show('pg-def',this)">Definitions</button>
-  <button class="nbtn" onclick="show('pg-form',this)">All Formulas</button>
-  <button class="nbtn" onclick="show('pg-conc',this)">Key Concepts</button>
-  <button class="nbtn" onclick="show('pg-proj',this)">Projectile Guide</button>
-  <button class="nbtn" onclick="show('pg-fc',this)">Flashcards</button>
-  <button class="nbtn" onclick="show('pg-quiz',this)">Quiz</button>
-  <button class="nbtn" onclick="show('pg-sim',this)">Simulator</button>
-</nav>
-
-<!-- DEFINITIONS -->
-<div id="pg-def" class="sec">
-<div class="wrap">
-  <div class="sec-title"><span class="num">00</span> Definitions of Terms</div>
-  <p class="sec-desc">Every important word in this chapter, defined in plain language. Start here if anything feels unfamiliar.</p>
-
-  <div class="def-search-wrap">
-    <span class="def-search-icon">&#128269;</span>
-    <input class="def-search" type="text" id="defSearch" placeholder="Search any term..." oninput="filterDefs()">
-  </div>
-
-  <div class="def-filter-row">
-    <button class="def-filter active" onclick="filterCat('all',this)">All Terms</button>
-    <button class="def-filter" onclick="filterCat('physics',this)">Physics</button>
-    <button class="def-filter" onclick="filterCat('vectors',this)">Vectors</button>
-    <button class="def-filter" onclick="filterCat('motion',this)">Motion</button>
-    <button class="def-filter" onclick="filterCat('projectile',this)">Projectile</button>
-    <button class="def-filter" onclick="filterCat('math',this)">Math</button>
-  </div>
-
-  <div class="def-count" id="def-count"></div>
-  <div id="def-list"></div>
-</div>
-</div>
-
-<!-- MNEMONICS -->
-<div id="pg-mne" class="sec active">
-<div class="wrap">
-  <div class="sec-title"><span class="num">01</span> Memory Tricks &amp; Mnemonics</div>
-  <p class="sec-desc">Learn these 7 hooks and you will have the whole chapter locked in memory. Each one maps directly to exam problems.</p>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-k">Start Here</span> The Big Picture -- One Paragraph</div>
-    <p>A particle moving through space has a <strong>position vector r</strong> (an arrow from the origin to where it is). As it moves, r changes -- the rate of that change is <strong>velocity v</strong> (always pointing along the path it travels, tangent to the curve). If the path curves or the particle speeds up, v itself changes -- the rate of that change is <strong>acceleration a</strong> (always pointing toward the inside of the curve).</p>
-    <p>The entire chapter is this: <span class="hl-y">r to v to a = differentiate</span> and <span class="hl-b">a to v to r = integrate</span>. That's it.</p>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-r">Mnemonic 1</span> The Derivative Chain -- "Rabbits vs Ants"</div>
-    <div class="mnemonic">
-      <span class="mne-tag">Remember This</span>
-      <div class="big-word">R &rarr; V &rarr; A</div>
-      <p style="color:var(--muted); font-size:15px; margin-bottom:12px;">Say: "Position R, Velocity V, Acceleration A -- each one is the derivative of the one before it"</p>
-      <div class="mne-grid">
-        <div class="mne-l">R</div>
-        <div class="mne-r"><strong>r</strong> = Position vector. Where is the particle right now?</div>
-        <div class="mne-l">d/dt</div>
-        <div class="mne-r">Differentiate with respect to time to get the next one</div>
-        <div class="mne-l">V</div>
-        <div class="mne-r"><strong>v = dr/dt</strong> = Velocity. Which direction and how fast? Always tangent to the path.</div>
-        <div class="mne-l">d/dt</div>
-        <div class="mne-r">Differentiate again</div>
-        <div class="mne-l">A</div>
-        <div class="mne-r"><strong>a = dv/dt</strong> = Acceleration. How is velocity changing? Points to the inside of the curve.</div>
-      </div>
-    </div>
-    <div class="tip"><strong>Tip:</strong> Go backwards by integrating: integrate a to get v, integrate v to get r. This is exactly how all projectile equations are derived.</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-b">Mnemonic 2</span> Velocity Direction -- "V Hugs the Road"</div>
-    <div class="mnemonic">
-      <span class="mne-tag">Golden Rule</span>
-      <p style="font-family:'Libre Baskerville',serif; font-size:1.3rem; font-weight:700; color:var(--blue); margin:10px 0;">Velocity is ALWAYS tangent to the path</p>
-      <div class="mne-grid">
-        <div class="mne-l">V</div>
-        <div class="mne-r">Velocity hugs the curve -- it points exactly where the particle is heading at that instant</div>
-        <div class="mne-l">A</div>
-        <div class="mne-r">Acceleration points toward the INSIDE (concave side) of any curve</div>
-        <div class="mne-l">Rule</div>
-        <div class="mne-r">Constant speed + curved path: v is tangent, a is purely perpendicular -- they are 90 degrees apart</div>
-      </div>
-    </div>
-    <div class="warn"><strong>Common trap:</strong> Students think acceleration = 0 if speed is constant. Wrong! A car at constant speed rounding a curve still accelerates because its direction keeps changing.</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-g">Mnemonic 3</span> Acceleration Components -- "GPS" (Gas, Perpendicular, Steering)</div>
-    <div class="mnemonic">
-      <span class="mne-tag">Mnemonic</span>
-      <div class="big-word">GPS</div>
-      <div class="mne-grid">
-        <div class="mne-l">G</div>
-        <div class="mne-r"><strong>Gas pedal = a-parallel:</strong> tangent to path, changes SPEED. Zero means constant speed.</div>
-        <div class="mne-l">P</div>
-        <div class="mne-r"><strong>Perpendicular = a-perp:</strong> normal to path, changes DIRECTION. Always points inward on a curve.</div>
-        <div class="mne-l">S</div>
-        <div class="mne-r"><strong>Steering rule:</strong> if speed is constant, ALL of a is steering (a-parallel = 0). All acceleration is perpendicular.</div>
-      </div>
-    </div>
-    <div class="tip"><strong>Skier problem shortcut:</strong> Speeding up = a tilts forward of the normal. Maximum speed = a is purely normal (perpendicular). Slowing down = a tilts backward of the normal.</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-o">Mnemonic 4</span> Projectile Motion -- "HAVE" (Horizontal Always, Vertical Ever-changing)</div>
-    <div class="mnemonic">
-      <span class="mne-tag">Projectile</span>
-      <div class="big-word">HAVE</div>
-      <div class="mne-grid">
-        <div class="mne-l">H</div>
-        <div class="mne-r"><strong>Horizontal:</strong> zero acceleration (ax = 0). No force acts sideways.</div>
-        <div class="mne-l">A</div>
-        <div class="mne-r"><strong>Always constant horizontal velocity:</strong> vx = v0 * cos(angle). Never changes for the whole flight.</div>
-        <div class="mne-l">V</div>
-        <div class="mne-r"><strong>Vertical:</strong> constant downward acceleration, ay = -g = -9.8 m/s^2. Always.</div>
-        <div class="mne-l">E</div>
-        <div class="mne-r"><strong>Ever-changing vertical velocity:</strong> vy = v0*sin(angle) - g*t. Gets smaller going up, zero at peak, negative coming down.</div>
-      </div>
-    </div>
-    <div class="warn"><strong>Critical warning:</strong> At the peak, vy = 0 BUT acceleration is still -9.8 m/s^2 downward. Acceleration is NEVER zero during flight.</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-d">Mnemonic 5</span> Trig Components -- "CASH" (Cos = Adjacent Side = Horizontal)</div>
-    <div class="mnemonic">
-      <span class="mne-tag">Trig Trick</span>
-      <div class="big-word">CASH</div>
-      <div class="mne-grid">
-        <div class="mne-l">C</div>
-        <div class="mne-r"><strong>Cosine</strong> gives you the...</div>
-        <div class="mne-l">A</div>
-        <div class="mne-r"><strong>Adjacent</strong> side of the right triangle, which is the...</div>
-        <div class="mne-l">S</div>
-        <div class="mne-r"><strong>Side</strong> that runs along the...</div>
-        <div class="mne-l">H</div>
-        <div class="mne-r"><strong>Horizontal.</strong> So: vx = v0 * cos(angle), and vy = v0 * sin(angle)</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-k">Mnemonic 6</span> Problem-Solving Order -- "TPVR" (Time, Position, Velocity, Result)</div>
-    <div class="mnemonic">
-      <span class="mne-tag">Strategy</span>
-      <div class="big-word">TPVR</div>
-      <div class="mne-grid">
-        <div class="mne-l">T</div>
-        <div class="mne-r"><strong>Time first.</strong> t is the bridge between x and y. Always find it from the vertical equation first.</div>
-        <div class="mne-l">P</div>
-        <div class="mne-r"><strong>Position.</strong> Once you have t, find x = vx*t and y = vy0*t - 0.5*g*t^2</div>
-        <div class="mne-l">V</div>
-        <div class="mne-r"><strong>Velocity.</strong> vx = vx0 (unchanged!), vy = vy0 - g*t</div>
-        <div class="mne-l">R</div>
-        <div class="mne-r"><strong>Result.</strong> Combine: speed = sqrt(vx^2 + vy^2), angle = arctan(vy/vx). Check quadrant!</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-r">Mnemonic 7</span> Skier Points -- "Straight, Ahead, Normal, Behind" (SANB)</div>
-    <div class="mnemonic">
-      <span class="mne-tag">Skier Problem</span>
-      <p style="margin-bottom:12px; font-size:15px; color:var(--muted);">For the ski-jump ramp problem (points B, D, E, F), remember acceleration direction at each point:</p>
-      <div class="mne-grid">
-        <div class="mne-l">B</div>
-        <div class="mne-r">Straight ramp + speeding up: a is <strong>parallel to path (forward/tangent direction)</strong></div>
-        <div class="mne-l">D</div>
-        <div class="mne-r">Curved + speeding up: a points <strong>ahead of the normal (inward and forward)</strong></div>
-        <div class="mne-l">E</div>
-        <div class="mne-r">Curved + max speed (dv/dt = 0): a is <strong>purely normal -- perpendicular, pointing inward</strong></div>
-        <div class="mne-l">F</div>
-        <div class="mne-r">Curved + slowing down: a points <strong>behind the normal (inward and backward)</strong></div>
-      </div>
-    </div>
-    <div class="tip"><strong>Hook:</strong> B = Straight along path. D = Ahead of normal. E = Normal only. F = Behind normal. "B D E F = Straight, Ahead, Normal, Behind"</div>
-  </div>
-
-</div>
-</div>
-
-<!-- FORMULAS -->
-<div id="pg-form" class="sec">
-<div class="wrap">
-  <div class="sec-title"><span class="num">02</span> All Formulas -- Master Sheet</div>
-  <p class="sec-desc">Every equation you need, with plain-English explanations. Understand the meaning, not just the symbols.</p>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-b">Section 3.1</span> Position and Velocity</div>
-    <table class="ftable">
-      <tr><th>Quantity</th><th>Formula</th><th>Plain English</th></tr>
-      <tr><td>Position vector</td><td class="mono">r = x*i + y*j + z*k</td><td class="note">Arrow pointing from origin to particle. Components are the coordinates.</td></tr>
-      <tr><td>Displacement</td><td class="mono">dr = r2 - r1</td><td class="note">Straight-line arrow from start to end. NOT the path length.</td></tr>
-      <tr><td>Average velocity</td><td class="mono">v_avg = dr / dt</td><td class="note">Same direction as displacement. Net motion over a time interval.</td></tr>
-      <tr><td>Instantaneous velocity</td><td class="mono">v = dr/dt</td><td class="danger">ALWAYS tangent to the path at that point</td></tr>
-      <tr><td>Velocity components</td><td class="mono">vx = dx/dt, vy = dy/dt</td><td class="note">Differentiate each coordinate separately</td></tr>
-      <tr><td>Speed (magnitude)</td><td class="mono">|v| = sqrt(vx^2 + vy^2)</td><td class="note">Always positive. The number on a speedometer.</td></tr>
-      <tr><td>Direction angle</td><td class="mono">a = arctan(vy / vx)</td><td class="danger">Always check which quadrant the vector is in!</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-r">Section 3.2</span> Acceleration</div>
-    <table class="ftable">
-      <tr><th>Quantity</th><th>Formula</th><th>Plain English</th></tr>
-      <tr><td>Average acceleration</td><td class="mono">a_avg = dv / dt</td><td class="note">Same direction as the change in velocity vector</td></tr>
-      <tr><td>Instantaneous acceleration</td><td class="mono">a = dv/dt = d^2r/dt^2</td><td class="danger">Points toward the inside (concave side) of the curve</td></tr>
-      <tr><td>Components</td><td class="mono">ax = d^2x/dt^2, ay = d^2y/dt^2</td><td class="note">Second derivative of each position component</td></tr>
-      <tr><td>Parallel component (a-par)</td><td class="mono">tangent to path</td><td class="note">Changes SPEED. Zero means constant speed.</td></tr>
-      <tr><td>Perp. component (a-perp)</td><td class="mono">normal to path, inward</td><td class="note">Changes DIRECTION. Zero means straight-line motion.</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-g">Section 3.3</span> Projectile Motion -- Complete Set</div>
-    <table class="ftable">
-      <tr><th>Quantity</th><th>Formula</th><th>Notes</th></tr>
-      <tr><td>Accelerations</td><td class="mono">ax = 0, ay = -9.80 m/s^2</td><td class="note">Constant throughout the entire flight</td></tr>
-      <tr><td>Initial components</td><td class="mono">vx0 = v0*cos(a0), vy0 = v0*sin(a0)</td><td class="note">First thing to do: decompose the launch velocity</td></tr>
-      <tr><td>Horizontal velocity</td><td class="mono">vx = v0*cos(a0)</td><td class="danger">CONSTANT. Never changes for the whole flight.</td></tr>
-      <tr><td>Vertical velocity</td><td class="mono">vy = v0*sin(a0) - g*t</td><td class="note">Changes every instant due to gravity</td></tr>
-      <tr><td>Horizontal position</td><td class="mono">x = (v0*cos(a0)) * t</td><td class="note">Linear -- just speed times time</td></tr>
-      <tr><td>Vertical position</td><td class="mono">y = (v0*sin(a0))*t - (g/2)*t^2</td><td class="note">Quadratic -- produces the parabolic curve</td></tr>
-      <tr><td>Trajectory (y as function of x)</td><td class="mono">y = tan(a0)*x - g*x^2/(2*v0^2*cos^2(a0))</td><td class="note">Eliminates t. Form y = bx - cx^2 proves it is a parabola.</td></tr>
-      <tr><td>Range (same start/end height)</td><td class="mono">R = v0^2 * sin(2*a0) / g</td><td class="danger">Only valid if landing height = launch height</td></tr>
-      <tr><td>Time to peak</td><td class="mono">t_peak = v0*sin(a0) / g</td><td class="note">Set vy = 0 and solve for t</td></tr>
-      <tr><td>Maximum height</td><td class="mono">h = (v0*sin(a0))^2 / (2*g)</td><td class="note">Substitute t_peak into the y equation</td></tr>
-    </table>
-    <div class="tip" style="margin-top:16px;"><strong>Key numbers:</strong> g = 9.80 m/s^2 &nbsp;|&nbsp; Max range at 45 degrees &nbsp;|&nbsp; 30 and 60 degrees give the same range &nbsp;|&nbsp; At peak: vy = 0, vx unchanged, ay = -9.8 still</div>
-  </div>
-
-</div>
-</div>
-
-<!-- CONCEPTS -->
-<div id="pg-conc" class="sec">
-<div class="wrap">
-  <div class="sec-title"><span class="num">03</span> Key Concepts -- Deeply Explained</div>
-  <p class="sec-desc">These are the conceptual questions that separate high marks from average marks. Read each one carefully.</p>
-
-  <div class="acc open">
-    <div class="acc-head" onclick="tAcc(this)">Why is instantaneous velocity ALWAYS tangent to the path?<span class="acc-arrow">&#9660;</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p>Picture two points P1 and P2 on the curve. The average velocity points in the same direction as the displacement vector (straight arrow from P1 to P2).</p>
-      <p>Now shrink the time interval: slide P2 toward P1 along the curve. The straight arrow from P1 to P2 keeps rotating until it lines up perfectly with the tangent at P1. In the mathematical limit as delta-t approaches zero, that is your instantaneous velocity.</p>
-      <div class="fbox">v = lim[dt->0] (delta_r / delta_t) = dr/dt
-<span class="cm">// This limit IS the tangent direction at P1</span></div>
-      <p><strong>Exam application:</strong> If a question shows a curved path and asks which way the particle is moving at a specific point -- draw the tangent line at that point. The velocity vector points along that tangent.</p>
-    </div></div>
-  </div>
-
-  <div class="acc">
-    <div class="acc-head" onclick="tAcc(this)">Why can a particle accelerate at CONSTANT speed?<span class="acc-arrow">&#9660;</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p>Acceleration means the velocity vector is changing. A vector has two parts: its size (speed) AND its direction. Acceleration changes when either part changes.</p>
-      <p>When a car drives a roundabout at constant 40 km/h, the speedometer doesn't move. But the direction of the car keeps changing -- the velocity vector keeps rotating. A rotating vector is a changing vector. Change per unit time is acceleration.</p>
-      <div class="fbox">Speed constant  ->  a_parallel = 0  (no speed change)
-Curved path     ->  a_perp != 0   (direction is changing)
-Total accel     ->  NOT zero!     (it just has no "gas pedal" component)</div>
-      <p><strong>Rule to remember:</strong> Constant speed never means no acceleration when the path is curved.</p>
-    </div></div>
-  </div>
-
-  <div class="acc">
-    <div class="acc-head" onclick="tAcc(this)">How do we prove the projectile path is a parabola?<span class="acc-arrow">&#9660;</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p>Start with both position equations:</p>
-      <div class="fbox">x = (v0*cos(a0)) * t     ... (1)
-y = (v0*sin(a0))*t - (1/2)*g*t^2  ... (2)</div>
-      <p>From equation (1), isolate t: &nbsp; t = x / (v0*cos(a0))</p>
-      <p>Substitute into equation (2):</p>
-      <div class="fbox">y = (v0*sin(a0)) * [x / (v0*cos(a0))] - (1/2)*g * [x/(v0*cos(a0))]^2
-
-Simplify sin(a)/cos(a) = tan(a):
-y = tan(a0)*x  -  [g / (2*v0^2*cos^2(a0))] * x^2</div>
-      <p>This has the form <strong>y = B*x - C*x^2</strong> where B and C are just constants. That is a quadratic equation in x -- which is a <span class="hl-y">parabola opening downward</span>.</p>
-    </div></div>
-  </div>
-
-  <div class="acc">
-    <div class="acc-head" onclick="tAcc(this)">The Monkey and Zookeeper -- why does the dart ALWAYS hit?<span class="acc-arrow">&#9660;</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p>A monkey hangs at distance d. A dart is aimed directly at the monkey. The monkey drops the instant the dart is fired. Why does it always get hit?</p>
-      <p><strong>Core insight:</strong> Gravity pulls both objects down by the same amount at the same time.</p>
-      <div class="fbox">Without gravity: dart travels straight line directly to monkey's start position.
-
-With gravity: BOTH fall by exactly (1/2)*g*t^2 below their "no gravity" positions.
-
-y_dart   = d*tan(a0) - (1/2)*g*t^2
-y_monkey = H         - (1/2)*g*t^2   [where H = d*tan(a0)]
-
-The -(1/2)*g*t^2 term is IDENTICAL for both.
-They are always at the same height. They always meet.</div>
-      <p>The dart speed only affects WHEN they meet (sooner or later) -- not WHETHER they meet.</p>
-    </div></div>
-  </div>
-
-  <div class="acc">
-    <div class="acc-head" onclick="tAcc(this)">Sled at the crest of a hill -- which way does acceleration point?<span class="acc-arrow">&#9660;</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p>The sled slows going up, is fastest at the crest, then speeds up going down. At the crest, the speed is at its maximum value -- meaning it is momentarily not increasing or decreasing.</p>
-      <div class="fbox">At the crest:
-  dv/dt = 0   ->   a_parallel = 0   (speed not changing at this instant)
-  path curves downward (concave down)
-  ->   a_perp points toward center of curvature = STRAIGHT DOWN</div>
-      <p>Answer: acceleration points <strong>straight downward</strong> at the crest (vector 7 in the textbook).</p>
-      <div class="tip"><strong>Why straight down and not at an angle?</strong> Because a_parallel = 0 exactly at the crest (speed is at a local maximum -- neither increasing nor decreasing). The only remaining acceleration is the centripetal one pointing to the inside of the curve, which at the top of a hill is directly downward.</div>
-    </div></div>
-  </div>
-
-  <div class="acc">
-    <div class="acc-head" onclick="tAcc(this)">Average vs. Instantaneous velocity -- what is the real difference?<span class="acc-arrow">&#9660;</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <div class="fbox">Average velocity   = (total displacement) / (total time)
-                       = points from start to end position
-                       = ignores what happened along the way
-
-Instantaneous vel. = dr/dt = limit as dt -> 0
-                       = tangent to path at that exact moment
-                       = what a speedometer + compass shows right now</div>
-      <p>They are almost never equal during curved motion. Average velocity only cares about where you started and where you ended up. Instantaneous velocity tells you the exact direction and speed at one single moment.</p>
-      <div class="tip"><strong>Exam language guide:</strong> "at t = 2.0 s" means instantaneous. "between t = 0 and t = 2.0 s" means average.</div>
-    </div></div>
-  </div>
-
-</div>
-</div>
-
-<!-- PROJECTILE GUIDE -->
-<div id="pg-proj" class="sec">
-<div class="wrap">
-  <div class="sec-title"><span class="num">04</span> Projectile Motion -- Complete Playbook</div>
-  <p class="sec-desc">Three problem types. Master these and you can solve any projectile question on the exam.</p>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-b">Foundation</span> The Two Independent Motions</div>
-    <div class="two-col">
-      <div class="col-box horiz">
-        <h4>Horizontal (x-axis)</h4>
-        <ul>
-          <li>ax = 0 -- no horizontal force</li>
-          <li>vx = v0*cos(angle) -- constant, never changes</li>
-          <li>x = vx * t -- just speed times time</li>
-          <li>Equal x-distances every second</li>
-        </ul>
-      </div>
-      <div class="col-box vert">
-        <h4>Vertical (y-axis)</h4>
-        <ul>
-          <li>ay = -g = -9.80 m/s^2 -- always</li>
-          <li>vy = v0*sin(angle) - g*t</li>
-          <li>y = vy0*t - (g/2)*t^2</li>
-          <li>vy = 0 only at the peak</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tip"><strong>The bridge:</strong> Time t is shared between both axes. Find t from the vertical equation, then plug it into the horizontal equation.</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-r">Steps</span> Universal Problem-Solving Approach</div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-content">
-          <div class="step-title">Draw a clear diagram and list all known values</div>
-          <div class="step-desc">Origin at launch point. +x right, +y up. Write down: v0, launch angle, starting height, landing height, any given time.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <div class="step-title">Decompose the initial velocity into components</div>
-          <div class="step-desc">vx0 = v0 * cos(angle). vy0 = v0 * sin(angle). Exception: horizontal launch means angle=0, so vx0=v0 and vy0=0.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <div class="step-title">Identify the target: position, velocity, time, or range?</div>
-          <div class="step-desc">Write the target variable explicitly before choosing an equation. This prevents picking the wrong one.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <div class="step-title">Find time from the vertical equation (almost always first)</div>
-          <div class="step-desc">Set y = final height. If landing at same height: t_total = 2*vy0/g. If different height: solve the quadratic -- take only the positive root.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <div class="step-title">Use t in the horizontal equation</div>
-          <div class="step-desc">x = vx0 * t. That is all there is for horizontal position. It is always this simple.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <div class="step-title">Find velocity components and combine them</div>
-          <div class="step-desc">vx = vx0 (same as always). vy = vy0 - g*t. Speed = sqrt(vx^2 + vy^2). Angle = arctan(vy/vx) -- verify the correct quadrant!</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-g">Case 1</span> Horizontal Launch (Thrown off a cliff)</div>
-    <p>Object launched perfectly horizontally. Launch angle = 0 degrees. Example: motorcycle off a cliff, package dropped from plane.</p>
-    <div class="fbox"><span class="hi">Given:</span> v0 (horizontal speed), height H above ground
-
-<span class="hi">Setup:</span>  vx0 = v0,   vy0 = 0   (no vertical component at launch)
-
-<span class="hi2">Find time to hit ground (y = -H):</span>
-  -H = 0 - (1/2)*g*t^2
-  t = sqrt(2H / g)
-
-<span class="hi3">Find horizontal distance:</span>
-  x = v0 * t = v0 * sqrt(2H/g)
-
-<span class="hi4">Find velocity at impact:</span>
-  vx = v0  (unchanged the whole way down)
-  vy = -g*t  (negative means downward)
-  speed = sqrt(vx^2 + vy^2)</div>
-    <div class="tip"><strong>Example numbers:</strong> v0=9.0 m/s, t=0.5s: x = 9.0*0.5 = 4.5m, y = -0.5*9.8*0.25 = -1.2m (below the cliff)</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-o">Case 2</span> Symmetric Launch (Lands at same height)</div>
-    <p>Launched at angle a0, lands at the same height. Perfect parabola. Example: baseball, football, soccer kick.</p>
-    <div class="fbox"><span class="hi">Decompose:</span>  vx0 = v0*cos(a0),   vy0 = v0*sin(a0)
-
-<span class="hi2">Time to peak (set vy = 0):</span>
-  t_peak = vy0 / g
-
-<span class="hi2">Max height:</span>
-  h = vy0^2 / (2*g)
-
-<span class="hi3">Total flight time (symmetric path):</span>
-  t_total = 2 * t_peak
-
-<span class="hi3">Range:</span>
-  R = vx0 * t_total
-  OR: R = v0^2 * sin(2*a0) / g   (shortcut formula)
-
-<span class="cm">// 45 degrees maximizes R because sin(2*45) = sin(90) = 1 (maximum)
-// 30 and 60 degrees: sin(60) = sin(120) = same value, so same R</span></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="lbl lbl-r">Case 3</span> Different Landing Height (Quadratic needed)</div>
-    <p>Lands at a different height than launch. Requires quadratic formula. Example: grasshopper off a cliff, projectile over a wall.</p>
-    <div class="fbox"><span class="hi">Set up:</span>  y_final = vy0*t - (1/2)*g*t^2
-
-<span class="hi">Rearrange to standard form:</span>
-  (1/2)*g*t^2 - vy0*t - y_final = 0
-  <span class="cm">// if landing below: y_final is negative, so -y_final is positive</span>
-
-<span class="hi2">Use quadratic formula:</span>
-  t = [vy0 +/- sqrt(vy0^2 + 2*g*|y_final|)] / g
-
-<span class="hi4">IMPORTANT: Take only the POSITIVE root.</span>
-<span class="cm">// Negative time is physically impossible. Discard it.</span>
-
-<span class="hi3">Then find horizontal distance:</span>
-  x = vx0 * t</div>
-    <div class="warn"><strong>Most common mistake:</strong> Students forget there are two roots from the quadratic formula and pick the wrong one. Always check -- you want the positive time value.</div>
-  </div>
-
-</div>
-</div>
-
-<!-- FLASHCARDS -->
-<div id="pg-fc" class="sec">
-<div class="wrap">
-  <div class="sec-title"><span class="num">05</span> Flashcards</div>
-  <p class="sec-desc">Click the card to flip it and see the answer. Use the buttons to move between all 14 cards. Say the answer out loud before flipping.</p>
-
-  <div class="fc-wrap">
-    <div class="fc-inner" id="fc" onclick="flipCard()">
-      <div class="fc-front">
-        <div class="fc-label">Click to flip -- Question</div>
-        <div class="fc-q" id="fcq">What direction does the instantaneous velocity vector always point?</div>
-      </div>
-      <div class="fc-back">
-        <div class="fc-label">Answer</div>
-        <div class="fc-a" id="fca">Tangent to the path at that point</div>
-        <div class="fc-sub" id="fcsub">v = dr/dt -- as dt approaches zero, delta_r becomes the tangent direction</div>
-      </div>
-    </div>
-  </div>
-  <div class="fc-controls">
-    <button class="fc-btn" onclick="prevCard()">Prev</button>
-    <div class="fc-count" id="fcc">1 / 14</div>
-    <button class="fc-btn" onclick="nextCard()">Next</button>
+  <div class="header-title">CPE 114 // OOP Conceptual Exam</div>
+  <div class="header-sub">Randomly selected 50 of 150 questions</div>
+  <div class="header-tags">
+    <span class="tag tag-blue">Java History</span>
+    <span class="tag tag-green">OOP Concepts</span>
+    <span class="tag tag-red">Data Types</span>
+    <span class="tag tag-purple">Methods &amp; Constructors</span>
+    <span class="tag tag-blue">Encapsulation</span>
+    <span class="tag tag-green">UML</span>
+    <span class="tag tag-red">Code Analysis</span>
   </div>
 </div>
-</div>
 
-<!-- QUIZ -->
-<div id="pg-quiz" class="sec">
-<div class="wrap">
-  <div class="sec-title"><span class="num">06</span> Quick Quiz</div>
-  <p class="sec-desc">8 exam-style questions. Try to answer before clicking. Read every explanation -- even for correct answers.</p>
-
-  <div class="score-bar">
-    <div class="score-num" id="score-num">0 / 0</div>
-    <div class="score-track"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
-    <button class="reset-btn" onclick="resetQuiz()">Reset</button>
+<div class="sticky-bar">
+  <div class="prog-wrap">
+    <span class="prog-text" id="prog-text">0 / 50</span>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
   </div>
-  <div id="quiz-area"></div>
-</div>
-</div>
-
-<!-- SIMULATOR -->
-<div id="pg-sim" class="sec">
-<div class="wrap">
-  <div class="sec-title"><span class="num">07</span> Projectile Simulator</div>
-  <p class="sec-desc">Adjust speed and angle, then click Launch. Try launching at 30 and 60 degrees -- notice they land at the same spot. Try 45 degrees for maximum range.</p>
-
-  <div class="sim-controls">
-    <div class="sim-row">
-      <div>
-        <label class="sim-label">Launch Speed v0: <span class="sim-val" id="v0lbl">25 m/s</span></label>
-        <input type="range" id="v0r" min="5" max="45" value="25" oninput="document.getElementById('v0lbl').textContent=this.value+' m/s'">
-      </div>
-      <div>
-        <label class="sim-label">Launch Angle: <span class="sim-val" id="anglbl">45 deg</span></label>
-        <input type="range" id="angr" min="1" max="89" value="45" oninput="document.getElementById('anglbl').textContent=this.value+' deg'">
-      </div>
-    </div>
-    <button class="launch-btn" onclick="doLaunch()">Launch</button>
-    <button class="clear-btn" onclick="doClear()">Clear All</button>
+  <div class="bar-actions">
+    <button class="btn btn-ghost" onclick="newSession()">↺ New Set</button>
+    <button class="btn btn-primary" onclick="submitExam()">Submit &amp; Grade</button>
   </div>
-
-  <div class="canvas-wrap" id="canvasWrap">
-    <canvas id="simCanvas" height="340"></canvas>
-  </div>
-
-  <div id="stat-area"></div>
 </div>
+
+<div class="main" id="exam-body"></div>
 </div>
 
 <script>
-// ===== TAB =====
-function show(id, btn) {
-  document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('active'); });
-  document.querySelectorAll('.nbtn').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-  if (id === 'pg-sim') { setTimeout(initSim, 30); }
-}
+// ═══════════════════════════════════════════════════════════════════════
+// QUESTION POOL — 150 ITEMS
+// Format: { type:'mc'|'tf'|'short'|'essay', topic, text, code?, opts?, answer, explain }
+// ═══════════════════════════════════════════════════════════════════════
+const POOL = [
 
-// ===== ACCORDION =====
-function tAcc(head) { head.closest('.acc').classList.toggle('open'); }
+// ── JAVA HISTORY (15 MC) ──────────────────────────────────────────────
+{id:1, type:'mc', topic:'Java History', text:'Who led the "Green team" at Sun Microsystems and is credited as the creator of Java?',
+ opts:['Bill Gates','James Gosling','Linus Torvalds','Dennis Ritchie'], answer:1,
+ explain:'James Gosling led the Green team at Sun Microsystems and created Java (originally called Oak) in 1991.'},
 
-// ===== FLASHCARDS =====
-var fcData = [
-  { q: "What direction does the instantaneous velocity vector always point?", a: "Tangent to the path at that point", s: "v = dr/dt -- as dt -> 0, delta_r aligns with the tangent direction" },
-  { q: "What direction does the acceleration vector point for any curved motion?", a: "Toward the inside (concave side) of the curve", s: "The perpendicular component a_perp always points inward toward the center of curvature" },
-  { q: "What is the horizontal acceleration of a projectile during flight?", a: "ax = 0 (exactly zero)", s: "No horizontal force exists, so horizontal velocity vx never changes throughout the flight" },
-  { q: "What is the vertical acceleration throughout the entire projectile flight?", a: "ay = -g = -9.80 m/s squared, constant, always downward", s: "This never changes -- not at launch, not at the peak, not at landing" },
-  { q: "At the very peak of a projectile path, what is the vertical velocity vy?", a: "vy = 0 (zero) -- but acceleration is still -9.8 m/s^2!", s: "This is the most common trap. vy = 0 only at the peak, but ay is NEVER zero." },
-  { q: "What launch angle gives the maximum horizontal range?", a: "45 degrees", s: "R = v0^2 * sin(2*a0) / g is maximized when sin(2*a0) = 1, giving 2*a0 = 90, so a0 = 45" },
-  { q: "Formula for horizontal range when landing at the same height?", a: "R = v0^2 * sin(2 * angle) / g", s: "Only valid when y_final = y_initial = 0 (symmetric flight)" },
-  { q: "What single variable connects the x and y equations in projectile problems?", a: "Time t -- it is shared by both the horizontal and vertical equations", s: "Always find t first from the vertical equation, then substitute it into the horizontal one" },
-  { q: "What does the parallel component of acceleration (a_par) do?", a: "Changes the speed (magnitude) of the velocity", s: "a_par = 0 means constant speed. a_par forward means speeding up. a_par backward means slowing." },
-  { q: "What does the perpendicular component of acceleration (a_perp) do?", a: "Changes the direction of motion -- it is the turning acceleration", s: "a_perp = 0 means straight-line motion. a_perp inward means turning." },
-  { q: "If launch angles are 30 degrees and 60 degrees with the same initial speed, how do ranges compare?", a: "They are equal -- complementary angles (30+60=90) always give the same range", s: "sin(2*30) = sin(60) and sin(2*60) = sin(120) = sin(60). Same sine value, same R." },
-  { q: "Why do a dropped ball and a horizontally thrown ball hit the ground at the same time?", a: "Their vertical motions are identical -- horizontal speed has zero effect on vertical acceleration", s: "ax = 0 means x and y are completely independent. Both fall with ay = -g regardless." },
-  { q: "In the Mars Rover problem at t=2.0s, velocity angle is 128 degrees. Why not -52 degrees?", a: "vx = -1.0 m/s (negative) and vy = +1.3 m/s -- this is the second quadrant, so add 180", s: "arctan(1.3 / -1.0) = -52 degrees but that is 4th quadrant. Since vx<0, vy>0: 180 + (-52) = 128" },
-  { q: "What is the formula for average velocity, and what direction does it point?", a: "v_avg = delta_r / delta_t, and it points in the same direction as the displacement delta_r", s: "Dividing a vector by a positive scalar does not change its direction. It points from start to end." },
-];
-var fcIdx = 0;
-function updateFC() {
-  var c = fcData[fcIdx];
-  document.getElementById('fcq').textContent = c.q;
-  document.getElementById('fca').textContent = c.a;
-  document.getElementById('fcsub').textContent = c.s;
-  document.getElementById('fcc').textContent = (fcIdx+1) + ' / ' + fcData.length;
-  document.getElementById('fc').classList.remove('flipped');
-}
-function flipCard() { document.getElementById('fc').classList.toggle('flipped'); }
-function nextCard() { fcIdx = (fcIdx+1) % fcData.length; updateFC(); }
-function prevCard() { fcIdx = (fcIdx-1+fcData.length) % fcData.length; updateFC(); }
+{id:2, type:'mc', topic:'Java History', text:'In what year did the Java programming language originate as a research project at Sun Microsystems?',
+ opts:['1985','1991','1995','1999'], answer:1,
+ explain:'Java originated in 1991 as a research project at Sun Microsystems.'},
 
-// ===== QUIZ =====
-var qdata = [
-  {
-    q: "A particle moves along a curved path at constant speed. The acceleration vector must be:",
-    opts: ["Zero everywhere", "Parallel to velocity (tangent to path)", "Perpendicular to velocity (normal to path)", "In the opposite direction to velocity"],
-    ans: 2,
-    exp: "If speed is constant, a_parallel = 0 (no speed change). The only remaining acceleration is a_perp, which is perpendicular and points inward to the curve. The particle still accelerates because its direction keeps changing."
-  },
-  {
-    q: "A projectile is launched at 30 m/s at 60 degrees. What is the horizontal velocity component at the peak?",
-    opts: ["0 m/s", "15 m/s (which is 30 * cos 60)", "26 m/s (which is 30 * sin 60)", "30 m/s"],
-    ans: 1,
-    exp: "Horizontal velocity vx = v0 * cos(angle) = 30 * cos(60) = 30 * 0.5 = 15 m/s. This value NEVER changes throughout the flight -- not even at the peak."
-  },
-  {
-    q: "A sled reaches maximum speed at the crest of a snowy hill. At that instant, acceleration points:",
-    opts: ["Forward, tangent to path", "Backward, against direction of motion", "Straight downward", "Zero, because speed is not changing at that instant"],
-    ans: 2,
-    exp: "At maximum speed: dv/dt = 0, so a_parallel = 0. The path curves downward (concave), so a_perp points toward the center of curvature -- which is straight down. There is still acceleration pointing downward."
-  },
-  {
-    q: "Average velocity v_avg always points in the same direction as which vector?",
-    opts: ["Instantaneous velocity at t1", "Displacement vector delta_r", "Acceleration vector", "Position vector r"],
-    ans: 1,
-    exp: "v_avg = delta_r / delta_t. Dividing by a positive scalar (time) preserves direction. So v_avg always points in exactly the same direction as delta_r, from start position to end position."
-  },
-  {
-    q: "Which launch angle gives the greatest horizontal range when landing at the same height?",
-    opts: ["30 degrees", "60 degrees", "90 degrees", "45 degrees"],
-    ans: 3,
-    exp: "R = v0^2 * sin(2*angle) / g. The sine function reaches its maximum of 1 when its argument is 90 degrees. So 2*angle = 90, meaning angle = 45 degrees. This gives R_max = v0^2 / g."
-  },
-  {
-    q: "A ball is thrown horizontally off a cliff at 10 m/s. After 2 seconds, what is its vertical velocity?",
-    opts: ["-9.8 m/s", "-19.6 m/s", "0 m/s", "10 m/s"],
-    ans: 1,
-    exp: "vy = vy0 - g*t = 0 - 9.8*2 = -19.6 m/s. Negative means downward. Meanwhile, the horizontal velocity stays at vx = 10 m/s the whole time -- it does not change."
-  },
-  {
-    q: "Projectiles launched at 20 degrees and 70 degrees with the same initial speed. Which is true?",
-    opts: ["20 degrees gives greater range", "70 degrees gives greater range", "They land at the same horizontal distance", "They reach the same maximum height"],
-    ans: 2,
-    exp: "20 + 70 = 90 degrees, so they are complementary. sin(2*20) = sin(40) and sin(2*70) = sin(140) = sin(40). Same sine value means same range formula result. Note: 70 degrees reaches a much higher peak but the same horizontal distance."
-  },
-  {
-    q: "In the Monkey and Zookeeper problem, the dart always hits because:",
-    opts: ["The dart speed perfectly compensates for gravity", "Both the dart and monkey fall the same amount (half*g*t^2) due to gravity", "The zookeeper calculates the exact landing spot", "Air resistance affects both objects equally"],
-    ans: 1,
-    exp: "Without gravity, the dart would travel straight to the monkey's start position. With gravity, BOTH fall exactly (1/2)*g*t^2 below their no-gravity positions. y_dart = d*tan(a) - (1/2)*g*t^2 and y_monkey = H - (1/2)*g*t^2 where H = d*tan(a). The gravity terms are identical, so they are always at the same height."
+{id:3, type:'mc', topic:'Java History', text:'What was Java\'s original name before it was publicly renamed?',
+ opts:['Pine','Duke','Oak','Maple'], answer:2,
+ explain:'Java was originally named Oak before being renamed Java.'},
+
+{id:4, type:'mc', topic:'Java History', text:'What was the original intended purpose of the Java language when it was created in 1991?',
+ opts:['To replace C++ in operating systems','To bridge communication between consumer devices like VCRs and TVs','To power web server applications','To develop video games'], answer:1,
+ explain:'Java was created to bridge the communication gap between consumer devices such as VCRs and televisions.'},
+
+{id:5, type:'mc', topic:'Java History', text:'What event in 1995 made Java widely popular and marked its turning point?',
+ opts:['Sun released Java as open-source','Netscape incorporated Java into its browser','Microsoft adopted Java as primary language','Java won the Turing Award'], answer:1,
+ explain:'The turning point was in 1995 when Netscape incorporated Java into its browser.'},
+
+{id:6, type:'mc', topic:'Java History', text:'What is Java\'s official mascot character, originally created by Green team artist Joe Palrang?',
+ opts:['Byte','Gosling','Oak','Duke'], answer:3,
+ explain:'Duke is Java\'s mascot, created by Joe Palrang of the Green team.'},
+
+{id:7, type:'mc', topic:'Java History', text:'What programming language is Java loosely based on?',
+ opts:['FORTRAN','COBOL','C++','BASIC'], answer:2,
+ explain:'OOP started with SIMULA-67 and evolved through C++, upon which Java is loosely based.'},
+
+{id:8, type:'mc', topic:'Java History', text:'What are the small browser-based applications first created with the Oak language called?',
+ opts:['Widgets','Applets','Modules','Scripts'], answer:1,
+ explain:'Applets were the initial use of the Oak (Java) language — small applications for web browsers.'},
+
+{id:9, type:'mc', topic:'Java History', text:'UML 1.0 specification draft was proposed to the OMG in which month and year?',
+ opts:['March 1995','January 1997','June 1999','October 2000'], answer:1,
+ explain:'UML 1.0 specification draft was proposed to the Object Management Group in January 1997.'},
+
+{id:10, type:'mc', topic:'Java History', text:'What does "JVM" stand for?',
+ opts:['Java Variable Machine','Java Virtual Machine','Java Vendor Module','Java Version Manager'], answer:1,
+ explain:'JVM stands for Java Virtual Machine — the platform-specific program that interprets Java bytecode.'},
+
+{id:11, type:'mc', topic:'Java History', text:'What does "JRE" stand for and what two components form it?',
+ opts:['Java Runtime Engine — compiler and linker','Java Runtime Environment — JVM and Java class libraries','Java Runtime Executor — bytecode and machine code','Java Run Engine — IDE and interpreter'], answer:1,
+ explain:'JRE = Java Runtime Environment, made up of the JVM and Java class libraries.'},
+
+{id:12, type:'mc', topic:'Java History', text:'Which OOP language is credited as the very first — the origin of OOP?',
+ opts:['C++','Java','SIMULA-67','Smalltalk'], answer:2,
+ explain:'OOP started with SIMULA-67, the first object-oriented programming language.'},
+
+{id:13, type:'mc', topic:'Java History', text:'What is the name of Java\'s automatic memory management feature that removes unused objects?',
+ opts:['Memory Manager','Object Cleaner','Garbage Collector','Heap Flusher'], answer:2,
+ explain:'Java\'s garbage collector monitors and removes objects from memory that are no longer referenced.'},
+
+{id:14, type:'mc', topic:'Java History', text:'What format does the Java compiler produce (instead of platform-specific machine code)?',
+ opts:['Binary executable','Machine code','Bytecode','Assembly'], answer:2,
+ explain:'The Java compiler produces platform-independent bytecode instead of CPU-specific machine code.'},
+
+{id:15, type:'mc', topic:'Java History', text:'Why is Java described as "platform-independent"?',
+ opts:['It runs only on Windows','Its compiled bytecode can run on any platform that has a JVM','It does not need to be compiled at all','It produces one binary for all operating systems'], answer:1,
+ explain:'Java bytecode is platform-independent — any JVM on any platform can interpret and execute it.'},
+
+// ── OOP CONCEPTS (25 MC) ─────────────────────────────────────────────
+{id:16, type:'mc', topic:'OOP Concepts', text:'Which of the following best describes a <strong>class</strong> in OOP?',
+ opts:['A single instance of data in memory','A blueprint or prototype from which objects are created','A compiled bytecode file','A sequence of procedural steps'], answer:1,
+ explain:'A class is a blueprint or prototype from which objects are created (The Java Tutorials).'},
+
+{id:17, type:'mc', topic:'OOP Concepts', text:'An object in OOP is defined as having which two fundamental components?',
+ opts:['Class and interface','State and behavior','Variables and constants','Methods and files'], answer:1,
+ explain:'An object has state (attribute values) and behavior (methods/operations).'},
+
+{id:18, type:'mc', topic:'OOP Concepts', text:'What is <strong>abstraction</strong> in OOP?',
+ opts:['Combining data and methods into a single unit','Capturing only those details about an object that are relevant to the current perspective','Inheriting properties from a parent class','Compiling code into platform-specific executables'], answer:1,
+ explain:'Abstraction captures only relevant details from the current perspective, hiding all else.'},
+
+{id:19, type:'mc', topic:'OOP Concepts', text:'What is <strong>encapsulation</strong>?',
+ opts:['Allowing a child class to reuse parent methods','Making fields private and providing access via public methods','Creating multiple methods with the same name','Running the same code on multiple platforms'], answer:1,
+ explain:'Encapsulation is the technique of making fields private and providing access via public methods (getters/setters).'},
+
+{id:20, type:'mc', topic:'OOP Concepts', text:'Encapsulation is also referred to as:',
+ opts:['Code reuse','Polymorphism','Data hiding','Abstraction'], answer:2,
+ explain:'Encapsulation is also called data hiding because private fields are hidden from outside the class.'},
+
+{id:21, type:'mc', topic:'OOP Concepts', text:'What is <strong>inheritance</strong> in OOP?',
+ opts:['Allowing multiple method names','Hiding data behind public methods','A child class acquiring properties and behaviors of a parent class','Creating an object from a class'], answer:2,
+ explain:'Inheritance allows a child class to acquire the properties and behaviors of its parent, enabling code reuse.'},
+
+{id:22, type:'mc', topic:'OOP Concepts', text:'What is <strong>polymorphism</strong>?',
+ opts:['Combining data and functions','The ability of a variable, object, or function to take on multiple forms','Hiding fields with private access','Compiling bytecode to machine code'], answer:1,
+ explain:'Polymorphism means "many forms" — one interface, multiple implementations/behaviors.'},
+
+{id:23, type:'mc', topic:'OOP Concepts', text:'What is <strong>instantiation</strong>?',
+ opts:['Writing a class definition','Creating an object from a class using the new keyword','Declaring an interface','Compiling a Java program'], answer:1,
+ explain:'Instantiation is the act of creating an object (an instance) from a class using the new keyword.'},
+
+{id:24, type:'mc', topic:'OOP Concepts', text:'In OOP, what is the difference between a class and an object?',
+ opts:['They are the same thing','A class is the blueprint; an object is an instance created from that blueprint','An object is the blueprint; a class is the instance','A class is executable; an object is not'], answer:1,
+ explain:'A class is the blueprint/template; an object is a specific instance created from that class.'},
+
+{id:25, type:'mc', topic:'OOP Concepts', text:'Which symbol in UML class diagrams indicates a <em>private</em> member?',
+ opts:['+','-','#','*'], answer:1,
+ explain:'In UML notation, "-" denotes private access, "+" denotes public, "#" denotes protected.'},
+
+{id:26, type:'mc', topic:'OOP Concepts', text:'What are the three compartments of a UML class diagram, in order?',
+ opts:['Methods, Attributes, Class Name','Class Name, Attributes, Methods','Attributes, Class Name, Methods','Class Name, Methods, Attributes'], answer:1,
+ explain:'A UML class diagram has three compartments: Class Name (top), Attributes (middle), Methods/Operations (bottom).'},
+
+{id:27, type:'mc', topic:'OOP Concepts', text:'Which key benefit does <strong>information hiding</strong> provide?',
+ opts:['Allows faster compilation','Simplifies the model and acts as a barrier against change propagation','Forces all methods to be public','Prevents objects from being instantiated'], answer:1,
+ explain:'Information hiding simplifies the model by hiding implementation details and protects against change propagation.'},
+
+{id:28, type:'mc', topic:'OOP Concepts', text:'What is the unit of programming in OOP (vs. "function" in procedural)?',
+ opts:['Function','Module','Class','Procedure'], answer:2,
+ explain:'In OOP, the unit is the class. In procedural programming, the unit is the function.'},
+
+{id:29, type:'mc', topic:'OOP Concepts', text:'What does UML stand for?',
+ opts:['Universal Modeling Language','Unified Modeling Language','Unified Method Language','Universal Method Library'], answer:1,
+ explain:'UML = Unified Modeling Language — a graphical language for visualizing and documenting software systems.'},
+
+{id:30, type:'mc', topic:'OOP Concepts', text:'Which type of UML diagram is most widely used by OOP developers and maps directly to OOP languages?',
+ opts:['Sequence diagram','Use-case diagram','Class diagram','Activity diagram'], answer:2,
+ explain:'Class diagrams are the most popular UML diagrams and can be mapped directly to OOP languages.'},
+
+{id:31, type:'mc', topic:'OOP Concepts', text:'In OOP, what does "objects = state + behavior" mean?',
+ opts:['Objects contain only data (state)','Objects have both data (attributes/state) and methods (behavior)','Objects must have a main() method','Objects always inherit from another object'], answer:1,
+ explain:'Objects = state (attribute values) + behavior (operations/methods). Both are essential.'},
+
+{id:32, type:'mc', topic:'OOP Concepts', text:'What is an "interface" in the OOP sense (as covered in the lectures)?',
+ opts:['A compiled .class file','A GUI window component','The set of operations (public methods) that an object exposes for other objects to interact with','A private field'], answer:2,
+ explain:'An object\'s interface is the set of operations (public methods) through which other objects communicate with it.'},
+
+{id:33, type:'mc', topic:'OOP Concepts', text:'Procedural programming <em>separates</em> data from operations, while OOP:',
+ opts:['Also separates them, but more strictly','Focuses on both data and operations together within objects','Eliminates data entirely','Uses only global variables'], answer:1,
+ explain:'OOP focuses on both data and operations together within objects (classes), unlike procedural which separates them.'},
+
+{id:34, type:'mc', topic:'OOP Concepts', text:'A class diagram represents what kind of view of a system?',
+ opts:['Dynamic view (runtime behavior)','Static view (structure at a point in time)','Network view','Deployment view'], answer:1,
+ explain:'The class diagram represents the static view of a system — its structure, not runtime behavior.'},
+
+{id:35, type:'mc', topic:'OOP Concepts', text:'Which statement about objects in Java is correct?',
+ opts:['An object can be an instance of multiple classes','An object is always identical to its class','An object is an instance of exactly one class','A class can only create one object'], answer:2,
+ explain:'In Java, an object is an instance of exactly one class.'},
+
+{id:36, type:'mc', topic:'OOP Concepts', text:'What is object-oriented <strong>analysis (OOA)</strong>?',
+ opts:['Writing Java code for every class','Identifying the problem domain, objects, their attributes, and behaviors','Drawing diagrams without any classes','Compiling source code with javac'], answer:1,
+ explain:'OOA involves identifying the problem domain, its objects, attributes, and behaviors, and specifying object interactions.'},
+
+{id:37, type:'mc', topic:'OOP Concepts', text:'When identifying objects in OOA, what are object names and attributes typically phrased as?',
+ opts:['Verbs','Nouns','Adjectives','Prepositions'], answer:1,
+ explain:'Object names and attributes are typically nouns. Operations/behaviors are typically verbs or noun-verb combinations.'},
+
+{id:38, type:'mc', topic:'OOP Concepts', text:'What are object operations (behaviors) typically phrased as?',
+ opts:['Nouns','Adjectives','Verbs or noun-verb combinations','Numbers'], answer:2,
+ explain:'Object operations are usually verbs or noun-verb combinations (e.g., placeOrder(), calculateTotal()).'},
+
+{id:39, type:'mc', topic:'OOP Concepts', text:'Which OOP benefit allows you to remove a problematic object and replace it with another without redesigning the whole system?',
+ opts:['Inheritance','Polymorphism','Pluggability and debugging ease','Abstraction'], answer:2,
+ explain:'Pluggability and debugging ease means a problematic object can be removed and replaced, like replacing a broken bolt.'},
+
+{id:40, type:'mc', topic:'OOP Concepts', text:'What is the "problem domain" in OOA?',
+ opts:['The server where code runs','The scope of the problem to be solved','The list of all variables in the program','The set of all methods in a class'], answer:1,
+ explain:'The problem domain is the scope of the problem you are solving — the boundary of what the system must address.'},
+
+// ── JAVA DATA TYPES & VARIABLES (20 MC) ──────────────────────────────
+{id:41, type:'mc', topic:'Data Types & Variables', text:'How many primitive data types does Java have?',
+ opts:['6','7','8','10'], answer:2,
+ explain:'Java has exactly 8 primitive data types: byte, short, int, long, float, double, char, boolean.'},
+
+{id:42, type:'mc', topic:'Data Types & Variables', text:'Which of the following is NOT a primitive data type in Java?',
+ opts:['int','boolean','String','char'], answer:2,
+ explain:'String is NOT a primitive — it is a class (reference type). The 8 primitives are byte, short, int, long, float, double, char, boolean.'},
+
+{id:43, type:'mc', topic:'Data Types & Variables', text:'What character set does the Java <code>char</code> type use?',
+ opts:['ASCII (8-bit)','EBCDIC (8-bit)','Unicode (16-bit)','UTF-32 (32-bit)'], answer:2,
+ explain:'Java char uses Unicode — a 16-bit character set. Unicode contains ASCII as its first 128 characters.'},
+
+{id:44, type:'mc', topic:'Data Types & Variables', text:'Which Java primitive type stores only <strong>true</strong> or <strong>false</strong>?',
+ opts:['int','bit','boolean','flag'], answer:2,
+ explain:'boolean is the only Java primitive that holds true or false.'},
+
+{id:45, type:'mc', topic:'Data Types & Variables', text:'What is the correct way to declare a Java constant?',
+ opts:['constant int MAX = 100;','final int MAX = 100;','static int MAX = 100;','readonly int MAX = 100;'], answer:1,
+ explain:'Constants in Java are declared with the "final" keyword (e.g., final int MAX = 100).'},
+
+{id:46, type:'mc', topic:'Data Types & Variables', text:'What is the default value of an instance variable of type <code>int</code> in Java?',
+ opts:['null','undefined','1','0'], answer:3,
+ explain:'Field (instance) variables are automatically initialized: int/short/byte/long → 0, float/double → 0.0, boolean → false, char → \\u0000.'},
+
+{id:47, type:'mc', topic:'Data Types & Variables', text:'Which naming convention is recommended for Java variable names?',
+ opts:['ALL_CAPS_WITH_UNDERSCORES','StartWithUppercase','beginWithLowercase_ThenCamelCase','use-hyphens-between-words'], answer:2,
+ explain:'Variables should begin with a lowercase letter; subsequent words are capitalized (camelCase). e.g., myVariable.'},
+
+{id:48, type:'mc', topic:'Data Types & Variables', text:'Which of these is a <strong>valid</strong> Java identifier?',
+ opts:['2ndValue','my-variable','_myValue','class'], answer:2,
+ explain:'Identifiers must start with a letter, _, or $. _myValue is valid. 2ndValue starts with digit (illegal), my-variable has a dash (illegal), class is a keyword.'},
+
+{id:49, type:'mc', topic:'Data Types & Variables', text:'What is <strong>type promotion</strong>?',
+ opts:['Explicitly converting a larger type to a smaller one','The compiler automatically converting a smaller type to a larger one to prevent data loss','Declaring a variable as final','Making a local variable into an instance variable'], answer:1,
+ explain:'Promotion is automatic widening — compiler converts smaller to larger type (e.g., int to double) without explicit code.'},
+
+{id:50, type:'mc', topic:'Data Types & Variables', text:'What is <strong>type casting</strong>?',
+ opts:['Automatic widening of a data type','Explicitly converting a value to a different (usually smaller) data type','Declaring multiple variables on one line','Promoting all bytes to int'], answer:1,
+ explain:'Type casting is explicit narrowing — programmer manually converts a larger type to smaller, possibly losing precision.'},
+
+{id:51, type:'mc', topic:'Data Types & Variables', text:'What happens when you cast <code>(int) 9.99</code> in Java?',
+ opts:['Result is 10 (rounds up)','Result is 9 (truncated, not rounded)','Compilation error','Result is 9.99 stored as int'], answer:1,
+ explain:'Casting truncates — it does NOT round. (int) 9.99 = 9. The decimal part is dropped.'},
+
+{id:52, type:'mc', topic:'Data Types & Variables', text:'Which floating-point type should you use when greater range or accuracy is needed?',
+ opts:['float','double','long','decimal'], answer:1,
+ explain:'double offers greater range and higher accuracy than float. Always prefer double when precision matters.'},
+
+{id:53, type:'mc', topic:'Data Types & Variables', text:'What is the output of <code>System.out.println("Result: " + 3 + 4);</code>?',
+ opts:['Result: 7','Result: 34','Result: 3 4','Compilation error'], answer:1,
+ explain:'Left-to-right: "Result: " + 3 → "Result: 3", then + 4 → "Result: 34". Once a String is in the expression, + means concatenation.'},
+
+{id:54, type:'mc', topic:'Data Types & Variables', text:'What is <strong>string concatenation</strong>?',
+ opts:['Splitting a string into characters','Joining two or more strings using the + operator','Converting a number to a string using casting','Removing whitespace from a string'], answer:1,
+ explain:'Concatenation joins strings together using the + operator.'},
+
+{id:55, type:'mc', topic:'Data Types & Variables', text:'What does this statement produce? <code>System.out.println("Result: " + (3 + 4));</code>',
+ opts:['Result: 34','Result: 7','Compilation error','Result: 3+4'], answer:1,
+ explain:'Parentheses force arithmetic first: (3+4) = 7. Then concatenation: "Result: 7".'},
+
+{id:56, type:'mc', topic:'Data Types & Variables', text:'Which Java types are classified as <strong>integral</strong> primitive types?',
+ opts:['float and double','char and boolean','byte, short, int, and long','int and float'], answer:2,
+ explain:'Integral types are byte, short, int, and long — all store whole number values.'},
+
+{id:57, type:'mc', topic:'Data Types & Variables', text:'Which is automatically promoted when used in arithmetic: byte, char, or short?',
+ opts:['They are promoted to long','They are promoted to int before the operation','They remain their original type','They are promoted to double'], answer:1,
+ explain:'byte, char, and short values are promoted to int before any arithmetic operation.'},
+
+{id:58, type:'mc', topic:'Data Types & Variables', text:'Which of the following correctly declares and initializes a boolean field?',
+ opts:['boolean isOpen = 1;','boolean isOpen = false;','Boolean isOpen = FALSE;','bool isOpen = false;'], answer:1,
+ explain:'boolean isOpen = false; is correct. Java boolean is only true or false — not 0/1.'},
+
+{id:59, type:'mc', topic:'Data Types & Variables', text:'A variable declared inside a method is called a:',
+ opts:['Instance variable','Global variable','Local variable','Class variable'], answer:2,
+ explain:'Variables declared inside a method are local variables — accessible only within that method.'},
+
+{id:60, type:'mc', topic:'Data Types & Variables', text:'Which Java keyword cannot be used as a variable name?',
+ opts:['myClass','_value','result','class'], answer:3,
+ explain:'"class" is a reserved keyword in Java. Keywords cannot be used as identifiers.'},
+
+// ── JAVA METHODS (20 MC) ──────────────────────────────────────────────
+{id:61, type:'mc', topic:'Methods & Constructors', text:'What is the <strong>method signature</strong>?',
+ opts:['Return type and access modifier only','Method name and parameter list combined','Method body and return type','Class name and method name combined'], answer:1,
+ explain:'Method signature = method name + parameter list. Return type is NOT part of the signature.'},
+
+{id:62, type:'mc', topic:'Methods & Constructors', text:'What does a <strong>void</strong> return type indicate?',
+ opts:['The method returns null','The method returns a boolean','The method returns no value','The method is private'], answer:2,
+ explain:'void means the method performs operations without returning any value.'},
+
+{id:63, type:'mc', topic:'Methods & Constructors', text:'What is <strong>method overloading</strong>?',
+ opts:['Calling a method from another class','Defining multiple methods with the same name but different parameter lists','Overriding a parent class method','Calling a method without declaring it'], answer:1,
+ explain:'Method overloading: same name, different parameter declarations (type and/or number). Return type alone does not differentiate.'},
+
+{id:64, type:'mc', topic:'Methods & Constructors', text:'Can two overloaded methods be differentiated by return type alone?',
+ opts:['Yes, always','Yes, but only for static methods','No — parameter list must differ','Yes, if one returns void'], answer:2,
+ explain:'Return type alone is insufficient to distinguish overloaded methods. The parameter list must differ.'},
+
+{id:65, type:'mc', topic:'Methods & Constructors', text:'What is <strong>pass-by-value</strong>?',
+ opts:['The method receives a direct reference to the original variable','The value of the argument is copied to the parameter; the original is unaffected','The parameter owns the argument\'s memory address','The method cannot change any value'], answer:1,
+ explain:'Pass-by-value: a copy of the argument\'s value is passed. Changes inside the method do NOT affect the original variable.'},
+
+{id:66, type:'mc', topic:'Methods & Constructors', text:'Why is the <code>main</code> method declared <strong>static</strong>?',
+ opts:['Because it returns void','Because it must be private','Because program execution starts there before any object is created','Because it accepts String arguments'], answer:2,
+ explain:'main is static because program execution begins from main and no object has been created yet at startup.'},
+
+{id:67, type:'mc', topic:'Methods & Constructors', text:'How do you call a static method of another class named <code>MathUtils</code>?',
+ opts:['square(4)','MathUtils.square(4)','new MathUtils.square(4)','MathUtils::square(4)'], answer:1,
+ explain:'Static methods of another class are called as ClassName.methodName(). No object is needed.'},
+
+{id:68, type:'mc', topic:'Methods & Constructors', text:'What is a <strong>constructor</strong>?',
+ opts:['A method that always returns boolean','A method invoked when an object is created to initialize it','A static method that builds new classes at runtime','A method that destroys objects'], answer:1,
+ explain:'A constructor is invoked automatically when an object is created (using new) to initialize it into a usable state.'},
+
+{id:69, type:'mc', topic:'Methods & Constructors', text:'Which characteristic uniquely identifies a constructor in Java?',
+ opts:['It has a void return type','It is always private','It has the same name as the class and NO return type','It must have parameters'], answer:2,
+ explain:'A constructor has the same name as the class and has NO return type — not even void.'},
+
+{id:70, type:'mc', topic:'Methods & Constructors', text:'What is the result of this code?',
+ code:`<span class="kw">public class</span> <span class="cls">Demo</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="kw">int</span> x = <span class="num">5</span>;
+        <span class="fn">change</span>(x);
+        <span class="cls">System</span>.out.<span class="fn">println</span>(x);
+    }
+    <span class="kw">public static void</span> <span class="fn">change</span>(<span class="kw">int</span> n) { n = n * <span class="num">2</span>; }
+}`,
+ opts:['10','5','0','Compilation error'], answer:1,
+ explain:'Java is pass-by-value. The original variable x is NOT modified by change(). Output: 5.'},
+
+{id:71, type:'mc', topic:'Methods & Constructors', text:'What does the <strong><code>this</code></strong> keyword refer to inside a constructor?',
+ opts:['The parent class','The current object being constructed','The return value of the constructor','The static class reference'], answer:1,
+ explain:'"this" refers to the current object — the one being created or whose method is being called.'},
+
+{id:72, type:'mc', topic:'Methods & Constructors', text:'When is using <code>this.variableName</code> necessary?',
+ opts:['Always — it is required in every constructor','When a constructor/method parameter has the same name as the instance variable, shadowing it','When the variable is static','When the variable is public'], answer:1,
+ explain:'this.variableName is needed when a parameter shadows (has the same name as) the instance variable.'},
+
+{id:73, type:'mc', topic:'Methods & Constructors', text:'What does <code>this(0, 0)</code> inside a constructor do?',
+ opts:['Calls the parent class constructor','Sets "this" to null','Calls another constructor in the same class — explicit constructor invocation','Causes a compilation error'], answer:2,
+ explain:'"this(args)" inside a constructor calls another constructor of the same class — called explicit constructor invocation.'},
+
+{id:74, type:'mc', topic:'Methods & Constructors', text:'If a programmer defines a parameterized constructor but no default constructor, what happens when <code>new MyClass()</code> (no args) is called?',
+ opts:['Java auto-generates a default constructor','Compilation error — no no-arg constructor exists','The parameterized constructor is called with default values','It creates an empty object'], answer:1,
+ explain:'If any parameterized constructor is defined, Java does NOT auto-generate a default constructor. Calling new MyClass() will fail.'},
+
+{id:75, type:'mc', topic:'Methods & Constructors', text:'What is a <strong>getter</strong> method also called?',
+ opts:['Mutator method','Constructor','Accessor or query method','Static method'], answer:2,
+ explain:'Getter methods are called accessor or query methods — they return the value of a private field.'},
+
+{id:76, type:'mc', topic:'Methods & Constructors', text:'What is a <strong>setter</strong> method also called?',
+ opts:['Accessor method','Query method','Mutator method','Abstract method'], answer:2,
+ explain:'Setter methods are called mutator methods — they set/change the value of a private field.'},
+
+{id:77, type:'mc', topic:'Methods & Constructors', text:'Method overloading is one way Java implements which OOP concept?',
+ opts:['Inheritance','Encapsulation','Polymorphism','Abstraction'], answer:2,
+ explain:'Method overloading supports polymorphism — "one interface, multiple methods."'},
+
+{id:78, type:'mc', topic:'Methods & Constructors', text:'What happens when Java cannot find an exact match for an overloaded method call?',
+ opts:['Compilation error','Java uses automatic type conversions to find a match','Java calls the first defined method','Runtime exception is thrown'], answer:1,
+ explain:'If no exact match is found, Java applies automatic type conversions (e.g., int → double) to resolve the call.'},
+
+{id:79, type:'mc', topic:'Methods & Constructors', text:'What is the return type of this method?',
+ code:`<span class="kw">public static int</span> <span class="fn">addNums</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> a + b;
+}`,
+ opts:['void','static','int','public'], answer:2,
+ explain:'The return type appears before the method name — here it is "int".'},
+
+{id:80, type:'mc', topic:'Methods & Constructors', text:'Which statement about instance methods vs. static methods is correct?',
+ opts:['Static methods require an object; instance methods do not','Instance methods require an object to be created; static methods can be called without one','They are functionally identical','Instance methods cannot access fields'], answer:1,
+ explain:'Instance methods require an object (instance) of the class. Static methods can be called directly on the class.'},
+
+// ── JAVA SYNTAX (15 MC) ───────────────────────────────────────────────
+{id:81, type:'mc', topic:'Java Syntax', text:'What command compiles a Java file named <code>Hello.java</code>?',
+ opts:['java Hello.java','javac Hello.java','run Hello','compile Hello.java'], answer:1,
+ explain:'"javac Hello.java" compiles the source file. "java Hello" (no extension) runs the compiled class.'},
+
+{id:82, type:'mc', topic:'Java Syntax', text:'What must every basic Java statement end with?',
+ opts:['A colon :','A period .','A semicolon ;','A comma ,'], answer:2,
+ explain:'Every basic Java statement ends with a semicolon ;'},
+
+{id:83, type:'mc', topic:'Java Syntax', text:'Which of these identifiers is <strong>illegal</strong> in Java?',
+ opts:['_myName','ANSWER_IS_42','$bling$','49ers'], answer:3,
+ explain:'Identifiers cannot start with a digit. "49ers" starts with 4 — illegal.'},
+
+{id:84, type:'mc', topic:'Java Syntax', text:'Java is described as case-sensitive. What does this mean?',
+ opts:['All keywords must be uppercase','Hello and hello are treated as different identifiers','The compiler converts all code to lowercase','Class names must start lowercase'], answer:1,
+ explain:'Java is case-sensitive: "Hello" and "hello" are completely different identifiers.'},
+
+{id:85, type:'mc', topic:'Java Syntax', text:'What is a <strong>keyword</strong> in Java?',
+ opts:['A user-defined variable name','An identifier reserved by Java for specific constructs that cannot be used as variable names','A comment in the source code','A method return type'], answer:1,
+ explain:'Keywords are identifiers reserved by Java (like class, int, if, public) — they cannot be used as variable names.'},
+
+{id:86, type:'mc', topic:'Java Syntax', text:'What does <code>System.out.println()</code> with no argument print?',
+ opts:['null','An error','A blank line','Nothing — it is ignored'], answer:2,
+ explain:'System.out.println() with no argument prints a blank line of output.'},
+
+{id:87, type:'mc', topic:'Java Syntax', text:'What is the output of <code>System.out.println("\\ta\\tb\\tc");</code>?',
+ opts:['\\ta\\tb\\tc','[tab]a[tab]b[tab]c','a b c','Compilation error'], answer:1,
+ explain:'\\t is the tab character, so the output is a tab, then a, tab, b, tab, c.'},
+
+{id:88, type:'mc', topic:'Java Syntax', text:'What escape sequence represents a <strong>newline</strong> character?',
+ opts:['\\t','\\r','\\n','\\b'], answer:2,
+ explain:'\\n is the newline character. \\t is tab. \\\\ is backslash. \\" is a quotation mark.'},
+
+{id:89, type:'mc', topic:'Java Syntax', text:'What escape sequence produces a literal <strong>backslash</strong> in output?',
+ opts:['\\b','\\\\','\\n','\\/'], answer:1,
+ explain:'\\\\ in a string literal produces a single backslash character in the output.'},
+
+{id:90, type:'mc', topic:'Java Syntax', text:'Which of these is a <strong>syntax error</strong> in Java?',
+ opts:['Missing semicolon at end of statement','Declaring a variable with a lowercase name','Using a double instead of a float','Having only one class per file'], answer:0,
+ explain:'A missing semicolon is a classic syntax error. The compiler reports a ";" expected error.'},
+
+{id:91, type:'mc', topic:'Java Syntax', text:'What is the naming convention for <strong>class names</strong> in Java?',
+ opts:['all lowercase','ALL_CAPS','camelCase starting lowercase','Mixed case with first letter of each word capitalized (e.g., MyClass)'], answer:3,
+ explain:'Class names should be nouns in mixed case, with the first letter of each word capitalized (e.g., BankAccount).'},
+
+{id:92, type:'mc', topic:'Java Syntax', text:'What does <code>System.out.println("\\\\");</code> output?',
+ opts:['\\\\','\\','Compilation error','Two backslashes'], answer:1,
+ explain:'\\\\ produces a single backslash in output. The string "\\\\" has two characters: two escape sequences each producing one backslash — wait, "\\\\" = one escaped backslash, so output is \\. Two \\\\ would be "\\\\\\\\".'},
+
+{id:93, type:'mc', topic:'Java Syntax', text:'What is the structure of every executable Java program?',
+ opts:['A function containing statements','A class, containing a main method, containing statements','A package, containing methods','A module containing classes'], answer:1,
+ explain:'Every Java program = a class containing a method named main containing the statements to execute.'},
+
+{id:94, type:'mc', topic:'Java Syntax', text:'What does it mean that Java is a <strong>distributed</strong> language?',
+ opts:['Code can run without a compiler','Multiple people can edit the same file','It supports distributed network technologies like RMI, CORBA, and URL; code can be downloaded and executed over the internet','It runs on only distributed cloud servers'], answer:2,
+ explain:'Java is distributed because it supports RMI, CORBA, and URL — code can be downloaded over the internet and executed.'},
+
+{id:95, type:'mc', topic:'Java Syntax', text:'Which file extension is used for compiled Java bytecode files?',
+ opts:['.java','.exe','.class','.bc'], answer:2,
+ explain:'Compiled Java bytecode is stored in .class files. Source code is in .java files.'},
+
+// ── ENCAPSULATION DEEP DIVE (10 MC) ───────────────────────────────────
+{id:96, type:'mc', topic:'Encapsulation', text:'What is the main benefit of encapsulation, per the lectures?',
+ opts:['Faster runtime performance','The ability to modify implemented code without breaking code that uses it','Allowing direct field access from anywhere','Preventing class inheritance'], answer:1,
+ explain:'The main benefit of encapsulation is modifying internal implementation without breaking other code that depends on it.'},
+
+{id:97, type:'mc', topic:'Encapsulation', text:'Which access modifier makes a field inaccessible from outside the class?',
+ opts:['public','protected','static','private'], answer:3,
+ explain:'"private" prevents direct access from outside the class — this is the foundation of encapsulation.'},
+
+{id:98, type:'mc', topic:'Encapsulation', text:'Encapsulation gives a class which three code-quality properties?',
+ opts:['Speed, power, size','Maintainability, flexibility, and extensibility','Compilation, linking, loading','Inheritance, polymorphism, abstraction'], answer:1,
+ explain:'Encapsulation provides maintainability, flexibility, and extensibility to code.'},
+
+{id:99, type:'mc', topic:'Encapsulation', text:'With encapsulation, a class can make a field <em>read-only</em> by:',
+ opts:['Providing a setter but no getter','Making the field public','Providing a getter but no setter','Declaring the field static'], answer:2,
+ explain:'A field is effectively read-only if a getter is provided but no setter — outside code can read but not modify it.'},
+
+{id:100, type:'mc', topic:'Encapsulation', text:'Why is it a design decision (not just a coding rule) whether to provide getters and setters?',
+ opts:['Because all fields need both getter and setter','Because some fields should not be changeable after initialization (e.g., account number)','Because getters are slow','Because setters prevent compilation'], answer:1,
+ explain:'Whether to provide a getter/setter is a design decision. E.g., a bank account number once set should not change — so no setter is provided.'},
+
+{id:101, type:'mc', topic:'Encapsulation', text:'What is the conventional prefix for a <strong>getter</strong> method name?',
+ opts:['set','return','fetch','get'], answer:3,
+ explain:'Getter methods are conventionally prefixed with "get" — e.g., getBalance(), getName(), getEmail().'},
+
+{id:102, type:'mc', topic:'Encapsulation', text:'What does the <strong>mutator</strong> method\'s responsibility include, beyond just setting a value?',
+ opts:['Returning the value','Maintaining data integrity of the object while setting','Deleting the field','Printing the value to screen'], answer:1,
+ explain:'The setter/mutator must set the appropriate variable WHILST MAINTAINING data integrity of the object.'},
+
+{id:103, type:'mc', topic:'Encapsulation', text:'In an encapsulated class, how should outside code access the private fields?',
+ opts:['Directly, using dot notation','Through public getter and setter methods only','By making fields temporarily public','Through the class name'], answer:1,
+ explain:'Outside code accesses private fields only through the public getter and setter methods provided by the class.'},
+
+{id:104, type:'mc', topic:'Encapsulation', text:'When a field is declared <code>private</code>, where can it still be accessed?',
+ opts:['Anywhere in the program','Only from the same package','Only from within the class where it is declared','Only from subclasses'], answer:2,
+ explain:'A private field can only be accessed within the class where it is declared — nowhere outside.'},
+
+{id:105, type:'mc', topic:'Encapsulation', text:'What does encapsulation act as, in the analogy from the lectures?',
+ opts:['A bridge between classes','A protective barrier that prevents random access to code and data from outside the class','A compiler optimization tool','A debugging mechanism'], answer:1,
+ explain:'Encapsulation is described as a protective barrier preventing code and data from being randomly accessed from outside.'},
+
+// ── TRUE / FALSE (25 items) ───────────────────────────────────────────
+{id:106, type:'tf', topic:'Java History', text:'Java was originally created to develop web browsers.',
+ answer:'False', explain:'False — Java was created to bridge communication between consumer devices (VCRs, TVs), not to develop browsers.'},
+
+{id:107, type:'tf', topic:'Java History', text:'The turning point for Java came in 1995 when Netscape incorporated Java into its browser.',
+ answer:'True', explain:'True — Netscape\'s 1995 incorporation of Java was the turning point for widespread adoption.'},
+
+{id:108, type:'tf', topic:'Java History', text:'Java\'s mascot Duke was created by James Gosling.',
+ answer:'False', explain:'False — Duke was created by Joe Palrang, the Green team\'s graphic artist.'},
+
+{id:109, type:'tf', topic:'OOP Concepts', text:'In OOP, a class is an instance of an object.',
+ answer:'False', explain:'False — it\'s the reverse. An object is an instance of a class. A class is the blueprint.'},
+
+{id:110, type:'tf', topic:'OOP Concepts', text:'OOP started with the SIMULA-67 programming language.',
+ answer:'True', explain:'True — SIMULA-67 is credited as the first OOP language.'},
+
+{id:111, type:'tf', topic:'OOP Concepts', text:'In a UML class diagram, attributes are listed in the top compartment.',
+ answer:'False', explain:'False — the class name is in the top compartment, attributes in the middle, methods at the bottom.'},
+
+{id:112, type:'tf', topic:'OOP Concepts', text:'Method overloading is one way that Java implements polymorphism.',
+ answer:'True', explain:'True — method overloading is one of the ways Java implements polymorphism ("one interface, multiple methods").'},
+
+{id:113, type:'tf', topic:'OOP Concepts', text:'An object in Java can be an instance of more than one class.',
+ answer:'False', explain:'False — an object is an instance of exactly one class.'},
+
+{id:114, type:'tf', topic:'OOP Concepts', text:'Encapsulation is also referred to as data hiding.',
+ answer:'True', explain:'True — encapsulation hides the fields within the class, so it is also called data hiding.'},
+
+{id:115, type:'tf', topic:'Data Types', text:'String is a primitive data type in Java.',
+ answer:'False', explain:'False — String is a class (reference type), not a primitive. The 8 primitives do not include String.'},
+
+{id:116, type:'tf', topic:'Data Types', text:'Java uses Unicode (16-bit) for its char type, which contains ASCII as its first 128 characters.',
+ answer:'True', explain:'True — Java char is 16-bit Unicode. ASCII is a subset of Unicode (first 128 characters).'},
+
+{id:117, type:'tf', topic:'Data Types', text:'In Java, boolean variables can store values like 0 and 1 (as in C).',
+ answer:'False', explain:'False — Java boolean only holds true or false, unlike C/C++ where 0 and 1 are used.'},
+
+{id:118, type:'tf', topic:'Data Types', text:'Local variables declared within a method must be explicitly initialized before being used.',
+ answer:'True', explain:'True — local variables are NOT auto-initialized. They must be explicitly assigned a value before use.'},
+
+{id:119, type:'tf', topic:'Data Types', text:'Field (instance) variables are automatically initialized to default values in Java.',
+ answer:'True', explain:'True — fields are auto-initialized: int/etc → 0, boolean → false, char → \\u0000, references → null.'},
+
+{id:120, type:'tf', topic:'Data Types', text:'Type casting increases the range of a value by promoting it to a larger data type.',
+ answer:'False', explain:'False — type casting LOWERS the range (narrows). Type promotion increases the range (widens).'},
+
+{id:121, type:'tf', topic:'Methods', text:'A constructor must have a return type of void.',
+ answer:'False', explain:'False — constructors have NO return type at all, not even void.'},
+
+{id:122, type:'tf', topic:'Methods', text:'Constructors can be overloaded in Java.',
+ answer:'True', explain:'True — constructors can be overloaded, allowing objects to be created in different ways.'},
+
+{id:123, type:'tf', topic:'Methods', text:'If a programmer defines any parameterized constructor, Java still auto-generates a no-argument constructor.',
+ answer:'False', explain:'False — if any parameterized constructor is defined, Java does NOT auto-generate a default no-arg constructor.'},
+
+{id:124, type:'tf', topic:'Methods', text:'The "this" keyword in Java refers to the current object.',
+ answer:'True', explain:'True — "this" is a reference to the current object whose method or constructor is being called.'},
+
+{id:125, type:'tf', topic:'Methods', text:'Return type alone is sufficient to distinguish two overloaded methods in Java.',
+ answer:'False', explain:'False — return type alone is NOT sufficient. Parameter types and/or count must differ.'},
+
+{id:126, type:'tf', topic:'Java Syntax', text:'The javac command executes a compiled Java program.',
+ answer:'False', explain:'False — "javac" compiles source → bytecode. "java" executes the compiled program.'},
+
+{id:127, type:'tf', topic:'Java Syntax', text:'Java is case-sensitive, meaning "Hello" and "hello" are treated as different identifiers.',
+ answer:'True', explain:'True — Java is case-sensitive.'},
+
+{id:128, type:'tf', topic:'Java Syntax', text:'Every basic Java statement must end with a semicolon.',
+ answer:'True', explain:'True — every basic Java statement ends with a semicolon ;'},
+
+{id:129, type:'tf', topic:'Java Syntax', text:'Java identifiers can start with a digit.',
+ answer:'False', explain:'False — identifiers must start with a letter, underscore _, or dollar sign $. Starting with a digit is illegal.'},
+
+{id:130, type:'tf', topic:'Java Syntax', text:'Java technology and the Java programming language refer to the same thing.',
+ answer:'False', explain:'False — "Java technology" refers to the entire family of Java products; the programming language is only one part.'},
+
+// ── SHORT ANSWER (10 items) ───────────────────────────────────────────
+{id:131, type:'short', topic:'Java History',
+ text:'Describe the origin of Java. Who created it, what was its original name, and what was its original intended purpose?',
+ answer:'James Gosling led the Green team at Sun Microsystems in 1991. Java (originally named Oak) was created to bridge communication between consumer devices like VCRs and televisions. When that market failed, the team pivoted to the World Wide Web, creating applets. In 1995, Netscape incorporated Java into its browser, making it widely adopted.'},
+
+{id:132, type:'short', topic:'OOP Concepts',
+ text:'Explain the difference between procedural programming and object-oriented programming. Give one key distinction.',
+ answer:'Procedural programming organizes code around functions and separates data from operations. OOP organizes code around objects (classes) that bundle data (attributes) and operations (methods) together. The unit in procedural is a function; in OOP it is a class.'},
+
+{id:133, type:'short', topic:'OOP Concepts',
+ text:'What is abstraction? Give a real-world example from the lectures.',
+ answer:'Abstraction means capturing only the details relevant to the current perspective. Example: A car viewed by a driver shows the steering wheel, pedals, and dashboard. An engineer\'s view shows the engine, axle, and wiring. Each perspective shows only what is relevant to that role.'},
+
+{id:134, type:'short', topic:'Data Types',
+ text:'Explain type promotion vs. type casting. Give one example of each.',
+ answer:'Type promotion is automatic — the compiler converts a smaller type to a larger one (e.g., double price = 6; int 6 is promoted to 6.0). Type casting is explicit — the programmer manually converts a larger type to a smaller one, possibly losing precision (e.g., (int) 9.99 = 9).'},
+
+{id:135, type:'short', topic:'Methods',
+ text:'What is encapsulation? What are three benefits it provides?',
+ answer:'Encapsulation is the technique of making fields private and providing access via public methods. Benefits: (1) Fields can be read-only or write-only. (2) A class has total control over what is stored in its fields. (3) Internal implementation can be changed without breaking code that uses the class (maintainability, flexibility, extensibility).'},
+
+{id:136, type:'short', topic:'Methods',
+ text:'Explain string concatenation and its common pitfall with numbers.',
+ answer:'Concatenation joins strings with the + operator. The pitfall: "Result: " + 10 + 20 produces "Result: 1020" (not 30) because + is evaluated left-to-right and once a String is encountered, subsequent + means string concatenation. Fix: use parentheses: "Result: " + (10 + 20) → "Result: 30".'},
+
+{id:137, type:'short', topic:'Methods',
+ text:'What is instantiation and what keyword is used for it in Java?',
+ answer:'Instantiation is creating an object from a class using the "new" keyword. A class is the blueprint; an object is an instance. Example: BankAccount myAcc = new BankAccount(12345); — this instantiates a BankAccount object and invokes its constructor automatically.'},
+
+{id:138, type:'short', topic:'Java Syntax',
+ text:'What is the this keyword and when is it necessary?',
+ answer:'"this" is a reference to the current object. It is necessary when a constructor or method parameter has the same name as an instance variable, shadowing it. E.g., this.hour = hour; in a constructor where both the parameter and field are named "hour". this.hour refers to the field; plain hour refers to the parameter.'},
+
+{id:139, type:'short', topic:'Methods',
+ text:'What is method overloading and how does Java determine which overloaded version to call?',
+ answer:'Method overloading is defining multiple methods in the same class with the same name but different parameter declarations. Java uses the type and/or number of arguments in the method call to determine which version to invoke. If no exact match is found, Java applies automatic type conversions (e.g., int → double).'},
+
+{id:140, type:'short', topic:'Java History',
+ text:'What are the six key features of the Java programming language?',
+ answer:'The six key features are: (1) Object-Oriented — creates interacting objects; (2) Distributed — supports RMI, CORBA, URL, downloadable code; (3) Simple — uses object references, no pointer manipulation, automatic garbage collection; (4) Multi-threaded — supports concurrent execution paths; (5) Secure — protects against attacks, no pointer manipulation; (6) Platform-independent — bytecode runs on any JVM.'},
+
+// ── ESSAY (10 items) ──────────────────────────────────────────────────
+{id:141, type:'essay', topic:'OOP Concepts',
+ text:'Discuss the four pillars of OOP: Abstraction, Encapsulation, Inheritance, and Polymorphism. Define each and provide a Java-context example.',
+ answer:'(1) Abstraction — hides irrelevant details; only relevant attributes exposed. E.g., a Car class exposes drive() without internal engine logic. (2) Encapsulation — private fields + public getters/setters. Protects data integrity and hides implementation. (3) Inheritance — child class acquires parent\'s properties/behaviors; enables code reuse. (4) Polymorphism — same method name, different behavior (overloading = compile-time, overriding = runtime). E.g., Math.abs() is overloaded for int, float, double.'},
+
+{id:142, type:'essay', topic:'Java History',
+ text:'Discuss Java\'s six key features (Object-Oriented, Distributed, Simple, Multi-threaded, Secure, Platform-independent) and what each means in practice.',
+ answer:'Object-Oriented: programs consist of interacting objects. Distributed: supports RMI, CORBA, URL; code downloadable over internet. Simple: no direct pointer manipulation, automatic garbage collection, boolean is only true/false. Multi-threaded: multiple execution paths in one process. Secure: applets cannot access hard disk, digital signature support, no pointer manipulation. Platform-independent: compiles to bytecode, JVM interprets on any platform ("write once, run anywhere").'},
+
+{id:143, type:'essay', topic:'OOP Concepts',
+ text:'Compare procedural vs. OOP using the Baking a Cake example from the lectures. Which is more maintainable and why?',
+ answer:'Procedural: program flows as steps — PrepareIngredients → Mix → Heat → IceCake. Data (ingredients) is separate from the steps. OOP: a CakeRecipe class has attributes (ingredients, shape) and methods (mix(), heat()). OOP is more maintainable because code is bundled into self-contained objects that can be reused, modified independently, and easily replaced without affecting the rest of the program.'},
+
+{id:144, type:'essay', topic:'Encapsulation',
+ text:'Explain encapsulation in detail. Why is it important? Write pseudocode showing a properly encapsulated BankAccount class with a private field and getter/setter.',
+ answer:'Encapsulation makes fields private and provides controlled public access. Benefits: data integrity (setter validates input), flexibility (change internal type without breaking callers), read/write control. Example: public class BankAccount { private float balance; public float getBalance() { return balance; } public void setBalance(float b) { if(b >= 0) balance = b; } }. Outside code can only access balance through these methods.'},
+
+{id:145, type:'essay', topic:'Methods',
+ text:'Explain constructor overloading using the BankAccount example from lectures. Why is it useful to have multiple constructors?',
+ answer:'Constructor overloading: multiple constructors with different parameter lists in the same class. Java calls the right one based on new statement arguments. BankAccount(): no-arg, creates empty account. BankAccount(int num): sets account number. BankAccount(int num, String name): sets both number and owner. Usefulness: flexibility in initialization — callers provide only the values they have, without requiring all fields every time.'},
+
+{id:146, type:'essay', topic:'OOP Concepts',
+ text:'Describe Object-Oriented Analysis (OOA) using the Online Order Entry System case study from lectures. Identify at least 4 classes and their key attributes and behaviors.',
+ answer:'OOA involves identifying the problem domain, objects, attributes, and behaviors. From the Online Order Entry System: (1) Customer — attributes: customerID, name, email; behaviors: placeOrder(), viewOrderHistory(). (2) Product — attributes: productID, name, price, stockQuantity; behaviors: checkStock(). (3) Order — attributes: orderID, customer, totalAmount, status; behaviors: calculateTotal(), verifyOrder(). (4) Payment — attributes: paymentID, type, status; behaviors: processPayment(). Relationships: Customer places multiple Orders; Order contains multiple OrderItems linked to Products.'},
+
+{id:147, type:'essay', topic:'Data Types',
+ text:'Discuss Java\'s primitive data types. Cover all 8, their categories, default values for fields, and explain promotion and casting with examples.',
+ answer:'8 primitives: Integral — byte (0), short (0), int (0), long (0); Floating — float (0.0), double (0.0); Textual — char (\\u0000); Logical — boolean (false). Fields auto-initialized to these defaults; local variables must be explicitly initialized. Promotion: compiler widens types automatically (int → double when needed). Casting: explicit narrowing e.g., (int) 9.99 = 9 (truncated, not rounded). byte/char/short → promoted to int in operations. If one operand is long, both become long. If one is float/double, all become float/double.'},
+
+{id:148, type:'essay', topic:'Methods',
+ text:'Explain method overloading in detail. Provide a code example showing multiple overloaded methods and describe how Java resolves which one to call.',
+ answer:'Method overloading defines multiple methods with the same name but different parameter lists. Java uses the type and/or number of arguments to determine which version to call. Example: void test() — no params. void test(int a) — one int. double test(double a) — one double. Calling test() → first version. test(10) → second. test(3.14) → third. If test(int) doesn\'t exist but test(double) does, Java auto-promotes int → double. Return type alone cannot distinguish overloaded methods. Overloading is one way Java implements polymorphism.'},
+
+{id:149, type:'essay', topic:'Java Syntax',
+ text:'Discuss Java escape sequences. List all four from the lectures (\\t, \\n, \\", \\\\), explain each, and write two System.out.println statements using them with expected outputs.',
+ answer:'Escape sequences: \\t = tab character; \\n = newline; \\" = quotation mark; \\\\ = backslash. Example 1: System.out.println("A\\tB\\nC"); → A[tab]B then new line then C. Example 2: System.out.println("She said \\"hello\\"."); → She said "hello". Example 3: System.out.println("C:\\\\Users\\\\file"); → C:\\Users\\file. These sequences allow special characters to be embedded in string literals that otherwise could not be typed directly.'},
+
+{id:150, type:'essay', topic:'OOP Concepts',
+ text:'Using the "this" keyword in Java, explain its three main uses: referencing instance variables, calling instance methods, and calling another constructor. Provide a code example for each.',
+ answer:'(1) Referencing instance variables: when a parameter shadows a field, this.hour = hour; disambiguates — this.hour is the field, hour is the parameter. (2) Calling instance methods: inside a method, this.toString() calls the toString() of the current object — same as calling toString() directly. (3) Calling another constructor (explicit constructor invocation): this(0, 0); inside a no-arg constructor calls the two-arg constructor of the same class, avoiding code duplication. Java determines which constructor to call based on the arguments passed.'},
+
+]; // end POOL
+
+// ═══════════════════════════════════════════════════════════════════════
+// EXAM ENGINE
+// ═══════════════════════════════════════════════════════════════════════
+let session = [];
+let answeredSet = new Set();
+let submitted = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-];
-var qscore = { c: 0, t: 0 };
-function buildQuiz() {
-  var area = document.getElementById('quiz-area');
-  area.innerHTML = '';
-  qdata.forEach(function(q, i) {
-    var d = document.createElement('div');
-    d.className = 'card';
-    d.style.marginBottom = '20px';
-    var html = '<div class="quiz-q">Q' + (i+1) + '. ' + q.q + '</div><div class="quiz-opts">';
-    q.opts.forEach(function(opt, j) {
-      html += '<div class="qopt" onclick="checkQ(this,' + i + ',' + j + ')">'
-        + '<span class="qopt-lbl">' + 'ABCD'[j] + '</span>' + opt + '</div>';
-    });
-    html += '</div><div class="qfeedback" id="qf' + i + '"></div>';
-    d.innerHTML = html;
-    area.appendChild(d);
-  });
+  return a;
 }
-function checkQ(el, qi, oi) {
-  var q = qdata[qi];
-  var opts = el.closest('.quiz-opts').querySelectorAll('.qopt');
-  opts.forEach(function(o){ o.classList.add('disabled'); });
-  var fb = document.getElementById('qf' + qi);
-  if (oi === q.ans) {
-    el.classList.add('correct');
-    fb.innerHTML = '<strong>Correct!</strong> ' + q.exp;
-    fb.className = 'qfeedback good show';
-    qscore.c++;
+
+function startExam() {
+  document.getElementById('welcome-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display = 'block';
+  buildSession();
+}
+
+function newSession() {
+  if (!submitted && answeredSet.size > 0) {
+    if (!confirm('Start a new question set? Your current progress will be lost.')) return;
+  }
+  submitted = false;
+  answeredSet = new Set();
+  document.getElementById('result-panel') && document.getElementById('result-panel').remove();
+  buildSession();
+}
+
+function buildSession() {
+  // Stratified sampling: ensure coverage across types
+  const mc = shuffle(POOL.filter(q => q.type === 'mc'));
+  const tf = shuffle(POOL.filter(q => q.type === 'tf'));
+  const sh = shuffle(POOL.filter(q => q.type === 'short'));
+  const es = shuffle(POOL.filter(q => q.type === 'essay'));
+
+  // Pick: 30 MC, 10 TF, 7 short, 3 essay = 50
+  session = [
+    ...mc.slice(0, 30),
+    ...tf.slice(0, 10),
+    ...sh.slice(0, 7),
+    ...es.slice(0, 3)
+  ];
+  session = shuffle(session);
+
+  answeredSet = new Set();
+  submitted = false;
+  updateProgress();
+  renderExam();
+  window.scrollTo(0, 0);
+}
+
+function renderExam() {
+  const body = document.getElementById('exam-body');
+  body.innerHTML = '';
+
+  // Group by type for section headers
+  const sections = [
+    { label: 'Multiple Choice', filter: q => q.type === 'mc', badge: 'mc' },
+    { label: 'True or False', filter: q => q.type === 'tf', badge: 'tf' },
+    { label: 'Short Answer', filter: q => q.type === 'short', badge: 'short' },
+    { label: 'Essay', filter: q => q.type === 'essay', badge: 'essay' },
+  ];
+
+  let qNum = 1;
+  sections.forEach(sec => {
+    const qs = session.filter(sec.filter);
+    if (qs.length === 0) return;
+
+    const sh = document.createElement('div');
+    sh.className = 'sec-head';
+    sh.innerHTML = `<span class="sec-badge">${sec.badge.toUpperCase()}</span><span class="sec-title">${sec.label} — ${qs.length} question${qs.length > 1 ? 's' : ''}</span>`;
+    body.appendChild(sh);
+
+    qs.forEach(q => {
+      body.appendChild(buildCard(q, qNum++));
+    });
+  });
+
+  // Result panel placeholder
+  const rp = document.createElement('div');
+  rp.id = 'result-panel';
+  rp.className = 'result';
+  body.appendChild(rp);
+}
+
+function buildCard(q, num) {
+  const div = document.createElement('div');
+  div.className = 'q';
+  div.id = 'qcard-' + q.id;
+
+  let inner = `<div class="q-num">Question ${num} &nbsp;·&nbsp; ${q.topic}</div>`;
+  inner += `<div class="q-text">${q.text}</div>`;
+  if (q.code) inner += `<pre>${q.code}</pre>`;
+
+  if (q.type === 'mc') {
+    inner += `<div class="opts" id="opts-${q.id}">`;
+    q.opts.forEach((opt, i) => {
+      inner += `<label class="opt" id="opt-${q.id}-${i}" onclick="selectMC(${q.id},${i})">
+        <input type="radio" name="q${q.id}" value="${i}"/>
+        <label>${opt}</label>
+      </label>`;
+    });
+    inner += `</div>`;
+  } else if (q.type === 'tf') {
+    inner += `<div class="tf-row">
+      <button class="tf-btn" id="tf-${q.id}-T" onclick="selectTF(${q.id},'True')">True</button>
+      <button class="tf-btn" id="tf-${q.id}-F" onclick="selectTF(${q.id},'False')">False</button>
+    </div>`;
+  } else if (q.type === 'short') {
+    inner += `<textarea class="short-in" id="ans-${q.id}" placeholder="Write your answer here…" oninput="markText(${q.id},this.value)"></textarea>`;
+    inner += `<div class="fb fi show" id="fb-${q.id}"><strong>Model Answer:</strong> ${q.answer}</div>`;
+  } else if (q.type === 'essay') {
+    inner += `<textarea class="essay-in" id="ans-${q.id}" placeholder="Write your essay here…" oninput="markText(${q.id},this.value)"></textarea>`;
+    inner += `<div class="fb fi show" id="fb-${q.id}"><strong>Scoring Guide:</strong> ${q.answer}</div>`;
+  }
+
+  if (q.type === 'mc' || q.type === 'tf') {
+    inner += `<div class="fb" id="fb-${q.id}"></div>`;
+  }
+
+  div.innerHTML = inner;
+  return div;
+}
+
+function selectMC(qid, idx) {
+  if (submitted) return;
+  const card = document.getElementById('qcard-' + qid);
+  card.querySelectorAll('.opt').forEach(o => o.classList.remove('opt-selected'));
+  const chosen = document.getElementById(`opt-${qid}-${idx}`);
+  if (chosen) chosen.classList.add('opt-selected');
+  const radio = chosen && chosen.querySelector('input');
+  if (radio) radio.checked = true;
+  card.dataset.answer = idx;
+  answeredSet.add(qid);
+  card.classList.add('answered');
+  card.classList.remove('correct', 'wrong');
+  updateProgress();
+}
+
+function selectTF(qid, val) {
+  if (submitted) return;
+  const card = document.getElementById('qcard-' + qid);
+  document.getElementById(`tf-${qid}-T`).classList.toggle('sel', val === 'True');
+  document.getElementById(`tf-${qid}-F`).classList.toggle('sel', val === 'False');
+  card.dataset.answer = val;
+  answeredSet.add(qid);
+  card.classList.add('answered');
+  card.classList.remove('correct', 'wrong');
+  updateProgress();
+}
+
+function markText(qid, val) {
+  if (submitted) return;
+  if (val.trim().length > 0) {
+    answeredSet.add(qid);
+    document.getElementById('qcard-' + qid).classList.add('answered');
   } else {
-    el.classList.add('wrong');
-    opts[q.ans].classList.add('correct');
-    fb.innerHTML = '<strong>Incorrect.</strong> ' + q.exp;
-    fb.className = 'qfeedback bad show';
+    answeredSet.delete(qid);
+    document.getElementById('qcard-' + qid).classList.remove('answered');
   }
-  qscore.t++;
-  document.getElementById('score-num').textContent = qscore.c + ' / ' + qscore.t;
-  document.getElementById('score-fill').style.width = (qscore.t ? qscore.c/qscore.t*100 : 0) + '%';
-}
-function resetQuiz() {
-  qscore = { c: 0, t: 0 };
-  document.getElementById('score-num').textContent = '0 / 0';
-  document.getElementById('score-fill').style.width = '0%';
-  buildQuiz();
+  updateProgress();
 }
 
-// ===== SIMULATOR =====
-var cvs = null, ctx = null, trajs = [], palIdx = 0;
-var pal = ['#e74c3c','#2980b9','#27ae60','#e67e22','#8e44ad','#16a085','#c0392b','#1a5276'];
-var simOk = false;
-
-function initSim() {
-  cvs = document.getElementById('simCanvas');
-  ctx = cvs.getContext('2d');
-  var wrap = document.getElementById('canvasWrap');
-  var w = wrap.offsetWidth || 700;
-  cvs.width = w;
-  cvs.height = 340;
-  simOk = true;
-  drawBg();
+function updateProgress() {
+  const total = session.length;
+  const done = answeredSet.size;
+  document.getElementById('prog-text').textContent = `${done} / ${total}`;
+  document.getElementById('prog-fill').style.width = (done / total * 100) + '%';
 }
 
-function drawBg() {
-  if (!simOk) return;
-  var W = cvs.width, H = cvs.height;
-  var OX = 58, OY = H - 44;
-  ctx.fillStyle = '#0d1117';
-  ctx.fillRect(0, 0, W, H);
-  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-  ctx.lineWidth = 1;
-  for (var gx = OX; gx < W-8; gx += 55) {
-    ctx.beginPath(); ctx.moveTo(gx, 18); ctx.lineTo(gx, OY); ctx.stroke();
-  }
-  for (var gy = OY; gy > 18; gy -= 48) {
-    ctx.beginPath(); ctx.moveTo(OX, gy); ctx.lineTo(W-8, gy); ctx.stroke();
-  }
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.moveTo(OX, 18); ctx.lineTo(OX, OY); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(OX, OY); ctx.lineTo(W-8, OY); ctx.stroke();
-  ctx.fillStyle = '#666';
-  ctx.font = '12px JetBrains Mono, monospace';
-  ctx.fillText('x (m)', W-50, OY+18);
-  ctx.fillText('y (m)', OX-48, 22);
-  ctx.fillText('O', OX-16, OY+16);
-}
+function submitExam() {
+  if (submitted) return;
+  submitted = true;
 
-function niceStep(max, n) {
-  var r = max / n;
-  var e = Math.pow(10, Math.floor(Math.log10(r)));
-  var s = [1,2,5,10];
-  for (var i=0;i<s.length;i++) if (s[i]*e >= r) return s[i]*e;
-  return e*10;
-}
+  let mcCorrect = 0, mcTotal = 0;
+  let tfCorrect = 0, tfTotal = 0;
 
-function redraw() {
-  if (!simOk) return;
-  if (trajs.length === 0) { drawBg(); return; }
-  var W = cvs.width, H = cvs.height;
-  var OX = 58, OY = H - 44;
-  var maxX=1, maxY=1;
-  trajs.forEach(function(tr) {
-    tr.pts.forEach(function(p){ if(p.x>maxX) maxX=p.x; if(p.y>maxY) maxY=p.y; });
+  session.forEach(q => {
+    const card = document.getElementById('qcard-' + q.id);
+    const fb = document.getElementById('fb-' + q.id);
+
+    if (q.type === 'mc') {
+      mcTotal++;
+      const userAns = card.dataset.answer !== undefined ? parseInt(card.dataset.answer) : -1;
+      const correct = q.answer;
+
+      q.opts.forEach((_, i) => {
+        const el = document.getElementById(`opt-${q.id}-${i}`);
+        if (!el) return;
+        if (i === correct) el.classList.add('opt-correct');
+        if (i === userAns && i !== correct) el.classList.add('opt-wrong');
+        el.classList.remove('opt-selected');
+      });
+
+      if (userAns === correct) {
+        mcCorrect++;
+        card.classList.replace('answered', 'correct') || (card.classList.add('correct'), card.classList.remove('answered', 'wrong'));
+        fb.className = 'fb fc show';
+        fb.innerHTML = `<strong>✓ Correct!</strong> ${q.explain}`;
+      } else {
+        card.classList.add('wrong');
+        card.classList.remove('answered', 'correct');
+        fb.className = 'fb fw show';
+        const correctText = q.opts[correct];
+        fb.innerHTML = `<strong>✗ Incorrect.</strong> Correct answer: <strong>${correctText}</strong>. ${q.explain}`;
+      }
+    }
+
+    if (q.type === 'tf') {
+      tfTotal++;
+      const userAns = card.dataset.answer;
+      const correct = q.answer;
+
+      const tBtn = document.getElementById(`tf-${q.id}-T`);
+      const fBtn = document.getElementById(`tf-${q.id}-F`);
+      tBtn.classList.remove('sel');
+      fBtn.classList.remove('sel');
+
+      if (correct === 'True') tBtn.classList.add('tf-correct');
+      else fBtn.classList.add('tf-correct');
+      if (userAns && userAns !== correct) {
+        if (userAns === 'True') tBtn.classList.add('tf-wrong');
+        else fBtn.classList.add('tf-wrong');
+      }
+
+      if (userAns === correct) {
+        tfCorrect++;
+        card.classList.add('correct'); card.classList.remove('answered','wrong');
+        fb.className = 'fb fc show';
+        fb.innerHTML = `<strong>✓ Correct!</strong> ${q.explain}`;
+      } else {
+        card.classList.add('wrong'); card.classList.remove('answered','correct');
+        fb.className = 'fb fw show';
+        fb.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer is <strong>${correct}</strong>. ${q.explain}`;
+      }
+    }
   });
-  var sx = (W - OX - 20) / maxX;
-  var sy = (OY - 28) / maxY;
-  var sc = Math.min(sx, sy) * 0.9;
-  drawBg();
-  ctx.fillStyle = '#555';
-  ctx.font = '11px JetBrains Mono, monospace';
-  var xs = niceStep(maxX, 6);
-  for (var tx=xs; tx<=maxX*1.05; tx+=xs) {
-    var px = OX + tx*sc; if (px > W-10) break;
-    ctx.fillText(Math.round(tx), px-10, OY+16);
-  }
-  var ys = niceStep(maxY, 5);
-  for (var ty=ys; ty<=maxY*1.05; ty+=ys) {
-    var py = OY - ty*sc; if (py < 18) break;
-    ctx.fillText(Math.round(ty), OX-46, py+4);
-  }
-  trajs.forEach(function(tr) {
-    ctx.save();
-    ctx.strokeStyle = tr.col;
-    ctx.lineWidth = 2.5;
-    ctx.shadowColor = tr.col;
-    ctx.shadowBlur = 5;
-    ctx.beginPath();
-    tr.pts.forEach(function(p,i) {
-      var cx = OX + p.x*sc, cy = OY - p.y*sc;
-      if (i===0) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
-    });
-    ctx.stroke();
-    ctx.restore();
-    var peak = tr.pts.reduce(function(a,b){ return b.y>a.y?b:a; });
-    var pcx = OX+peak.x*sc, pcy = OY-peak.y*sc;
-    ctx.beginPath(); ctx.arc(pcx,pcy,5,0,Math.PI*2);
-    ctx.fillStyle = tr.col; ctx.fill();
-    ctx.fillStyle = tr.col;
-    ctx.font = '12px JetBrains Mono, monospace';
-    ctx.fillText(tr.lbl, pcx+7, pcy-6);
-  });
+
+  const autoScore = mcCorrect + tfCorrect;
+  const autoTotal = mcTotal + tfTotal;
+  const pct = autoTotal > 0 ? Math.round(autoScore / autoTotal * 100) : 0;
+
+  const remark =
+    pct >= 90 ? '🏆 Outstanding — Excellent mastery!' :
+    pct >= 75 ? '✅ Good performance — solid understanding.' :
+    pct >= 60 ? '📖 Fair — review the flagged questions.' :
+                '⚠️ Needs improvement — revisit the lectures.';
+
+  const rp = document.getElementById('result-panel');
+  rp.className = 'result show';
+  rp.innerHTML = `
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.6rem;">Auto-graded score</div>
+    <div class="r-big">${autoScore}<span style="font-size:1.5rem;color:var(--text3)"> / ${autoTotal}</span></div>
+    <div class="r-label">Multiple Choice + True/False</div>
+    <div class="r-remark">${remark}</div>
+    <div class="r-stats">
+      <div class="r-stat"><strong>${mcCorrect}/${mcTotal}</strong><span>Multiple Choice</span></div>
+      <div class="r-stat"><strong>${tfCorrect}/${tfTotal}</strong><span>True / False</span></div>
+      <div class="r-stat"><strong>${pct}%</strong><span>Auto-grade</span></div>
+    </div>
+    <p class="r-note">Short answer and essay questions are self-assessed using the model answers shown above each text box.</p>
+    <button class="btn-new" onclick="newSession()">↺ New Random Set of 50</button>
+  `;
+  rp.scrollIntoView({ behavior: 'smooth' });
 }
-
-function doLaunch() {
-  if (!simOk) initSim();
-  var v0 = parseFloat(document.getElementById('v0r').value);
-  var deg = parseFloat(document.getElementById('angr').value);
-  var rad = deg * Math.PI / 180;
-  var g = 9.8;
-  var vx = v0 * Math.cos(rad);
-  var vy0 = v0 * Math.sin(rad);
-  var tF = 2 * vy0 / g;
-  var pts = [];
-  for (var i=0; i<=120; i++) {
-    var t = tF * i / 120;
-    var y = vy0*t - 0.5*g*t*t;
-    pts.push({ x: vx*t, y: Math.max(0, y) });
-  }
-  pts.push({ x: vx*tF, y: 0 });
-  var col = pal[palIdx % pal.length]; palIdx++;
-  trajs.push({
-    pts: pts, col: col,
-    lbl: v0+'m/s @'+deg+'deg',
-    range: (vx*tF).toFixed(1),
-    hMax: (vy0*vy0/(2*g)).toFixed(1),
-    tF: tF.toFixed(2),
-    vx: vx.toFixed(1),
-    vy0: vy0.toFixed(1)
-  });
-  redraw();
-  var tr = trajs[trajs.length-1];
-  document.getElementById('stat-area').innerHTML =
-    '<div class="stat-grid">'
-    + sbox('Range', tr.range+' m', col)
-    + sbox('Max Height', tr.hMax+' m', col)
-    + sbox('Flight Time', tr.tF+' s', col)
-    + sbox('vx (constant)', tr.vx+' m/s', col)
-    + sbox('vy at launch', tr.vy0+' m/s', col)
-    + sbox('Time to peak', (parseFloat(tr.tF)/2).toFixed(2)+' s', col)
-    + '</div>';
-}
-function sbox(l, v, c) {
-  return '<div class="stat-box"><div class="stat-val" style="color:'+c+'">'+v+'</div><div class="stat-lbl">'+l+'</div></div>';
-}
-function doClear() {
-  trajs=[]; palIdx=0;
-  if (simOk) drawBg();
-  document.getElementById('stat-area').innerHTML='';
-}
-
-window.addEventListener('resize', function() {
-  if (simOk) {
-    var w = document.getElementById('canvasWrap').offsetWidth || 700;
-    cvs.width = w; cvs.height = 340;
-    redraw();
-  }
-});
-
-// ===== DEFINITIONS =====
-var defs = [
-  { term: "Physics", cat: "physics", meaning: "Physics is the science that studies the fundamental rules that govern how the universe behaves -- matter, energy, force, motion, space, and time. It asks the most basic questions: why do things move? Why do they stop? What is light? What holds atoms together? Every other science (chemistry, biology, engineering) is built on top of physics.", analogy: "Think of physics as the rulebook of the universe. Just as a game has rules that every player must follow no matter what, physics describes rules that every object in the universe must obey -- from planets to electrons.", formula: "" },
-  { term: "Kinematics", cat: "physics", meaning: "Kinematics is the branch of physics that describes HOW things move -- their position, velocity, and acceleration -- without asking WHY they move (that is dynamics, which involves forces). Chapter 3 is pure kinematics.", analogy: "Kinematics is like a sports commentator describing the game: 'the ball went up 10 meters, travelled 30 meters horizontally, and hit the ground after 3 seconds.' No mention of who kicked it or how hard.", formula: "" },
-  { term: "Scalar", cat: "math", meaning: "A scalar is a quantity that has only a size (magnitude) -- no direction. You can fully describe it with just one number and a unit. Examples: temperature (25 degrees C), mass (5 kg), time (3 seconds), speed (60 km/h), distance (100 m).", analogy: "Saying 'I walked 5 km' is a scalar. You know how far, but not which way.", formula: "Examples: speed = 10 m/s, mass = 2 kg, time = 5 s" },
-  { term: "Vector", cat: "vectors", meaning: "A vector is a quantity that has both a size (magnitude) AND a direction. You need both pieces of information to fully describe it. Examples: velocity (60 km/h northward), displacement (5 km east), force (10 N downward), acceleration (9.8 m/s^2 downward).", analogy: "Saying 'I walked 5 km north' is a vector. You know both how far AND which direction. Without the direction, it is just a scalar (distance).", formula: "Written as bold r or r with arrow on top\nComponents: r = x*i + y*j + z*k" },
-  { term: "Position Vector (r)", cat: "vectors", meaning: "The position vector r is an arrow drawn from the origin of your coordinate system to wherever the particle currently is. Its components are simply the coordinates (x, y, z) of the particle. As the particle moves, all three components can change with time.", analogy: "Imagine you are standing at the center of a city (the origin). The position vector of your friend is an arrow pointing from you directly to where your friend is right now. If your friend moves, the arrow changes.", formula: "r = x*i + y*j + z*k\nMagnitude: |r| = sqrt(x^2 + y^2 + z^2)" },
-  { term: "Displacement", cat: "vectors", meaning: "Displacement is the change in position -- a straight-line arrow from where you started to where you ended up. It is NOT the total distance you travelled. If you walk in a circle and return to your start, your displacement is zero even though you walked a real distance.", analogy: "If you drive from Manila to Davao via Cebu, your distance is the full road length. Your displacement is just one straight arrow pointing from Manila to Davao -- the net change in position.", formula: "delta_r = r2 - r1 = (x2-x1)*i + (y2-y1)*j" },
-  { term: "Distance", cat: "motion", meaning: "Distance is the total length of the actual path travelled, regardless of direction. It is a scalar (just a number, no direction). It is always zero or positive -- it can never be negative.", analogy: "The odometer in a car measures distance. It keeps counting up no matter which direction you drive.", formula: "Distance = total path length (scalar, always >= 0)" },
-  { term: "Speed", cat: "motion", meaning: "Speed is how fast an object is moving -- the magnitude (size) of the velocity vector. It is a scalar: just a positive number with units of m/s or km/h. It tells you how fast but NOT which direction.", analogy: "The speedometer in a car shows speed. It reads 80 km/h whether you are going north, south, east, or turning a corner.", formula: "speed = |v| = sqrt(vx^2 + vy^2 + vz^2)" },
-  { term: "Velocity (v)", cat: "motion", meaning: "Velocity is a vector that describes both how fast an object is moving AND which direction it is moving. It is the rate of change of position. The magnitude of velocity is speed. Two cars going 60 km/h in opposite directions have the same speed but opposite velocities.", analogy: "A weather report saying 'wind at 20 km/h' gives speed. Saying 'wind at 20 km/h from the northeast' gives velocity -- same number but now includes direction.", formula: "v = dr/dt (instantaneous)\nv_avg = delta_r / delta_t (average)\nComponents: vx = dx/dt, vy = dy/dt" },
-  { term: "Average Velocity", cat: "motion", meaning: "Average velocity is the total displacement divided by the total time taken. It is a single arrow pointing from start position to end position. It ignores everything that happened along the way -- detours, speed changes, curves. It only cares about net change in position.", analogy: "If you leave home at 8am and arrive at school at 8:30am, your average velocity is one arrow from home to school divided by 30 minutes -- regardless of the route you actually took.", formula: "v_avg = delta_r / delta_t = (r2 - r1) / (t2 - t1)" },
-  { term: "Instantaneous Velocity", cat: "motion", meaning: "Instantaneous velocity is the velocity at one exact moment in time -- not over an interval. Mathematically it is the derivative of position with respect to time, which means the limit of average velocity as the time interval shrinks to zero. It is always tangent to the path at that point.", analogy: "The speedometer in a car shows instantaneous speed at this exact moment. GPS navigation shows instantaneous velocity -- both speed and the direction arrow pointing down your current road.", formula: "v = lim[dt->0] (delta_r/delta_t) = dr/dt\nAlways tangent to the path" },
-  { term: "Acceleration (a)", cat: "motion", meaning: "Acceleration is the rate of change of the velocity vector. Because velocity is a vector, acceleration occurs whenever velocity changes in size (speed changes) OR direction (path curves) OR both at once. This means even constant-speed circular motion involves acceleration.", analogy: "Pressing the gas pedal changes your speed -- that is acceleration. Turning the steering wheel changes your direction -- that is also acceleration. Both are real accelerations even though the first feels like 'speeding up' and the second feels like 'turning'.", formula: "a = dv/dt = d^2r/dt^2\na_avg = delta_v / delta_t" },
-  { term: "Average Acceleration", cat: "motion", meaning: "Average acceleration is the change in velocity divided by the time interval. It is a vector pointing in the same direction as the change in velocity (delta_v). It summarizes how much and in what direction the velocity changed over a period of time.", analogy: "If your car velocity changed from 20 m/s north to 30 m/s north over 5 seconds, the average acceleration is 2 m/s^2 northward -- pointing in the direction of velocity increase.", formula: "a_avg = (v2 - v1) / (t2 - t1) = delta_v / delta_t" },
-  { term: "Instantaneous Acceleration", cat: "motion", meaning: "Instantaneous acceleration is the acceleration at one exact moment -- the derivative of velocity with respect to time. For curved motion, it always points toward the concave (inside) of the curve. It can be broken into a parallel component (changes speed) and a perpendicular component (changes direction).", analogy: "When you go over a hump in the road and your stomach drops, you feel instantaneous acceleration pointing downward -- toward the inside of the curved road surface.", formula: "a = dv/dt = d^2r/dt^2\nPoints toward concave (inside) of the curve" },
-  { term: "Parallel Component of Acceleration", cat: "motion", meaning: "The component of acceleration that runs along the direction of motion (tangent to the path). This is the only part of acceleration that changes the particle's speed. If a-parallel is positive, the particle speeds up. If negative, it slows down. If zero, speed is constant.", analogy: "The gas pedal and brake in a car produce parallel acceleration. They make you go faster or slower along the road -- they do not change which way you are pointing.", formula: "a_par = tangent to path\nIf a_par = 0: speed is constant\nIf a_par > 0: speeding up\nIf a_par < 0: slowing down" },
-  { term: "Perpendicular Component of Acceleration", cat: "motion", meaning: "The component of acceleration that runs at 90 degrees to the direction of motion (normal to the path). This is the only part that changes the direction of the particle's motion. It always points toward the inside of the curve. It never changes speed -- only direction.", analogy: "The steering wheel in a car produces perpendicular acceleration. Turning the wheel does not make you go faster or slower -- it only changes which direction you are heading.", formula: "a_perp = normal to path, pointing inward\nIf a_perp = 0: straight-line motion\nIf a_perp != 0: path is curved" },
-  { term: "Unit Vector", cat: "vectors", meaning: "A unit vector is a vector with a magnitude of exactly 1. It has no units -- it simply points in a direction. The standard unit vectors are i (pointing in the +x direction), j (pointing in the +y direction), and k (pointing in the +z direction). They are used to build any other vector by scaling them.", analogy: "Think of i, j, k as arrows that say 'this way is x', 'this way is y', 'this way is z'. They are like compass needles for each axis. To say a position is at (3, 4, 0), you write r = 3*i + 4*j + 0*k.", formula: "i = (1,0,0), j = (0,1,0), k = (0,0,1)\n|i| = |j| = |k| = 1" },
-  { term: "Magnitude", cat: "vectors", meaning: "The magnitude of a vector is its size -- how long the arrow is. It is always a positive number (or zero). For a position vector r = (x, y, z), the magnitude is the straight-line distance from the origin to that point, found using the Pythagorean theorem extended to 3D.", analogy: "If a vector is an arrow, the magnitude is how long the arrow is. A velocity vector of (-3, 4) m/s has direction pointing upper-left, but its magnitude (speed) is sqrt(9+16) = 5 m/s.", formula: "|v| = sqrt(vx^2 + vy^2 + vz^2)\n|r| = sqrt(x^2 + y^2 + z^2)" },
-  { term: "Trajectory", cat: "motion", meaning: "The trajectory is the actual path that a moving object follows through space. For a projectile under ideal conditions (no air resistance), the trajectory is always a parabola. The trajectory equation gives y as a function of x, eliminating time from the equations.", analogy: "The white line that trails behind a plane in the sky shows the trajectory. For a thrown ball, the arc it follows from your hand to the ground is its trajectory.", formula: "y = tan(a0)*x - [g / (2*v0^2*cos^2(a0))] * x^2\nForm: y = b*x - c*x^2  (parabola)" },
-  { term: "Projectile", cat: "projectile", meaning: "A projectile is any object that is given an initial velocity and then left to move freely under the influence of gravity alone -- no engine, no wings, no additional forces. Once it leaves the launcher, only gravity acts on it (ignoring air resistance in this model).", analogy: "A ball thrown through the air, a bullet fired from a gun, a package dropped from a plane, a soccer ball kicked into the air -- all are projectiles the moment they leave contact with whatever launched them.", formula: "ax = 0 (no horizontal force)\nay = -g = -9.80 m/s^2 (gravity only)" },
-  { term: "Range (R)", cat: "projectile", meaning: "Range is the horizontal distance a projectile travels from launch to landing, when it lands at the same height as it was launched. It depends on both the initial speed and the launch angle. Maximum range is achieved at exactly 45 degrees.", analogy: "In a long-jump competition, the range is how far from the take-off board the athlete lands. The athlete wants to maximize range -- which means jumping at close to 45 degrees.", formula: "R = v0^2 * sin(2*a0) / g\nMaximum when a0 = 45 degrees\nR_max = v0^2 / g" },
-  { term: "Launch Angle", cat: "projectile", meaning: "The launch angle is the angle between the initial velocity vector and the horizontal. It determines how the initial speed is split between horizontal and vertical components. A large angle (close to 90 degrees) means mostly going up. A small angle (close to 0 degrees) means mostly going sideways.", analogy: "Think of a garden hose. Aim straight up (90 degrees) -- water goes very high but falls near you. Aim flat (0 degrees) -- water goes far sideways but barely rises. Aim at 45 degrees -- maximum distance.", formula: "vx0 = v0 * cos(a0)  [horizontal component]\nvy0 = v0 * sin(a0)  [vertical component]" },
-  { term: "Initial Velocity (v0)", cat: "projectile", meaning: "The initial velocity is the velocity of the projectile at the exact moment it is launched -- at time t=0. It has both a magnitude (the launch speed) and a direction (the launch angle). After launch, the horizontal part never changes, and the vertical part changes due to gravity.", analogy: "When you kick a soccer ball, the speed and angle of your foot at the moment of contact determines the initial velocity. Everything that happens after that is just physics taking over.", formula: "v0 = launch speed (m/s)\na0 = launch angle (degrees from horizontal)\nvx0 = v0*cos(a0), vy0 = v0*sin(a0)" },
-  { term: "Free Fall", cat: "projectile", meaning: "Free fall is motion under gravity alone, with no other forces acting (ignoring air resistance). An object in free fall accelerates downward at g = 9.80 m/s^2 regardless of its mass or horizontal motion. A projectile is always in free fall after launch.", analogy: "An astronaut floating inside a spacecraft is in free fall -- falling toward Earth but also moving sideways fast enough to keep missing it. A dropped ball is in free fall going straight down.", formula: "ay = -g = -9.80 m/s^2 (downward)\nThis applies throughout projectile flight" },
-  { term: "Derivative", cat: "math", meaning: "A derivative measures how fast something is changing at an exact instant. In physics, the derivative of position with respect to time gives velocity. The derivative of velocity with respect to time gives acceleration. Written as d/dt, it means 'the instantaneous rate of change with respect to time'.", analogy: "If position is like a car's mileage reading, the derivative (velocity) is like the speedometer -- it tells you the instantaneous rate at which the mileage is increasing right now.", formula: "v = dr/dt  (derivative of position = velocity)\na = dv/dt  (derivative of velocity = acceleration)\na = d^2r/dt^2  (second derivative of position)" },
-  { term: "Coordinate System", cat: "math", meaning: "A coordinate system is a framework for specifying the location of any point in space using numbers. In 2D we use x (horizontal) and y (vertical). In 3D we add z (depth). The origin is the reference point (0,0,0). Every position, velocity, and acceleration is expressed relative to this system.", analogy: "A coordinate system is like the grid on a map. Once you agree that the city hall is at (0,0), every other location can be described by two numbers. The choice of origin and axes is yours to make -- choose whatever makes the math easiest.", formula: "Origin at (0,0,0)\n+x: right, +y: up, +z: out of page (typical)\nChoose origin at launch point for projectile problems" },
-  { term: "Tangent", cat: "math", meaning: "A tangent line (or tangent direction) at a point on a curve is the line that just touches the curve at that one point, pointing in the exact direction the curve is heading at that instant. The instantaneous velocity vector is always tangent to the path of motion.", analogy: "Imagine a ball on a string being swung in a circle. If you cut the string, the ball flies off in the tangent direction -- exactly the direction it was heading at that instant. That tangent direction is where the velocity points.", formula: "v = dr/dt is always tangent to the path\nAs delta_t -> 0, the direction of delta_r becomes tangent" },
-  { term: "Parabola", cat: "math", meaning: "A parabola is a curved shape described by an equation of the form y = bx - cx^2. It is symmetric and opens either up or down. The trajectory of every ideal projectile (no air resistance) is a parabola. The negative x^2 term means it always opens downward for projectiles.", analogy: "The arc of a basketball shot, the spray of water from a garden hose, the path of a cliff diver -- all are parabolas. They all have that smooth, symmetric arch that is steeper near the ends and flatter at the top.", formula: "y = tan(a0)*x - [g/(2*v0^2*cos^2(a0))]*x^2\nForm: y = b*x - c*x^2\nThis is the equation of a downward-opening parabola" },
-  { term: "g (Gravitational Acceleration)", cat: "physics", meaning: "g is the magnitude of the acceleration due to gravity near Earth's surface. It equals 9.80 m/s^2 (sometimes approximated as 9.8 or 10 m/s^2). It is always directed downward, toward the center of the Earth. Every freely falling object -- regardless of mass -- accelerates at this same rate.", analogy: "Galileo famously showed that a feather and a hammer dropped on the Moon (no air) hit the ground at the same time. That is because g depends only on the planet, not on the object's mass.", formula: "g = 9.80 m/s^2 (downward)\nay = -g in projectile equations (negative = downward)\nOn Moon: g = 1.62 m/s^2" },
-  { term: "Independence of Motion", cat: "projectile", meaning: "The principle of independence of motion states that horizontal and vertical motions in projectile problems are completely independent of each other. Horizontal velocity does not affect vertical acceleration. Gravity does not affect horizontal motion. You can solve each axis separately and only time t connects them.", analogy: "If you fire a bullet horizontally from a gun and simultaneously drop another bullet from the same height, both bullets hit the ground at exactly the same time. The horizontal speed of the fired bullet has zero effect on how fast it falls.", formula: "Horizontal: ax = 0, vx = constant (independent)\nVertical: ay = -g, vy changes (independent)\nOnly shared variable: time t" },
-];
-
-var currentCat = 'all';
-
-function buildDefs() {
-  var list = document.getElementById('def-list');
-  list.innerHTML = '';
-  defs.forEach(function(d) {
-    var div = document.createElement('div');
-    div.className = 'def-item';
-    div.setAttribute('data-cat', d.cat);
-    div.setAttribute('data-term', d.term.toLowerCase());
-    div.setAttribute('data-meaning', d.meaning.toLowerCase());
-    div.innerHTML =
-      '<div class="def-header" onclick="toggleDef(this)">'
-      + '<div class="def-term">' + d.term + '</div>'
-      + '<span class="def-tag ' + d.cat + '">' + d.cat + '</span>'
-      + '<span class="def-chevron">&#9660;</span>'
-      + '</div>'
-      + '<div class="def-body"><div class="def-body-inner">'
-      + '<div class="def-meaning">' + d.meaning + '</div>'
-      + (d.analogy ? '<div class="def-analogy"><strong>Analogy:</strong> ' + d.analogy + '</div>' : '')
-      + (d.formula ? '<div class="def-formula-line">' + d.formula + '</div>' : '')
-      + '</div></div>';
-    list.appendChild(div);
-  });
-  updateDefCount();
-}
-
-function toggleDef(head) {
-  var item = head.closest('.def-item');
-  var wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.def-item.open').forEach(function(el){ el.classList.remove('open'); });
-  if (!wasOpen) item.classList.add('open');
-}
-
-function filterDefs() {
-  var q = document.getElementById('defSearch').value.toLowerCase().trim();
-  var items = document.querySelectorAll('.def-item');
-  items.forEach(function(item) {
-    var term = item.getAttribute('data-term') || '';
-    var meaning = item.getAttribute('data-meaning') || '';
-    var cat = item.getAttribute('data-cat') || '';
-    var catMatch = currentCat === 'all' || cat === currentCat;
-    var textMatch = !q || term.includes(q) || meaning.includes(q);
-    item.classList.toggle('hidden', !(catMatch && textMatch));
-  });
-  updateDefCount();
-}
-
-function filterCat(cat, btn) {
-  currentCat = cat;
-  document.querySelectorAll('.def-filter').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  filterDefs();
-}
-
-function updateDefCount() {
-  var visible = document.querySelectorAll('.def-item:not(.hidden)').length;
-  document.getElementById('def-count').textContent = 'Showing ' + visible + ' of ' + defs.length + ' terms';
-}
-
-// Init
-buildQuiz();
-buildDefs();
-updateFC();
 </script>
 </body>
 </html>
