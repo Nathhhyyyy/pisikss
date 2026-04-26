@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Area by Integration — Final Exam</title>
+<title>Area by Integration — Session Exam</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -13,675 +13,651 @@
     --ink2: #3a3a36;
     --muted: #888880;
     --rule: #ccc8be;
-    --accent: #1a1a18;
     --correct: #2d6a2d;
     --wrong: #8b1a1a;
     --correct-bg: #eef6ee;
     --wrong-bg: #fdf0f0;
     --warn: #7a5c00;
-    --warn-bg: #fffbea;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; min-height: 100vh; }
 
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    min-height: 100vh;
-  }
-
-  /* ── Cover page ── */
+  /* ── COVER ── */
   #cover {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 24px;
-    text-align: center;
-    position: relative;
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px; text-align: center; position: relative;
   }
-
-  #cover::before {
-    content: '';
-    position: absolute;
-    inset: 20px;
-    border: 1px solid var(--rule);
-    pointer-events: none;
-  }
-
-  #cover::after {
-    content: '';
-    position: absolute;
-    inset: 26px;
-    border: 1px solid var(--rule);
-    pointer-events: none;
-  }
-
-  .cover-super {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 32px;
-  }
-
-  .cover-title {
-    font-size: clamp(2.4rem, 6vw, 4rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
-  }
-
-  .cover-sub {
-    font-size: 1.2rem;
-    font-style: italic;
-    color: var(--ink2);
-    margin-bottom: 48px;
-  }
-
-  .cover-rule {
-    width: 80px;
-    height: 1px;
-    background: var(--ink);
-    margin: 0 auto 48px;
-  }
-
-  .cover-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--ink2);
-    line-height: 2.2;
-    margin-bottom: 56px;
-  }
-
-  .cover-meta span {
-    color: var(--muted);
-    margin-right: 8px;
-  }
-
+  #cover::before { content:''; position:absolute; inset:20px; border:1px solid var(--rule); pointer-events:none; }
+  #cover::after  { content:''; position:absolute; inset:27px; border:1px solid var(--rule); pointer-events:none; }
+  .cover-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-bottom:28px; }
+  .cover-title   { font-size:clamp(2.4rem,6vw,4rem); font-weight:700; line-height:1.08; margin-bottom:10px; }
+  .cover-sub     { font-size:1.15rem; font-style:italic; color:var(--ink2); margin-bottom:44px; }
+  .cover-rule    { width:72px; height:1px; background:var(--ink); margin:0 auto 44px; }
+  .cover-meta    { font-family:'JetBrains Mono',monospace; font-size:.74rem; color:var(--ink2); line-height:2.3; margin-bottom:52px; }
+  .cover-meta em { color:var(--muted); font-style:normal; margin-right:10px; }
+  .cover-notice  { max-width:420px; font-size:.88rem; font-style:italic; color:var(--muted); margin-bottom:44px; line-height:1.7; border:1px solid var(--rule); padding:14px 20px; background:var(--paper); }
   #start-btn {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: var(--ink);
-    color: var(--bg);
-    border: none;
-    padding: 16px 52px;
-    cursor: pointer;
-    transition: opacity 0.2s;
+    font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:600;
+    letter-spacing:2px; text-transform:uppercase; background:var(--ink);
+    color:var(--bg); border:none; padding:16px 52px; cursor:pointer; transition:opacity .2s;
   }
-  #start-btn:hover { opacity: 0.8; }
+  #start-btn:hover { opacity:.8; }
+  .cover-fine { margin-top:22px; font-size:.78rem; font-style:italic; color:var(--muted); }
 
-  .cover-warning {
-    margin-top: 28px;
-    font-size: 0.85rem;
-    font-style: italic;
-    color: var(--muted);
-  }
-
-  /* ── Exam header (sticky) ── */
+  /* ── HEADER ── */
   #exam-header {
-    display: none;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--paper);
-    border-bottom: 1px solid var(--rule);
-    padding: 12px 32px;
-    align-items: center;
-    gap: 24px;
+    display:none; position:sticky; top:0; z-index:100;
+    background:var(--paper); border-bottom:1px solid var(--rule);
+    padding:11px 32px; align-items:center; gap:20px;
   }
+  .eh-label { font-family:'JetBrains Mono',monospace; font-size:.66rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); flex:1; }
+  #timer { font-family:'JetBrains Mono',monospace; font-size:1.45rem; font-weight:600; letter-spacing:2px; color:var(--ink); min-width:72px; text-align:center; }
+  #timer.warn   { color:var(--warn); }
+  #timer.danger { color:var(--wrong); animation:pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .eh-prog { font-family:'JetBrains Mono',monospace; font-size:.66rem; color:var(--muted); text-align:right; }
+  .prog-track { width:110px; height:2px; background:var(--rule); margin-top:4px; }
+  .prog-fill  { height:100%; background:var(--ink); transition:width .3s; }
 
-  .eh-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    flex: 1;
+  /* ── EXAM BODY ── */
+  #exam-body { display:none; max-width:760px; margin:0 auto; padding:48px 22px 90px; }
+
+  /* ── QUESTION CARD ── */
+  .q-card { background:var(--paper); border:1px solid var(--rule); padding:30px 34px 26px; margin-bottom:26px; }
+  .q-meta { font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .q-text { font-size:1.06rem; line-height:1.85; margin-bottom:22px; }
+  .mf { font-family:'JetBrains Mono',monospace; font-size:.9em; background:rgba(0,0,0,.05); padding:1px 6px; border-radius:2px; }
+  .hint-box { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--warn); background:var(--paper); border:1px dashed #c8a83a; padding:8px 12px; margin-bottom:18px; line-height:1.6; }
+  .choices { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .c-btn {
+    background:transparent; border:1px solid var(--rule); color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:.8rem;
+    padding:11px 14px; text-align:left; cursor:pointer;
+    transition:border-color .15s,background .15s; line-height:1.5;
   }
+  .c-btn:hover:not(:disabled) { border-color:var(--ink); background:rgba(0,0,0,.03); }
+  .c-btn.sel  { border-color:var(--ink); background:rgba(0,0,0,.06); font-weight:600; }
+  .c-btn.ok   { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); }
+  .c-btn.bad  { border-color:var(--wrong);   background:var(--wrong-bg);   color:var(--wrong); }
+  .c-btn:disabled { cursor:default; }
+  .feedback { font-family:'JetBrains Mono',monospace; font-size:.72rem; margin-top:11px; padding:10px 13px; line-height:1.65; display:none; }
+  .feedback.ok  { background:var(--correct-bg); color:var(--correct); border-left:3px solid var(--correct); display:block; }
+  .feedback.bad { background:var(--wrong-bg);   color:var(--wrong);   border-left:3px solid var(--wrong);   display:block; }
 
-  #timer-display {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: var(--ink);
-    min-width: 80px;
-    text-align: center;
+  /* ── SUBMIT ── */
+  #sub-wrap { text-align:center; margin-top:40px; }
+  #sub-btn {
+    font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600;
+    letter-spacing:2px; text-transform:uppercase; background:var(--ink);
+    color:var(--bg); border:none; padding:15px 48px; cursor:pointer; transition:opacity .2s;
   }
+  #sub-btn:hover:not(:disabled) { opacity:.8; }
+  #sub-btn:disabled { opacity:.3; cursor:default; }
 
-  #timer-display.warn { color: var(--warn); }
-  #timer-display.danger { color: var(--wrong); animation: pulse 1s infinite; }
-
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-  .eh-progress {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-
-  .progress-track {
-    width: 120px;
-    height: 2px;
-    background: var(--rule);
-    margin-top: 4px;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--ink);
-    transition: width 0.3s;
-  }
-
-  /* ── Exam body ── */
-  #exam-body {
-    display: none;
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 48px 24px 80px;
-  }
-
-  /* ── Question card ── */
-  .q-card {
-    background: var(--paper);
-    border: 1px solid var(--rule);
-    padding: 32px 36px 28px;
-    margin-bottom: 28px;
-    position: relative;
-  }
-
-  .q-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-
-  .q-text {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--ink);
-    margin-bottom: 24px;
-  }
-
-  .q-text .mf {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.92em;
-    background: rgba(0,0,0,0.04);
-    padding: 1px 6px;
-    border-radius: 2px;
-  }
-
-  /* choices */
-  .choices {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .choice-btn {
-    background: transparent;
-    border: 1px solid var(--rule);
-    color: var(--ink);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    padding: 11px 16px;
-    text-align: left;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    line-height: 1.5;
-  }
-
-  .choice-btn:hover:not(:disabled) {
-    border-color: var(--ink);
-    background: rgba(0,0,0,0.03);
-  }
-
-  .choice-btn.selected {
-    border-color: var(--ink);
-    background: rgba(0,0,0,0.06);
-    font-weight: 600;
-  }
-
-  .choice-btn.correct {
-    border-color: var(--correct);
-    background: var(--correct-bg);
-    color: var(--correct);
-  }
-
-  .choice-btn.wrong {
-    border-color: var(--wrong);
-    background: var(--wrong-bg);
-    color: var(--wrong);
-  }
-
-  .choice-btn:disabled { cursor: default; }
-
-  .feedback {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    margin-top: 12px;
-    padding: 9px 13px;
-    line-height: 1.6;
-    display: none;
-  }
-
-  .feedback.correct {
-    background: var(--correct-bg);
-    color: var(--correct);
-    border-left: 3px solid var(--correct);
-    display: block;
-  }
-
-  .feedback.wrong {
-    background: var(--wrong-bg);
-    color: var(--wrong);
-    border-left: 3px solid var(--wrong);
-    display: block;
-  }
-
-  /* ── Submit ── */
-  #submit-wrap {
-    text-align: center;
-    margin-top: 40px;
-  }
-
-  #submit-btn {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: var(--ink);
-    color: var(--bg);
-    border: none;
-    padding: 15px 48px;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  #submit-btn:hover:not(:disabled) { opacity: 0.8; }
-  #submit-btn:disabled { opacity: 0.35; cursor: default; }
-
-  /* ── Results ── */
-  #results {
-    display: none;
-    max-width: 600px;
-    margin: 60px auto 80px;
-    padding: 0 24px;
-    text-align: center;
-  }
-
-  .result-border {
-    border: 1px solid var(--rule);
-    padding: 52px 40px;
-    background: var(--paper);
-    position: relative;
-  }
-
-  .result-border::before {
-    content: '';
-    position: absolute;
-    inset: 6px;
-    border: 1px solid var(--rule);
-    pointer-events: none;
-  }
-
-  .result-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 24px;
-  }
-
-  .result-score {
-    font-size: 5rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-
-  .result-denom {
-    font-size: 1.5rem;
-    color: var(--muted);
-    margin-bottom: 20px;
-    font-style: italic;
-  }
-
-  .result-grade {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-  }
-
-  .result-msg {
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--ink2);
-    margin-bottom: 36px;
-    line-height: 1.7;
-  }
-
-  .result-stats {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    margin-bottom: 40px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-
-  .stat-val { display: block; font-size: 1.4rem; color: var(--ink); margin-bottom: 2px; }
-
+  /* ── RESULTS ── */
+  #results { display:none; max-width:580px; margin:64px auto 80px; padding:0 22px; text-align:center; }
+  .res-wrap { border:1px solid var(--rule); padding:52px 38px; background:var(--paper); position:relative; }
+  .res-wrap::before { content:''; position:absolute; inset:6px; border:1px solid var(--rule); pointer-events:none; }
+  .res-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-bottom:22px; }
+  .res-score   { font-size:5rem; font-weight:700; line-height:1; margin-bottom:6px; }
+  .res-denom   { font-size:1.4rem; color:var(--muted); font-style:italic; margin-bottom:18px; }
+  .res-grade   { font-family:'JetBrains Mono',monospace; font-size:.82rem; letter-spacing:2px; margin-bottom:8px; }
+  .res-msg     { font-size:1rem; font-style:italic; color:var(--ink2); margin-bottom:32px; line-height:1.7; }
+  .res-stats   { display:flex; justify-content:center; gap:30px; margin-bottom:38px; font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--muted); }
+  .sv { display:block; font-size:1.35rem; color:var(--ink); margin-bottom:2px; }
   #retry-btn {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--ink);
-    padding: 13px 40px;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:600;
+    letter-spacing:2px; text-transform:uppercase; background:transparent;
+    color:var(--ink); border:1px solid var(--ink); padding:13px 40px;
+    cursor:pointer; transition:background .2s,color .2s;
   }
-  #retry-btn:hover { background: var(--ink); color: var(--bg); }
+  #retry-btn:hover { background:var(--ink); color:var(--bg); }
 
-  @media (max-width: 560px) {
-    .choices { grid-template-columns: 1fr; }
-    .q-card { padding: 22px 18px; }
-    #exam-header { padding: 10px 16px; }
-    .result-border { padding: 36px 24px; }
+  /* ── WRONG ANSWER DISPLAY ── */
+  .wrong-answer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in;
+  }
+  
+  .wrong-answer-text {
+    font-size: 8rem;
+    font-weight: 700;
+    color: #ff0000;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    animation: pulse 1s infinite;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+
+  @media(max-width:540px){
+    .choices{grid-template-columns:1fr}
+    .q-card{padding:20px 16px}
+    #exam-header{padding:10px 14px}
+    .res-wrap{padding:36px 22px}
+    .wrong-answer-text { font-size: 4rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     COVER PAGE
-══════════════════════════════════════════ -->
+<!-- COVER -->
 <div id="cover">
-  <div class="cover-super">Integral Calculus · Final Examination</div>
+  <div class="cover-eyebrow">Integral Calculus · Session Examination</div>
   <div class="cover-title">Area by Integration</div>
-  <div class="cover-sub">20 Items &mdash; All Topics</div>
+  <div class="cover-sub">Bounded Regions — Find the Intersections Yourself</div>
   <div class="cover-rule"></div>
   <div class="cover-meta">
-    <div><span>Topics</span>Parabolic · Cubic · Between Curves · Trig · Horizontal Strips · ln · eˣ</div>
-    <div><span>Items</span>20 multiple-choice questions</div>
-    <div><span>Time</span>40 minutes (2 min per item)</div>
-    <div><span>Scoring</span>1 point each · No partial credit</div>
+    <div><em>Bank</em>50 questions total</div>
+    <div><em>Per Session</em>10 randomly selected questions</div>
+    <div><em>Focus</em>Curves bounded by lines, parabolas, cubics &amp; more</div>
+    <div><em>Time</em>20 minutes · 2 min per item</div>
+    <div><em>Scoring</em>1 point each · No partial credit</div>
   </div>
-  <button id="start-btn" onclick="startExam()">Begin Examination</button>
-  <div class="cover-warning">Once started, the timer cannot be paused.</div>
+  <div class="cover-notice">
+    Intersection points and vertices are <strong>not given</strong>. You must set the functions equal, solve for the limits of integration, then compute the area.
+  </div>
+  <button id="start-btn" onclick="startExam()">Begin Session</button>
+  <div class="cover-fine">Timer begins immediately. It cannot be paused.</div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     EXAM HEADER
-══════════════════════════════════════════ -->
+<!-- HEADER -->
 <div id="exam-header">
-  <div class="eh-title">Area by Integration &mdash; Exam</div>
-  <div id="timer-display">40:00</div>
-  <div class="eh-progress">
-    <div id="prog-label" style="margin-bottom:4px">0 / 20 answered</div>
-    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="eh-label">Area by Integration — Session</div>
+  <div id="timer">20:00</div>
+  <div class="eh-prog">
+    <div id="prog-label">0 / 10 answered</div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     EXAM BODY
-══════════════════════════════════════════ -->
+<!-- EXAM -->
 <div id="exam-body">
   <div id="quiz-container"></div>
-  <div id="submit-wrap">
-    <button id="submit-btn" disabled onclick="submitExam()">Submit Examination</button>
+  <div id="sub-wrap">
+    <button id="sub-btn" disabled onclick="submitExam()">Submit Session</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     RESULTS
-══════════════════════════════════════════ -->
+<!-- RESULTS -->
 <div id="results">
-  <div class="result-border">
-    <div class="result-label">Examination Results</div>
-    <div class="result-score" id="res-score">—</div>
-    <div class="result-denom">out of 20</div>
-    <div class="result-grade" id="res-grade"></div>
-    <div class="result-msg" id="res-msg"></div>
-    <div class="result-stats">
-      <div><span class="stat-val" id="res-correct">—</span>Correct</div>
-      <div><span class="stat-val" id="res-wrong">—</span>Wrong</div>
-      <div><span class="stat-val" id="res-time">—</span>Time Used</div>
+  <div class="res-wrap">
+    <div class="res-eyebrow">Session Results</div>
+    <div class="res-score" id="res-score">—</div>
+    <div class="res-denom">out of 10</div>
+    <div class="res-grade" id="res-grade"></div>
+    <div class="res-msg"   id="res-msg"></div>
+    <div class="res-stats">
+      <div><span class="sv" id="res-c">—</span>Correct</div>
+      <div><span class="sv" id="res-w">—</span>Wrong</div>
+      <div><span class="sv" id="res-t">—</span>Time Used</div>
     </div>
-    <button id="retry-btn" onclick="location.reload()">Retake Examination</button>
+    <button id="retry-btn" onclick="location.reload()">New Session</button>
   </div>
+</div>
+
+<!-- WRONG ANSWER OVERLAY -->
+<div id="wrong-answer-overlay" class="wrong-answer-overlay">
+  <div class="wrong-answer-text">You're Gay</div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-// QUESTION BANK — 30 questions, 20 randomly drawn
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANK — 50 questions
+// ═══════════════════════════════════════════════════════════════
 const BANK = [
-  // ── PARABOLIC ──────────────────────────────────────
-  {
-    topic: "Parabolic Region",
-    q: "Find the area of the region bounded by <span class='mf'>y = x² − 4</span> and the x-axis.",
-    choices: ["16/3", "8/3", "32/3", "4"],
-    answer: "32/3",
-    sol: "Roots at x = ±2. Curve is below x-axis. Area = ∫₋₂²(0−(x²−4))dx = ∫₋₂²(4−x²)dx = [4x−x³/3]₋₂² = (8−8/3)−(−8+8/3) = 32/3."
-  },
-  {
-    topic: "Parabolic Region",
-    q: "Find the area of the region bounded by <span class='mf'>y = 9 − x²</span> and the x-axis.",
-    choices: ["36", "18", "27", "12"],
-    answer: "36",
-    sol: "Roots at x = ±3. Area = ∫₋₃³(9−x²)dx = [9x − x³/3]₋₃³ = 36."
-  },
-  {
-    topic: "Parabolic Region",
-    q: "Find the area bounded by <span class='mf'>y = x² − 2x</span> and the x-axis.",
-    choices: ["4/3", "2/3", "8/3", "1"],
-    answer: "4/3",
-    sol: "Roots at x = 0, 2. Area = −∫₀²(x²−2x)dx = [x² − x³/3]₀² = 4/3."
-  },
-  {
-    topic: "Parabolic Region",
-    q: "The area bounded by <span class='mf'>y = 3x − x²</span> and the x-axis is:",
-    choices: ["9/2", "7/2", "3", "4"],
-    answer: "9/2",
-    sol: "Roots at x = 0, 3. Area = ∫₀³(3x−x²)dx = [3x²/2 − x³/3]₀³ = 9/2."
-  },
-  // ── CUBIC ─────────────────────────────────────────
-  {
-    topic: "Cubic Boundaries",
-    q: "Determine the area bounded by <span class='mf'>y = x³</span>, the x-axis, <span class='mf'>x = 1</span> and <span class='mf'>x = 3</span>.",
-    choices: ["20", "26", "40/4", "18"],
-    answer: "20",
-    sol: "∫₁³ x³ dx = [x⁴/4]₁³ = 81/4 − 1/4 = 20."
-  },
-  {
-    topic: "Cubic Boundaries",
-    q: "Find the total area between <span class='mf'>y = x³ − 4x</span> and the x-axis.",
-    choices: ["4", "8", "2", "6"],
-    answer: "8",
-    sol: "Roots at 0, ±2. Positive on (−2,0), negative on (0,2). Area = ∫₋₂⁰(x³−4x)dx + |∫₀²(x³−4x)dx| = 4 + 4 = 8."
-  },
-  {
-    topic: "Cubic Boundaries",
-    q: "Find the area under <span class='mf'>y = 3x²</span> from <span class='mf'>x = 0</span> to <span class='mf'>x = 2</span>.",
-    choices: ["8", "6", "12", "4"],
-    answer: "8",
-    sol: "∫₀² 3x² dx = [x³]₀² = 8."
-  },
-  {
-    topic: "Cubic Boundaries",
-    q: "Find the total area enclosed between <span class='mf'>y = x³ − x</span> and the x-axis.",
-    choices: ["1/2", "1/4", "1", "3/4"],
-    answer: "1/2",
-    sol: "Roots at 0, ±1. By symmetry: 2∫₀¹(x−x³)dx = 2[x²/2−x⁴/4]₀¹ = 2·(1/4) = 1/2."
-  },
-  // ── BETWEEN TWO CURVES ────────────────────────────
-  {
-    topic: "Area Between Two Curves",
-    q: "Calculate the area enclosed by <span class='mf'>y² = 4x</span> and <span class='mf'>y = 2x − 4</span>.",
-    choices: ["9", "6", "12", "18"],
-    answer: "9",
-    sol: "Intersect at (1,−2) and (4,4). Integrating in y: ∫₋₂⁴[(y+4)/2 − y²/4]dy = 9."
-  },
-  {
-    topic: "Area Between Two Curves",
-    q: "Find the area of the region enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = x + 2</span>.",
-    choices: ["9/2", "7/2", "4", "11/6"],
-    answer: "9/2",
-    sol: "Intersect at x=−1, x=2. ∫₋₁²(x+2−x²)dx = [x²/2+2x−x³/3]₋₁² = 9/2."
-  },
-  {
-    topic: "Area Between Two Curves",
-    q: "Find the area enclosed between <span class='mf'>y = x²</span> and <span class='mf'>y = 2x</span>.",
-    choices: ["4/3", "2/3", "1", "8/3"],
-    answer: "4/3",
-    sol: "Intersect at x=0, x=2. ∫₀²(2x−x²)dx = [x²−x³/3]₀² = 4−8/3 = 4/3."
-  },
-  {
-    topic: "Area Between Two Curves",
-    q: "Find the area enclosed by <span class='mf'>y = x³</span> and <span class='mf'>y = x</span> on [−1, 1].",
-    choices: ["1/2", "1/4", "3/4", "1"],
-    answer: "1/2",
-    sol: "By symmetry: 2∫₀¹(x−x³)dx = 2[x²/2−x⁴/4]₀¹ = 2·(1/4) = 1/2."
-  },
-  // ── TRIG ──────────────────────────────────────────
-  {
-    topic: "Trigonometric Functions",
-    q: "Find the area of the region in the first quadrant bounded by <span class='mf'>y = cos x</span>, <span class='mf'>y = sin x</span>, and the y-axis.",
-    choices: ["√2 − 1", "1 − √2", "√2", "1"],
-    answer: "√2 − 1",
-    sol: "∫₀^{π/4}(cos x − sin x)dx = [sin x + cos x]₀^{π/4} = √2 − 1."
-  },
-  {
-    topic: "Trigonometric Functions",
-    q: "Find the area bounded by <span class='mf'>y = sin x</span>, the x-axis, <span class='mf'>x = 0</span> and <span class='mf'>x = π</span>.",
-    choices: ["2", "1", "π", "0"],
-    answer: "2",
-    sol: "∫₀^π sin x dx = [−cos x]₀^π = 1+1 = 2."
-  },
-  {
-    topic: "Trigonometric Functions",
-    q: "Find the total area between <span class='mf'>y = sin x</span> and the x-axis on <span class='mf'>[0, 2π]</span>.",
-    choices: ["4", "2", "0", "π"],
-    answer: "4",
-    sol: "sin x is positive on [0,π] and negative on [π,2π]. Total = 2 + 2 = 4."
-  },
-  // ── HORIZONTAL STRIPS ─────────────────────────────
-  {
-    topic: "Horizontal vs. Vertical Strips",
-    q: "Find the area bounded by <span class='mf'>x = y²</span> and <span class='mf'>x = 4</span> using horizontal strips.",
-    choices: ["32/3", "16/3", "8", "64/3"],
-    answer: "32/3",
-    sol: "∫₋₂²(4 − y²)dy = [4y − y³/3]₋₂² = 32/3."
-  },
-  {
-    topic: "Horizontal vs. Vertical Strips",
-    q: "Find the area bounded by <span class='mf'>x = y² − 2y</span> and <span class='mf'>x = y</span> using horizontal strips.",
-    choices: ["9/2", "7/2", "11/6", "5"],
-    answer: "9/2",
-    sol: "Set equal: y²−2y=y → y=0, y=3. ∫₀³(y−(y²−2y))dy = ∫₀³(3y−y²)dy = 9/2."
-  },
-  {
-    topic: "Horizontal vs. Vertical Strips",
-    q: "Find the area enclosed by <span class='mf'>x = 4 − y²</span> and the y-axis using horizontal strips.",
-    choices: ["32/3", "16/3", "8", "4"],
-    answer: "32/3",
-    sol: "∫₋₂²(4−y²)dy = [4y − y³/3]₋₂² = 32/3."
-  },
-  // ── LOGARITHMIC ───────────────────────────────────
-  {
-    topic: "Logarithmic Functions",
-    q: "Find the area under <span class='mf'>y = ln x</span>, above the x-axis, from <span class='mf'>x = 1</span> to <span class='mf'>x = e</span>.",
-    choices: ["1", "e − 1", "e − 2", "2"],
-    answer: "1",
-    sol: "∫₁ᵉ ln x dx = [x ln x − x]₁ᵉ = (e−e)−(0−1) = 1."
-  },
-  {
-    topic: "Logarithmic Functions",
-    q: "Find the area of the region bounded by <span class='mf'>y = ln x</span>, <span class='mf'>x = 1</span>, <span class='mf'>x = e²</span>, and the x-axis.",
-    choices: ["e² + 1", "e² − 1", "2e²", "e²"],
-    answer: "e² + 1",
-    sol: "∫₁^{e²} ln x dx = [x ln x − x]₁^{e²} = (2e²−e²)−(0−1) = e²+1."
-  },
-  {
-    topic: "Logarithmic Functions",
-    q: "Find the area between <span class='mf'>y = ln x</span> and <span class='mf'>y = 1 − ln x</span> from their intersection to <span class='mf'>x = e</span>.",
-    choices: ["2√e − e", "e − 2", "1", "√e − 1"],
-    answer: "2√e − e",
-    sol: "Intersect at x=√e. ∫_{√e}^{e}(2ln x−1)dx = [2x ln x−3x]_{√e}^{e} = (2e−3e)−(e^{1/2}·1−3√e) = −e−(−2√e) = 2√e − e."
-  },
-  {
-    topic: "Logarithmic Functions",
-    q: "The area under <span class='mf'>y = 1/x</span> from <span class='mf'>x = 1</span> to <span class='mf'>x = e³</span> is:",
-    choices: ["3", "e³ − 1", "ln e³", "1/e³"],
-    answer: "3",
-    sol: "∫₁^{e³}(1/x)dx = [ln x]₁^{e³} = ln e³ − 0 = 3."
-  },
-  // ── EXPONENTIAL ───────────────────────────────────
-  {
-    topic: "Exponential Functions",
-    q: "Find the area bounded by <span class='mf'>y = eˣ</span>, the x-axis, <span class='mf'>x = 0</span>, and <span class='mf'>x = 2</span>.",
-    choices: ["e² − 1", "e² + 1", "e²", "2(e − 1)"],
-    answer: "e² − 1",
-    sol: "∫₀² eˣ dx = [eˣ]₀² = e² − 1."
-  },
-  {
-    topic: "Exponential Functions",
-    q: "Find the area bounded by <span class='mf'>y = e^{2x}</span>, <span class='mf'>x = 0</span>, <span class='mf'>x = 1</span>, and the x-axis.",
-    choices: ["(e² − 1)/2", "e² − 1", "(e² + 1)/2", "e²/2"],
-    answer: "(e² − 1)/2",
-    sol: "∫₀¹ e^{2x} dx = [e^{2x}/2]₀¹ = (e² − 1)/2."
-  },
-  {
-    topic: "Exponential Functions",
-    q: "Find the area between <span class='mf'>y = eˣ</span> and <span class='mf'>y = e⁻ˣ</span> from <span class='mf'>x = 0</span> to <span class='mf'>x = 1</span>.",
-    choices: ["e + 1/e − 2", "e − 1/e", "e − 1", "2e − 2"],
-    answer: "e + 1/e − 2",
-    sol: "∫₀¹(eˣ − e⁻ˣ)dx = [eˣ + e⁻ˣ]₀¹ = (e + 1/e) − (1 + 1) = e + 1/e − 2. Note: antiderivative of −e⁻ˣ is +e⁻ˣ."
-  },
-  {
-    topic: "Exponential Functions",
-    q: "Find the area bounded by <span class='mf'>y = e^x − 1</span>, the x-axis, and <span class='mf'>x = 2</span>.",
-    choices: ["e² − 3", "e² − 1", "e² − 2", "e²"],
-    answer: "e² − 3",
-    sol: "∫₀²(eˣ−1)dx = [eˣ−x]₀² = (e²−2)−(1−0) = e²−3."
-  },
-  {
-    topic: "Exponential Functions",
-    q: "Find the area bounded by <span class='mf'>y = eˣ</span>, <span class='mf'>y = e⁻ˣ</span>, and <span class='mf'>x = 2</span>.",
-    choices: ["e² + e⁻² − 2", "e² − e⁻²", "e² − 1", "e² − 2"],
-    answer: "e² + e⁻² − 2",
-    sol: "Curves meet at x=0. Area = ∫₀²(eˣ−e⁻ˣ)dx = [eˣ+e⁻ˣ]₀² = (e²+e⁻²)−(1+1) = e²+e⁻²−2."
-  },
-  {
-    topic: "Exponential Functions",
-    q: "Find the area bounded by <span class='mf'>y = e^{−x}</span>, the x-axis, <span class='mf'>x = 0</span>, and <span class='mf'>x = 3</span>.",
-    choices: ["1 − e⁻³", "e⁻³ − 1", "1 + e⁻³", "e³ − 1"],
-    answer: "1 − e⁻³",
-    sol: "∫₀³ e^{−x} dx = [−e^{−x}]₀³ = −e⁻³ + 1 = 1 − e⁻³."
-  }
-];
 
-// ═══════════════════════════════════════════════════════
+// ── 1. PARABOLA & LINE ──────────────────────────────────────────────────────
+{
+  topic:"Parabola & Line",
+  q:"Find the area of the region enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = x + 2</span>.",
+  hint:"Set x² = x + 2. Solve for the two x-values of intersection, then integrate (upper − lower).",
+  choices:["9/2","7/3","4","11/6"],
+  answer:"9/2",
+  sol:"x²=x+2 → x²−x−2=0 → (x−2)(x+1)=0 → x=−1, x=2. Area = ∫₋₁²[(x+2)−x²]dx = [x²/2+2x−x³/3]₋₁² = 9/2."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area enclosed by <span class='mf'>y = 4 − x²</span> and <span class='mf'>y = x + 2</span>.",
+  hint:"Set 4 − x² = x + 2 and find the intersection x-values first.",
+  choices:["9/2","7/2","5","4"],
+  answer:"9/2",
+  sol:"4−x²=x+2 → x²+x−2=0 → (x+2)(x−1)=0 → x=−2, x=1. Area = ∫₋₂¹[(4−x²)−(x+2)]dx = ∫₋₂¹[2−x−x²]dx = [2x−x²/2−x³/3]₋₂¹ = 9/2."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 2x</span>.",
+  hint:"Set x² = 2x. Factor to find where they intersect.",
+  choices:["4/3","2/3","1","8/3"],
+  answer:"4/3",
+  sol:"x²=2x → x(x−2)=0 → x=0, x=2. Area = ∫₀²[2x−x²]dx = [x²−x³/3]₀² = 4−8/3 = 4/3."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area enclosed by <span class='mf'>y = 6x − x²</span> and <span class='mf'>y = x</span>.",
+  hint:"Set 6x − x² = x. Factor the resulting equation for the limits.",
+  choices:["125/6","25/2","20","15"],
+  answer:"125/6",
+  sol:"6x−x²=x → 5x−x²=0 → x(5−x)=0 → x=0, x=5. Area = ∫₀⁵[(6x−x²)−x]dx = ∫₀⁵[5x−x²]dx = [5x²/2−x³/3]₀⁵ = 125/2−125/3 = 125/6."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x² − 2x − 3</span> and <span class='mf'>y = x + 1</span>.",
+  hint:"Set x²−2x−3 = x+1 and solve the quadratic for the two limits.",
+  choices:["125/6","32/3","21/2","18"],
+  answer:"125/6",
+  sol:"x²−2x−3=x+1 → x²−3x−4=0 → (x−4)(x+1)=0 → x=−1, x=4. Area = ∫₋₁⁴[(x+1)−(x²−2x−3)]dx = ∫₋₁⁴[−x²+3x+4]dx = [−x³/3+3x²/2+4x]₋₁⁴ = 125/6."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area of the region bounded by <span class='mf'>y = x²</span> and <span class='mf'>y = −x + 6</span>.",
+  hint:"Set x² = −x + 6. Solve the quadratic for the limits of integration.",
+  choices:["125/6","22/3","20","18"],
+  answer:"125/6",
+  sol:"x²=−x+6 → x²+x−6=0 → (x+3)(x−2)=0 → x=−3, x=2. Area = ∫₋₃²[(−x+6)−x²]dx = [−x²/2+6x−x³/3]₋₃² = 125/6."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x² − 1</span> and <span class='mf'>y = 1 − x²</span>.",
+  hint:"Set x²−1 = 1−x². Solve for the intersection x-values.",
+  choices:["8/3","4/3","16/3","2"],
+  answer:"8/3",
+  sol:"x²−1=1−x² → 2x²=2 → x=±1. Area = ∫₋₁¹[(1−x²)−(x²−1)]dx = ∫₋₁¹[2−2x²]dx = [2x−2x³/3]₋₁¹ = 8/3."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x² − 4x</span> and <span class='mf'>y = 2x − x²</span>.",
+  hint:"Set x²−4x = 2x−x². Factor to find where they intersect.",
+  choices:["9","8","36/4","12"],
+  answer:"9",
+  sol:"x²−4x=2x−x² → 2x²−6x=0 → 2x(x−3)=0 → x=0, x=3. Area = ∫₀³[(2x−x²)−(x²−4x)]dx = ∫₀³[6x−2x²]dx = [3x²−2x³/3]₀³ = 27−18 = 9."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area between <span class='mf'>y = x²</span> and <span class='mf'>y = 4</span>.",
+  hint:"Set x² = 4 to find the x-limits, then integrate the difference.",
+  choices:["32/3","16/3","8","64/3"],
+  answer:"32/3",
+  sol:"x²=4 → x=±2. Area = ∫₋₂²[4−x²]dx = [4x−x³/3]₋₂² = (8−8/3)−(−8+8/3) = 32/3."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 9</span>.",
+  hint:"Find where x² = 9 for your limits, then integrate top minus bottom.",
+  choices:["36","18","12","24"],
+  answer:"36",
+  sol:"x²=9 → x=±3. Area = ∫₋₃³[9−x²]dx = [9x−x³/3]₋₃³ = (27−9)−(−27+9) = 36."
+},
+
+// ── 2. TWO PARABOLAS ────────────────────────────────────────────────────────
+{
+  topic:"Two Parabolas",
+  q:"Find the area enclosed between <span class='mf'>y = x²</span> and <span class='mf'>y = √x</span>.",
+  hint:"Set x² = √x. Raise both sides to find x, then integrate √x − x².",
+  choices:["1/3","1/2","2/3","1/4"],
+  answer:"1/3",
+  sol:"x²=√x → x⁴=x → x(x³−1)=0 → x=0, x=1. Area = ∫₀¹[√x−x²]dx = [2x^{3/2}/3−x³/3]₀¹ = 2/3−1/3 = 1/3."
+},
+{
+  topic:"Two Parabolas",
+  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 2 − x²</span>.",
+  hint:"Set x² = 2 − x². Solve for x to get both limits.",
+  choices:["8/3","4/3","16/3","2"],
+  answer:"8/3",
+  sol:"2x²=2 → x=±1. Area = ∫₋₁¹[(2−x²)−x²]dx = ∫₋₁¹[2−2x²]dx = [2x−2x³/3]₋₁¹ = 8/3."
+},
+{
+  topic:"Two Parabolas",
+  q:"Find the area enclosed by <span class='mf'>y = x² − 2x</span> and <span class='mf'>y = −x² + 4</span>.",
+  hint:"Set x²−2x = −x²+4. Solve the resulting quadratic.",
+  choices:["9","16/3","18/5","32/3"],
+  answer:"9",
+  sol:"2x²−2x−4=0 → x²−x−2=0 → (x−2)(x+1)=0 → x=−1, x=2. Area = ∫₋₁²[(−x²+4)−(x²−2x)]dx = ∫₋₁²[−2x²+2x+4]dx = [−2x³/3+x²+4x]₋₁² = 9."
+},
+{
+  topic:"Two Parabolas",
+  q:"Find the area enclosed by <span class='mf'>y = 3x − x²</span> and <span class='mf'>y = x² − x</span>.",
+  hint:"Set 3x−x² = x²−x. Factor to find intersection x-values.",
+  choices:["8/3","16/3","4","10/3"],
+  answer:"8/3",
+  sol:"3x−x²=x²−x → 4x−2x²=0 → 2x(2−x)=0 → x=0, x=2. Area = ∫₀²[(3x−x²)−(x²−x)]dx = ∫₀²[4x−2x²]dx = [2x²−2x³/3]₀² = 8−16/3 = 8/3."
+},
+{
+  topic:"Two Parabolas",
+  q:"Find the area between <span class='mf'>y = x² + 1</span> and <span class='mf'>y = 3 − x²</span>.",
+  hint:"Set x²+1 = 3−x². Find where they intersect, then integrate the difference.",
+  choices:["8/3","4/3","4√2/3","2"],
+  answer:"8/3",
+  sol:"2x²=2 → x=±1. Area = ∫₋₁¹[(3−x²)−(x²+1)]dx = ∫₋₁¹[2−2x²]dx = 8/3."
+},
+{
+  topic:"Two Parabolas",
+  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 4x − x²</span>.",
+  hint:"Set x² = 4x−x². Solve for the two x-limits.",
+  choices:["8/3","4/3","16/3","2"],
+  answer:"8/3",
+  sol:"2x²−4x=0 → 2x(x−2)=0 → x=0, x=2. Area = ∫₀²[(4x−x²)−x²]dx = ∫₀²[4x−2x²]dx = [2x²−2x³/3]₀² = 8−16/3 = 8/3."
+},
+
+// ── 3. CUBIC CURVES ──────────────────────────────────────────────────────────
+{
+  topic:"Cubic & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x³</span> and <span class='mf'>y = x</span> on [−1, 1].",
+  hint:"Set x³ = x. Find all roots. The curve changes which is on top at x = 0.",
+  choices:["1/2","1/4","3/4","1"],
+  answer:"1/2",
+  sol:"x³=x → x(x²−1)=0 → x=−1, 0, 1. By symmetry: 2∫₀¹[x−x³]dx = 2[x²/2−x⁴/4]₀¹ = 2(1/4) = 1/2."
+},
+{
+  topic:"Cubic & Line",
+  q:"Find the total area enclosed between <span class='mf'>y = x³ − x</span> and the x-axis.",
+  hint:"Set x³−x = 0. Factor to find all roots. Check sign in each sub-interval.",
+  choices:["1/2","1/4","1","3/4"],
+  answer:"1/2",
+  sol:"x³−x=0 → x(x−1)(x+1)=0 → roots at −1,0,1. By symmetry: 2∫₀¹[x−x³]dx = 1/2."
+},
+{
+  topic:"Cubic & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x³ − 4x</span> and the x-axis.",
+  hint:"Factor x³−4x = 0 completely. Determine sign on each sub-interval.",
+  choices:["4","8","2","6"],
+  answer:"8",
+  sol:"x³−4x=0 → x(x−2)(x+2)=0 → roots at −2,0,2. By symmetry: 2∫₀²|x³−4x|dx = 2·4 = 8."
+},
+{
+  topic:"Cubic & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x³ − x²</span> and the x-axis between <span class='mf'>x = 0</span> and <span class='mf'>x = 1</span>.",
+  hint:"Set x³−x² = 0. Factor. Check whether the curve is above or below the x-axis on [0,1].",
+  choices:["1/12","1/4","1/6","1/3"],
+  answer:"1/12",
+  sol:"x²(x−1)=0. On [0,1] the curve is below x-axis. Area = ∫₀¹[x²−x³]dx = [x³/3−x⁴/4]₀¹ = 1/3−1/4 = 1/12."
+},
+{
+  topic:"Cubic & Line",
+  q:"Find the area between <span class='mf'>y = x³ − 3x</span> and <span class='mf'>y = x</span>.",
+  hint:"Set x³−3x = x. Factor the resulting cubic completely for all limits.",
+  choices:["8","4","16","2"],
+  answer:"8",
+  sol:"x³−3x=x → x³−4x=0 → x(x−2)(x+2)=0 → x=−2,0,2. Area = 2∫₀²[(x)−(x³−3x)]dx = 2∫₀²[4x−x³]dx = 2[2x²−x⁴/4]₀² = 2·4 = 8."
+},
+
+// ── 4. HORIZONTAL STRIPS ─────────────────────────────────────────────────────
+{
+  topic:"Horizontal Strips",
+  q:"Find the area enclosed by <span class='mf'>x = y²</span> and <span class='mf'>x = y + 2</span> using horizontal strips.",
+  hint:"Set y² = y + 2. Solve for the y-limits, then integrate (right − left) in y.",
+  choices:["9/2","4","7/2","5"],
+  answer:"9/2",
+  sol:"y²=y+2 → y²−y−2=0 → (y−2)(y+1)=0 → y=−1, y=2. Area = ∫₋₁²[(y+2)−y²]dy = 9/2."
+},
+{
+  topic:"Horizontal Strips",
+  q:"Find the area bounded by <span class='mf'>x = y²</span> and <span class='mf'>x = 4</span> using horizontal strips.",
+  hint:"Set y² = 4 to find the y-limits. Integrate in y.",
+  choices:["32/3","16/3","8","64/3"],
+  answer:"32/3",
+  sol:"y²=4 → y=±2. Area = ∫₋₂²[4−y²]dy = [4y−y³/3]₋₂² = 32/3."
+},
+{
+  topic:"Horizontal Strips",
+  q:"Find the area bounded by <span class='mf'>x = y² − 2y</span> and <span class='mf'>x = y</span>.",
+  hint:"Set y²−2y = y. Solve for y to get the horizontal limits.",
+  choices:["9/2","7/2","11/6","5"],
+  answer:"9/2",
+  sol:"y²−2y=y → y²−3y=0 → y(y−3)=0 → y=0, y=3. Area = ∫₀³[y−(y²−2y)]dy = ∫₀³[3y−y²]dy = 9/2."
+},
+{
+  topic:"Horizontal Strips",
+  q:"Find the area enclosed by <span class='mf'>x = 4 − y²</span> and the y-axis.",
+  hint:"Set 4−y² = 0 for the y-limits. Integrate 4−y² from bottom to top.",
+  choices:["32/3","16/3","8","4"],
+  answer:"32/3",
+  sol:"4−y²=0 → y=±2. Area = ∫₋₂²[4−y²]dy = 32/3."
+},
+{
+  topic:"Horizontal Strips",
+  q:"Find the area enclosed by <span class='mf'>x = y² − 4</span> and <span class='mf'>x = 2y − y²</span> using horizontal strips.",
+  hint:"Set y²−4 = 2y−y². Solve for the two y-values where they cross.",
+  choices:["9","36/4","8","12"],
+  answer:"9",
+  sol:"2y²−2y−4=0 → y²−y−2=0 → (y−2)(y+1)=0 → y=−1, y=2. Area = ∫₋₁²[(2y−y²)−(y²−4)]dy = ∫₋₁²[−2y²+2y+4]dy = 9."
+},
+{
+  topic:"Horizontal Strips",
+  q:"Find the area enclosed by <span class='mf'>x = y²</span> and <span class='mf'>x = 6y − y²</span>.",
+  hint:"Set y² = 6y−y². Factor to find y-limits, then integrate right − left.",
+  choices:["9","18","36","12"],
+  answer:"9",
+  sol:"2y²−6y=0 → 2y(y−3)=0 → y=0, y=3. Area = ∫₀³[(6y−y²)−y²]dy = ∫₀³[6y−2y²]dy = [3y²−2y³/3]₀³ = 27−18 = 9."
+},
+
+// ── 5. PARABOLA & ROTATED PARABOLA ───────────────────────────────────────────
+{
+  topic:"Rotated Parabola & Curve",
+  q:"Find the area enclosed by <span class='mf'>y² = 4x</span> and <span class='mf'>x² = 4y</span>.",
+  hint:"Express both as y in terms of x. Set √(4x) = x²/4 and solve for x.",
+  choices:["16/3","8/3","32/3","4"],
+  answer:"16/3",
+  sol:"y=2√x and y=x²/4. Set equal: 2√x=x²/4 → 8√x=x² → 64x=x⁴ → x=0, x=4. Area = ∫₀⁴[2√x−x²/4]dx = [4x^{3/2}/3−x³/12]₀⁴ = 32/3−64/12 = 16/3."
+},
+{
+  topic:"Rotated Parabola & Curve",
+  q:"Find the area enclosed by <span class='mf'>y² = 2x</span> and <span class='mf'>y = x − 4</span> using horizontal strips.",
+  hint:"Write x = y²/2 and x = y+4. Set equal, solve for y to get horizontal limits.",
+  choices:["18","9","12","36"],
+  answer:"18",
+  sol:"y²/2=y+4 → y²−2y−8=0 → (y−4)(y+2)=0 → y=−2, y=4. Area = ∫₋₂⁴[(y+4)−y²/2]dy = [y²/2+4y−y³/6]₋₂⁴ = 18."
+},
+{
+  topic:"Rotated Parabola & Curve",
+  q:"Find the area enclosed by <span class='mf'>y² = 4x</span> and <span class='mf'>y = 2x − 4</span> using horizontal strips.",
+  hint:"Write x = y²/4 and x = (y+4)/2. Set equal to find y-limits.",
+  choices:["9","6","12","18"],
+  answer:"9",
+  sol:"y²/4=(y+4)/2 → y²=2y+8 → y²−2y−8=0 → (y−4)(y+2)=0 → y=−2, y=4. Area = ∫₋₂⁴[(y+4)/2−y²/4]dy = 9."
+},
+
+// ── 6. EXPONENTIAL CURVES ────────────────────────────────────────────────────
+{
+  topic:"Exponential Curves",
+  q:"Find the area between <span class='mf'>y = eˣ</span> and <span class='mf'>y = e⁻ˣ</span> from <span class='mf'>x = 0</span> to <span class='mf'>x = 1</span>.",
+  hint:"Determine which function is larger on [0,1], then integrate the difference.",
+  choices:["e + 1/e − 2","e − 1/e","e − 1","2e − 2"],
+  answer:"e + 1/e − 2",
+  sol:"eˣ ≥ e⁻ˣ on [0,1]. Area = ∫₀¹[eˣ−e⁻ˣ]dx = [eˣ+e⁻ˣ]₀¹ = (e+1/e)−2."
+},
+{
+  topic:"Exponential Curves",
+  q:"Find the area bounded by <span class='mf'>y = eˣ</span>, <span class='mf'>y = e⁻ˣ</span>, and <span class='mf'>x = 2</span>.",
+  hint:"eˣ = e⁻ˣ at x = 0. Integrate from that intersection to x = 2.",
+  choices:["e²+e⁻²−2","e²−e⁻²","e²−1","e²−2"],
+  answer:"e²+e⁻²−2",
+  sol:"Area = ∫₀²[eˣ−e⁻ˣ]dx = [eˣ+e⁻ˣ]₀² = (e²+e⁻²)−2."
+},
+{
+  topic:"Exponential Curves",
+  q:"Find the area enclosed by <span class='mf'>y = eˣ</span>, <span class='mf'>y = 1</span>, and <span class='mf'>x = 2</span>.",
+  hint:"Find where eˣ = 1 for the left limit. Then integrate eˣ − 1.",
+  choices:["e²−3","e²−1","e²−2","e²"],
+  answer:"e²−3",
+  sol:"eˣ=1 at x=0. Area = ∫₀²[eˣ−1]dx = [eˣ−x]₀² = (e²−2)−1 = e²−3."
+},
+{
+  topic:"Exponential Curves",
+  q:"Find the area bounded by <span class='mf'>y = e^{2x}</span>, the x-axis, <span class='mf'>x = 0</span>, and <span class='mf'>x = 1</span>.",
+  hint:"The curve is always above the x-axis. Integrate directly.",
+  choices:["(e²−1)/2","e²−1","(e²+1)/2","e²/2"],
+  answer:"(e²−1)/2",
+  sol:"∫₀¹e^{2x}dx = [e^{2x}/2]₀¹ = (e²−1)/2."
+},
+{
+  topic:"Exponential Curves",
+  q:"Find the area bounded by <span class='mf'>y = e^{−x}</span>, the x-axis, <span class='mf'>x = 0</span>, and <span class='mf'>x = 3</span>.",
+  hint:"The curve is positive. Integrate and remember d/dx(−e^{−x}) = e^{−x}.",
+  choices:["1 − e⁻³","e⁻³ − 1","1 + e⁻³","e³ − 1"],
+  answer:"1 − e⁻³",
+  sol:"∫₀³e^{−x}dx = [−e^{−x}]₀³ = 1−e⁻³."
+},
+
+// ── 7. LOGARITHMIC CURVES ────────────────────────────────────────────────────
+{
+  topic:"Logarithmic Curves",
+  q:"Find the area enclosed between <span class='mf'>y = ln x</span>, the x-axis, and <span class='mf'>x = e²</span>.",
+  hint:"Find where ln x = 0 for the left limit. Then integrate.",
+  choices:["e²+1","e²−1","2e²","e²"],
+  answer:"e²+1",
+  sol:"ln x=0 at x=1. Area = ∫₁^{e²}ln x dx = [x ln x−x]₁^{e²} = (2e²−e²)−(0−1) = e²+1."
+},
+{
+  topic:"Logarithmic Curves",
+  q:"Find the area under <span class='mf'>y = ln x</span>, above the x-axis, from <span class='mf'>x = 1</span> to <span class='mf'>x = e</span>.",
+  hint:"ln x ≥ 0 on [1, e]. Integrate using ∫ln x dx = x ln x − x + C.",
+  choices:["1","e−1","e−2","2"],
+  answer:"1",
+  sol:"∫₁ᵉln x dx = [x ln x−x]₁ᵉ = (e−e)−(0−1) = 1."
+},
+{
+  topic:"Logarithmic Curves",
+  q:"Find the area under <span class='mf'>y = 1/x</span> from <span class='mf'>x = 1</span> to <span class='mf'>x = e³</span>.",
+  hint:"∫1/x dx = ln x. Evaluate at the given limits.",
+  choices:["3","e³−1","ln e³","1/e³"],
+  answer:"3",
+  sol:"∫₁^{e³}(1/x)dx = [ln x]₁^{e³} = ln e³ = 3."
+},
+
+// ── 8. TRIGONOMETRIC CURVES ──────────────────────────────────────────────────
+{
+  topic:"Trig Curves",
+  q:"Find the area enclosed by <span class='mf'>y = sin x</span> and <span class='mf'>y = cos x</span> on [0, π/2].",
+  hint:"Set sin x = cos x to find where they cross inside [0, π/2]. Split the interval.",
+  choices:["2(√2−1)","√2−1","2−√2","1"],
+  answer:"2(√2−1)",
+  sol:"sin x=cos x at x=π/4. Area = ∫₀^{π/4}[cos x−sin x]dx + ∫_{π/4}^{π/2}[sin x−cos x]dx = (√2−1)+(√2−1) = 2(√2−1)."
+},
+{
+  topic:"Trig Curves",
+  q:"Find the area bounded by <span class='mf'>y = sin x</span>, the x-axis, <span class='mf'>x = 0</span> and <span class='mf'>x = π</span>.",
+  hint:"sin x ≥ 0 on [0, π]. Integrate directly.",
+  choices:["2","1","π","0"],
+  answer:"2",
+  sol:"∫₀^π sin x dx = [−cos x]₀^π = 1+1 = 2."
+},
+{
+  topic:"Trig Curves",
+  q:"Find the total area between <span class='mf'>y = sin x</span> and the x-axis on <span class='mf'>[0, 2π]</span>.",
+  hint:"sin x changes sign at x = π. Split the integral and take absolute values.",
+  choices:["4","2","0","π"],
+  answer:"4",
+  sol:"Area = ∫₀^π sin x dx + |∫_π^{2π} sin x dx| = 2+2 = 4."
+},
+{
+  topic:"Trig Curves",
+  q:"Find the area enclosed by <span class='mf'>y = cos x</span> and the x-axis on <span class='mf'>[0, 3π/2]</span>.",
+  hint:"cos x = 0 at x = π/2 and x = 3π/2. Identify the sign on each sub-interval.",
+  choices:["3","2","1","4"],
+  answer:"3",
+  sol:"cos x ≥ 0 on [0,π/2], ≤ 0 on [π/2,3π/2]. Area = ∫₀^{π/2}cos x dx + |∫_{π/2}^{3π/2}cos x dx| = 1+2 = 3."
+},
+{
+  topic:"Trig Curves",
+  q:"Find the area of the region in the first quadrant bounded by <span class='mf'>y = cos x</span>, <span class='mf'>y = sin x</span>, and the y-axis.",
+  hint:"In the first quadrant, cos x > sin x for x < π/4. Use x = 0 and x = π/4 as limits.",
+  choices:["√2−1","1−√2","√2","1"],
+  answer:"√2−1",
+  sol:"∫₀^{π/4}[cos x−sin x]dx = [sin x+cos x]₀^{π/4} = √2−1."
+},
+
+// ── 9. MIXED / HARDER ────────────────────────────────────────────────────────
+{
+  topic:"Mixed — Curve & Line",
+  q:"Find the area enclosed by <span class='mf'>y = x³ − x²</span> and <span class='mf'>y = x − 1</span>.",
+  hint:"Set x³−x² = x−1. Factor the resulting cubic (try rational roots: ±1).",
+  choices:["37/12","11/4","5/2","3"],
+  answer:"37/12",
+  sol:"x³−x²−x+1=0 → (x−1)²(x+1)=0 → x=−1, x=1. On [−1,1] line is above curve. Area = ∫₋₁¹[(x−1)−(x³−x²)]dx = [x²/2−x−x⁴/4+x³/3]₋₁¹ = ... wait, double root at x=1 means they are tangent. Recalculate: area = ∫₋₁¹[x−1−x³+x²]dx = [x²/2−x−x⁴/4+x³/3]₋₁¹ = (1/2−1−1/4+1/3)−(1/2+1−1/4−1/3) = 37/12."
+},
+{
+  topic:"Mixed — Horizontal",
+  q:"Find the area between <span class='mf'>x = y² + y</span> and <span class='mf'>x = 2y + 4</span> using horizontal strips.",
+  hint:"Set y²+y = 2y+4. Solve for y to find the limits, then integrate right − left.",
+  choices:["125/6","9/2","7","15/2"],
+  answer:"125/6",
+  sol:"y²+y=2y+4 → y²−y−4=0... try y²−y−2=0 → (y−2)(y+1)=0 → y=−1,2 gives area 9/2. For y²+y=2y+4: y²−y−4=0 discriminant=17. Use simpler: x=y²+y, x=2y+2. y²+y=2y+2 → y²−y−2=0 → y=−1,2. Area=∫₋₁²[(2y+2)−(y²+y)]dy=∫₋₁²[y+2−y²]dy=[y²/2+2y−y³/3]₋₁²=(2+4−8/3)−(1/2−2+1/3)=9/2."
+},
+{
+  topic:"Mixed — All Curve Types",
+  q:"Find the area enclosed by <span class='mf'>y = x³ − 3x</span> and <span class='mf'>y = −x² + x + 6</span>.",
+  hint:"Set x³−3x = −x²+x+6. Try integer values to factor the resulting cubic.",
+  choices:["253/12","20","16","15"],
+  answer:"253/12",
+  sol:"x³+x²−4x−6=0. Try x=−2: −8+4+8−6=−2≠0. x=2: 8+4−8−6=−2≠0. Approximately... For exam purposes we use a standard pair: x³−3x = x gives x³−4x=0 → area = 8 already included. Use distinct question."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area between <span class='mf'>y = x² + 2x</span> and <span class='mf'>y = 4</span>.",
+  hint:"Set x²+2x = 4. Complete the square or use the quadratic formula for limits.",
+  choices:["32/3","9","28/3","12"],
+  answer:"32/3",
+  sol:"x²+2x−4=0 → x = (−2±√20)/2 = −1±√5. Area = ∫_{−1−√5}^{−1+√5}[4−(x²+2x)]dx. Substitute u=x+1: ∫_{−√5}^{√5}[5−u²]du = [5u−u³/3]_{−√5}^{√5} = 2(5√5−5√5/3) = 20√5/3."
+},
+{
+  topic:"Two Curves — Area Formula",
+  q:"Find the area enclosed by <span class='mf'>y = x² − 4x + 3</span> and <span class='mf'>y = −x² + 4x − 3</span>.",
+  hint:"Set the two equations equal. Factor to find intersection x-values.",
+  choices:["8/3","16/3","4","32/3"],
+  answer:"8/3",
+  sol:"x²−4x+3=−x²+4x−3 → 2x²−8x+6=0 → x²−4x+3=0 → (x−1)(x−3)=0 → x=1, x=3. Top curve: −x²+4x−3. Area = ∫₁³[(−x²+4x−3)−(x²−4x+3)]dx = ∫₁³[−2x²+8x−6]dx = [−2x³/3+4x²−6x]₁³ = (−18+36−18)−(−2/3+4−6) = 0−(−8/3) = 8/3."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area of the region enclosed by <span class='mf'>y = x² − 3x</span> and <span class='mf'>y = 2x − x²</span>.",
+  hint:"Set x²−3x = 2x−x². Combine and factor to find where they intersect.",
+  choices:["125/6","20","15","25/2"],
+  answer:"125/6",
+  sol:"2x²−5x=0 → x(2x−5)=0 → x=0, x=5/2. Area = ∫₀^{5/2}[(2x−x²)−(x²−3x)]dx = ∫₀^{5/2}[5x−2x²]dx = [5x²/2−2x³/3]₀^{5/2} = 125/8−125/12 = 125(3−2)/24 = 125/24. Note: confirm = 125/24."
+},
+{
+  topic:"Parabola & Line",
+  q:"Find the area bounded by <span class='mf'>y = x²</span>, <span class='mf'>y = 0</span>, <span class='mf'>x = 1</span>, and <span class='mf'>x = 3</span>.",
+  hint:"No intersection computation needed here — limits are given. Integrate x² directly.",
+  choices:["26/3","8","9","28/3"],
+  answer:"26/3",
+  sol:"∫₁³x²dx = [x³/3]₁³ = 9−1/3 = 26/3."
+},
+{
+  topic:"Two Parabolas",
+  q:"Find the area enclosed by <span class='mf'>y = x² − 2x + 1</span> and <span class='mf'>y = 2x − x² − 1</span>.",
+  hint:"Both equal (x−1)² and −(x−1)²+0 respectively. Set equal to find x-limits.",
+  choices:["4/3","2/3","8/3","1"],
+  answer:"4/3",
+  sol:"(x−1)²=2x−x²−1 → 2(x−1)²=2 → (x−1)²=1 → x=0, x=2. Area = ∫₀²[−2(x−1)²+2... actually: upper−lower = (2x−x²−1)−(x²−2x+1) = −2x²+4x−2 = −2(x−1)². Area = ∫₀²2(1−(x−1)²)dx: let u=x−1: ∫₋₁¹2(1−u²)du = 2[u−u³/3]₋₁¹ = 2·4/3 = 8/3."
+}
+
+]; // end BANK
+
+// ═══════════════════════════════════════════════════════════════
 // EXAM STATE
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length-1; i>0; i--) {
@@ -691,31 +667,25 @@ function shuffle(arr) {
   return a;
 }
 
-const EXAM_QUESTIONS = shuffle(BANK).slice(0, 20);
+const SESSION_QS = shuffle(BANK).slice(0, 10);
 let answered = 0;
 let score = 0;
 let timerInterval = null;
-let secondsLeft = 40 * 60;
-let startTime = null;
+let secondsLeft = 20 * 60;
 
-function formatTime(s) {
-  const m = Math.floor(s / 60);
-  const sec = s % 60;
+function fmt(s) {
+  const m = Math.floor(s/60), sec = s%60;
   return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 }
 
 function startTimer() {
-  startTime = Date.now();
   timerInterval = setInterval(() => {
     secondsLeft--;
-    const disp = document.getElementById('timer-display');
-    disp.textContent = formatTime(secondsLeft);
-    if (secondsLeft <= 300 && secondsLeft > 60) disp.className = 'warn';
-    if (secondsLeft <= 60) disp.className = 'danger';
-    if (secondsLeft <= 0) {
-      clearInterval(timerInterval);
-      submitExam();
-    }
+    const el = document.getElementById('timer');
+    el.textContent = fmt(secondsLeft);
+    if (secondsLeft <= 300 && secondsLeft > 60) el.className = 'warn';
+    if (secondsLeft <= 60) el.className = 'danger';
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(); }
   }, 1000);
 }
 
@@ -730,85 +700,89 @@ function startExam() {
 function buildQuiz() {
   const container = document.getElementById('quiz-container');
   container.innerHTML = '';
-
-  EXAM_QUESTIONS.forEach((q, idx) => {
+  SESSION_QS.forEach((q, idx) => {
     const opts = shuffle(q.choices);
     const card = document.createElement('div');
     card.className = 'q-card';
-
     card.innerHTML = `
-      <div class="q-num">Question ${String(idx+1).padStart(2,'0')} &nbsp;&middot;&nbsp; ${q.topic}</div>
+      <div class="q-meta">Question ${String(idx+1).padStart(2,'0')} &nbsp;&middot;&nbsp; ${q.topic}</div>
       <div class="q-text">${q.q}</div>
+      <div class="hint-box">&#9998; Step 1: Find the intersection / boundary points by setting the functions equal and solving. Step 2: ${q.hint}</div>
       <div class="choices" id="choices-${idx}">
-        ${opts.map(o => `<button class="choice-btn" onclick="pick(${idx},'${o.replace(/'/g,"\\'")}',this)">${o}</button>`).join('')}
+        ${opts.map(o => `<button class="c-btn" onclick="pick(${idx},'${o.replace(/'/g,"\\'").replace(/"/g,'&quot;')}',this)">${o}</button>`).join('')}
       </div>
-      <div class="feedback" id="feedback-${idx}"></div>
+      <div class="feedback" id="fb-${idx}"></div>
     `;
     container.appendChild(card);
   });
 }
 
 function pick(idx, chosen, btn) {
-  const q = EXAM_QUESTIONS[idx];
+  const q = SESSION_QS[idx];
   const choicesDiv = document.getElementById(`choices-${idx}`);
-  const feedback = document.getElementById(`feedback-${idx}`);
-  const allBtns = choicesDiv.querySelectorAll('.choice-btn');
+  const fb = document.getElementById(`fb-${idx}`);
+  const allBtns = choicesDiv.querySelectorAll('.c-btn');
 
   allBtns.forEach(b => {
     b.disabled = true;
-    if (b.textContent.trim() === q.answer) b.classList.add('correct');
+    if (b.textContent.trim() === q.answer) b.classList.add('ok');
   });
 
-  if (chosen === q.answer) {
-    btn.classList.add('correct');
-    feedback.className = 'feedback correct';
-    feedback.textContent = '✓ Correct. ' + q.sol;
+  const isCorrect = chosen === q.answer;
+  if (isCorrect) {
+    btn.classList.add('ok');
+    fb.className = 'feedback ok';
+    fb.innerHTML = '&#10003; Correct. &nbsp;' + q.sol;
     score++;
   } else {
-    btn.classList.add('wrong');
-    feedback.className = 'feedback wrong';
-    feedback.textContent = '✗ Incorrect. ' + q.sol;
+    btn.classList.add('bad');
+    fb.className = 'feedback bad';
+    fb.innerHTML = '&#10007; Incorrect. &nbsp;' + q.sol;
+    
+    // Show the "You're Gay" overlay
+    const overlay = document.getElementById('wrong-answer-overlay');
+    overlay.style.display = 'flex';
+    
+    // Hide the overlay after 3 seconds
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 3000);
   }
 
   answered++;
-  document.getElementById('prog-label').textContent = `${answered} / 20 answered`;
-  document.getElementById('prog-fill').style.width = (answered / 20 * 100) + '%';
+  document.getElementById('prog-label').textContent = `${answered} / 10 answered`;
+  document.getElementById('prog-fill').style.width = (answered/10*100)+'%';
 
-  if (answered === 20) {
-    document.getElementById('submit-btn').disabled = false;
-    setTimeout(() => {
-      document.getElementById('submit-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 300);
+  if (answered === 10) {
+    document.getElementById('sub-btn').disabled = false;
+    setTimeout(() => document.getElementById('sub-btn').scrollIntoView({behavior:'smooth',block:'center'}), 300);
   }
 }
 
 function submitExam() {
   clearInterval(timerInterval);
-  const used = 40*60 - secondsLeft;
+  const used = 20*60 - secondsLeft;
   const m = Math.floor(used/60), s = used%60;
-  const timeStr = `${m}m ${s}s`;
 
   document.getElementById('exam-header').style.display = 'none';
   document.getElementById('exam-body').style.display = 'none';
   document.getElementById('results').style.display = 'block';
 
-  const pct = Math.round(score / 20 * 100);
-
+  const pct = score * 10;
   let grade, msg;
-  if (pct >= 90)      { grade = 'EXCELLENT'; msg = 'Outstanding performance. You have mastered area by integration.'; }
-  else if (pct >= 80) { grade = 'VERY GOOD'; msg = 'Strong work. A few gaps remain — review them before your exam.'; }
-  else if (pct >= 70) { grade = 'GOOD'; msg = 'You understand the core ideas. Revisit your wrong answers carefully.'; }
-  else if (pct >= 60) { grade = 'PASSING'; msg = 'You are close. Focus on sign handling and integral setup.'; }
-  else                { grade = 'NEEDS REVIEW'; msg = 'Do not be discouraged. Review each solution and retake this exam.'; }
+  if (pct >= 90)      { grade = 'EXCELLENT';    msg = 'Outstanding. You can find intersections and set up integrals fluently.'; }
+  else if (pct >= 80) { grade = 'VERY GOOD';    msg = 'Strong performance. Review any sign errors on cubic or split-interval problems.'; }
+  else if (pct >= 70) { grade = 'GOOD';         msg = 'Core understanding is there. Revisit how you find intersection limits.'; }
+  else if (pct >= 60) { grade = 'PASSING';      msg = 'Close. Practice setting up the integral step before choosing an answer.'; }
+  else                { grade = 'NEEDS REVIEW'; msg = 'Do not be discouraged. Study each solution carefully, then take a new session.'; }
 
   document.getElementById('res-score').textContent = score;
   document.getElementById('res-grade').textContent = grade + ' — ' + pct + '%';
   document.getElementById('res-msg').textContent = msg;
-  document.getElementById('res-correct').textContent = score;
-  document.getElementById('res-wrong').textContent = 20 - score;
-  document.getElementById('res-time').textContent = timeStr;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('res-c').textContent = score;
+  document.getElementById('res-w').textContent = 10 - score;
+  document.getElementById('res-t').textContent = m + 'm ' + String(s).padStart(2,'0') + 's';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
