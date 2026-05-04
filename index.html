@@ -3,787 +3,1126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Area by Integration — Session Exam</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Physics 1 — Final Exam Cram Guide | WMSU EE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f2eb;
-    --paper: #faf8f3;
-    --ink: #1a1a18;
-    --ink2: #3a3a36;
-    --muted: #888880;
-    --rule: #ccc8be;
-    --correct: #2d6a2d;
-    --wrong: #8b1a1a;
-    --correct-bg: #eef6ee;
-    --wrong-bg: #fdf0f0;
-    --warn: #7a5c00;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; min-height: 100vh; }
+/* ─── ROOT ─────────────────────────────────── */
+:root {
+  --ink:     #1a1208;
+  --paper:   #faf7f2;
+  --cream:   #f3ede1;
+  --warm:    #e8dcc8;
+  --rule:    #c8b89a;
+  --muted:   #8a7a66;
+  --accent:  #c0392b;
+  --accent2: #2c6e49;
+  --accent3: #1a4a8a;
+  --gold:    #b8860b;
+  --purple:  #6b3fa0;
+  --teal:    #0d7377;
+  --orange:  #c0580a;
+  --red:     #c0392b;
+}
 
-  /* ── COVER ── */
-  #cover {
-    min-height: 100vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 40px 24px; text-align: center; position: relative;
-  }
-  #cover::before { content:''; position:absolute; inset:20px; border:1px solid var(--rule); pointer-events:none; }
-  #cover::after  { content:''; position:absolute; inset:27px; border:1px solid var(--rule); pointer-events:none; }
-  .cover-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-bottom:28px; }
-  .cover-title   { font-size:clamp(2.4rem,6vw,4rem); font-weight:700; line-height:1.08; margin-bottom:10px; }
-  .cover-sub     { font-size:1.15rem; font-style:italic; color:var(--ink2); margin-bottom:44px; }
-  .cover-rule    { width:72px; height:1px; background:var(--ink); margin:0 auto 44px; }
-  .cover-meta    { font-family:'JetBrains Mono',monospace; font-size:.74rem; color:var(--ink2); line-height:2.3; margin-bottom:52px; }
-  .cover-meta em { color:var(--muted); font-style:normal; margin-right:10px; }
-  .cover-notice  { max-width:420px; font-size:.88rem; font-style:italic; color:var(--muted); margin-bottom:44px; line-height:1.7; border:1px solid var(--rule); padding:14px 20px; background:var(--paper); }
-  #start-btn {
-    font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:600;
-    letter-spacing:2px; text-transform:uppercase; background:var(--ink);
-    color:var(--bg); border:none; padding:16px 52px; cursor:pointer; transition:opacity .2s;
-  }
-  #start-btn:hover { opacity:.8; }
-  .cover-fine { margin-top:22px; font-size:.78rem; font-style:italic; color:var(--muted); }
+* { margin:0; padding:0; box-sizing:border-box; }
 
-  /* ── HEADER ── */
-  #exam-header {
-    display:none; position:sticky; top:0; z-index:100;
-    background:var(--paper); border-bottom:1px solid var(--rule);
-    padding:11px 32px; align-items:center; gap:20px;
-  }
-  .eh-label { font-family:'JetBrains Mono',monospace; font-size:.66rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); flex:1; }
-  #timer { font-family:'JetBrains Mono',monospace; font-size:1.45rem; font-weight:600; letter-spacing:2px; color:var(--ink); min-width:72px; text-align:center; }
-  #timer.warn   { color:var(--warn); }
-  #timer.danger { color:var(--wrong); animation:pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-  .eh-prog { font-family:'JetBrains Mono',monospace; font-size:.66rem; color:var(--muted); text-align:right; }
-  .prog-track { width:110px; height:2px; background:var(--rule); margin-top:4px; }
-  .prog-fill  { height:100%; background:var(--ink); transition:width .3s; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
 
-  /* ── EXAM BODY ── */
-  #exam-body { display:none; max-width:760px; margin:0 auto; padding:48px 22px 90px; }
+/* ─── EXAM NOTICE BANNER ────────────────────── */
+.notice-banner {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.notice-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.notice-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.015) 40px,
+      rgba(255,255,255,0.015) 41px
+    );
+}
+.notice-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rule);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.notice-eyebrow::before,
+.notice-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+}
+.notice-eyebrow::before { flex: 0 0 30px; }
 
-  /* ── QUESTION CARD ── */
-  .q-card { background:var(--paper); border:1px solid var(--rule); padding:30px 34px 26px; margin-bottom:26px; }
-  .q-meta { font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
-  .q-text { font-size:1.06rem; line-height:1.85; margin-bottom:22px; }
-  .mf { font-family:'JetBrains Mono',monospace; font-size:.9em; background:rgba(0,0,0,.05); padding:1px 6px; border-radius:2px; }
-  .hint-box { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--warn); background:var(--paper); border:1px dashed #c8a83a; padding:8px 12px; margin-bottom:18px; line-height:1.6; }
-  .choices { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  .c-btn {
-    background:transparent; border:1px solid var(--rule); color:var(--ink);
-    font-family:'JetBrains Mono',monospace; font-size:.8rem;
-    padding:11px 14px; text-align:left; cursor:pointer;
-    transition:border-color .15s,background .15s; line-height:1.5;
-  }
-  .c-btn:hover:not(:disabled) { border-color:var(--ink); background:rgba(0,0,0,.03); }
-  .c-btn.sel  { border-color:var(--ink); background:rgba(0,0,0,.06); font-weight:600; }
-  .c-btn.ok   { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); }
-  .c-btn.bad  { border-color:var(--wrong);   background:var(--wrong-bg);   color:var(--wrong); }
-  .c-btn:disabled { cursor:default; }
-  .feedback { font-family:'JetBrains Mono',monospace; font-size:.72rem; margin-top:11px; padding:10px 13px; line-height:1.65; display:none; }
-  .feedback.ok  { background:var(--correct-bg); color:var(--correct); border-left:3px solid var(--correct); display:block; }
-  .feedback.bad { background:var(--wrong-bg);   color:var(--wrong);   border-left:3px solid var(--wrong);   display:block; }
+.notice-hed {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.notice-hed em {
+  font-style: italic;
+  color: #e8c87a;
+}
+.notice-sub {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.55);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 2rem;
+}
 
-  /* ── SUBMIT ── */
-  #sub-wrap { text-align:center; margin-top:40px; }
-  #sub-btn {
-    font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600;
-    letter-spacing:2px; text-transform:uppercase; background:var(--ink);
-    color:var(--bg); border:none; padding:15px 48px; cursor:pointer; transition:opacity .2s;
-  }
-  #sub-btn:hover:not(:disabled) { opacity:.8; }
-  #sub-btn:disabled { opacity:.3; cursor:default; }
+/* EXAM DETAILS ROW */
+.exam-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.exam-detail {
+  background: rgba(255,255,255,0.04);
+  padding: 1rem 1.2rem;
+}
+.exam-detail-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 0.25rem;
+}
+.exam-detail-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e8c87a;
+}
 
-  /* ── RESULTS ── */
-  #results { display:none; max-width:580px; margin:64px auto 80px; padding:0 22px; text-align:center; }
-  .res-wrap { border:1px solid var(--rule); padding:52px 38px; background:var(--paper); position:relative; }
-  .res-wrap::before { content:''; position:absolute; inset:6px; border:1px solid var(--rule); pointer-events:none; }
-  .res-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-bottom:22px; }
-  .res-score   { font-size:5rem; font-weight:700; line-height:1; margin-bottom:6px; }
-  .res-denom   { font-size:1.4rem; color:var(--muted); font-style:italic; margin-bottom:18px; }
-  .res-grade   { font-family:'JetBrains Mono',monospace; font-size:.82rem; letter-spacing:2px; margin-bottom:8px; }
-  .res-msg     { font-size:1rem; font-style:italic; color:var(--ink2); margin-bottom:32px; line-height:1.7; }
-  .res-stats   { display:flex; justify-content:center; gap:30px; margin-bottom:38px; font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--muted); }
-  .sv { display:block; font-size:1.35rem; color:var(--ink); margin-bottom:2px; }
-  #retry-btn {
-    font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:600;
-    letter-spacing:2px; text-transform:uppercase; background:transparent;
-    color:var(--ink); border:1px solid var(--ink); padding:13px 40px;
-    cursor:pointer; transition:background .2s,color .2s;
-  }
-  #retry-btn:hover { background:var(--ink); color:var(--bg); }
+/* RULES GRID */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+.rule-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.rule-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.rule-text { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+.rule-text strong { color: #fff; }
 
-  /* ── WRONG ANSWER DISPLAY ── */
-  .wrong-answer-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-in;
-  }
-  
-  .wrong-answer-text {
-    font-size: 8rem;
-    font-weight: 700;
-    color: #ff0000;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    animation: pulse 1s infinite;
-    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-  }
+/* ─── NAV ───────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  padding: 0.5rem 2rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+  border-bottom: 2px solid #e8c87a;
+}
+.nav-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-right: 0.5rem;
+}
+.nav a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  padding: 3px 9px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.nav a:hover, .nav a.active { background: rgba(232,200,122,0.15); color: #e8c87a; border-color: #e8c87a; }
+.nav a.cheatsheet {
+  margin-left: auto;
+  background: #e8c87a;
+  color: var(--ink);
+  border-color: #e8c87a;
+  font-weight: 600;
+}
 
-  @media(max-width:540px){
-    .choices{grid-template-columns:1fr}
-    .q-card{padding:20px 16px}
-    #exam-header{padding:10px 14px}
-    .res-wrap{padding:36px 22px}
-    .wrong-answer-text { font-size: 4rem; }
+/* ─── MAIN ──────────────────────────────────── */
+.main { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+/* ─── CHAPTER HEADERS ───────────────────────── */
+.ch-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid;
+}
+.ch-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.ch-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  flex: 1;
+}
+.ch-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+
+/* COLOR THEMES PER CHAPTER */
+.t-nl  { border-color: var(--accent3); }
+.t-nl  .ch-num { background: rgba(26,74,138,0.12); color: var(--accent3); }
+.t-nl  .ch-title { color: var(--accent3); }
+
+.t-wk  { border-color: var(--accent2); }
+.t-wk  .ch-num { background: rgba(44,110,73,0.12); color: var(--accent2); }
+.t-wk  .ch-title { color: var(--accent2); }
+
+.t-pe  { border-color: var(--gold); }
+.t-pe  .ch-num { background: rgba(184,134,11,0.12); color: var(--gold); }
+.t-pe  .ch-title { color: var(--gold); }
+
+.t-fl  { border-color: var(--teal); }
+.t-fl  .ch-num { background: rgba(13,115,119,0.12); color: var(--teal); }
+.t-fl  .ch-title { color: var(--teal); }
+
+.t-th  { border-color: var(--purple); }
+.t-th  .ch-num { background: rgba(107,63,160,0.12); color: var(--purple); }
+.t-th  .ch-title { color: var(--purple); }
+
+/* ─── CONCEPT CARDS ─────────────────────────── */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.ccard {
+  background: var(--cream);
+  border: 1px solid var(--warm);
+  border-radius: 8px;
+  padding: 1.1rem 1.2rem;
+}
+.ccard-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+}
+.t-nl .ccard-title { color: var(--accent3); }
+.t-wk .ccard-title { color: var(--accent2); }
+.t-pe .ccard-title { color: var(--gold); }
+.t-fl .ccard-title { color: var(--teal); }
+.t-th .ccard-title { color: var(--purple); }
+
+.ccard p { font-size: 0.85rem; line-height: 1.65; }
+.ccard ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+.ccard ul li { font-size: 0.83rem; line-height: 1.55; padding-left: 1rem; position: relative; }
+.ccard ul li::before { content: '—'; position: absolute; left: 0; color: var(--rule); }
+
+/* ─── FORMULA PANELS ────────────────────────── */
+.fbox {
+  border: 1px solid var(--warm);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.fbox-head {
+  padding: 0.5rem 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.t-nl .fbox-head { background: rgba(26,74,138,0.1); color: var(--accent3); }
+.t-wk .fbox-head { background: rgba(44,110,73,0.1); color: var(--accent2); }
+.t-pe .fbox-head { background: rgba(184,134,11,0.1); color: var(--gold); }
+.t-fl .fbox-head { background: rgba(13,115,119,0.1); color: var(--teal); }
+.t-th .fbox-head { background: rgba(107,63,160,0.1); color: var(--purple); }
+
+.fbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0;
+  background: var(--warm);
+}
+.fitem {
+  background: var(--paper);
+  padding: 0.75rem 1rem;
+  border-right: 1px solid var(--warm);
+  border-bottom: 1px solid var(--warm);
+}
+.fitem:last-child { border-right: none; }
+.flabel { font-size: 0.67rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-bottom: 0.2rem; }
+.feq {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.fnote { font-size: 0.65rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 0.15rem; }
+
+/* ─── ALERT BOXES ───────────────────────────── */
+.alert {
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.65rem;
+  font-size: 0.83rem;
+  line-height: 1.6;
+  border-left: 3px solid;
+}
+.alert-icon { flex-shrink: 0; }
+.alert.warn { background: rgba(184,134,11,0.08); border-color: var(--gold); }
+.alert.danger { background: rgba(192,57,43,0.07); border-color: var(--accent); }
+.alert.info { background: rgba(26,74,138,0.06); border-color: var(--accent3); }
+.alert.green { background: rgba(44,110,73,0.07); border-color: var(--accent2); }
+
+/* ─── DIVIDER ───────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--warm); margin: 2rem 0; }
+
+/* ─── TIPS ──────────────────────────────────── */
+.tip-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+.tip {
+  background: var(--cream);
+  border: 1px solid var(--warm);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.83rem;
+  line-height: 1.6;
+}
+.tip-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  height: fit-content;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════
+   PRINTABLE CHEAT SHEET — ¼ A4 PAPER
+   ═══════════════════════════════════════════════════ */
+#cheatsheet { margin-top: 3rem; }
+.cheatsheet-intro {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 10px 10px 0 0;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.cheatsheet-intro h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  flex: 1;
+}
+.cheatsheet-intro p { font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
+.print-btn {
+  background: #e8c87a;
+  color: var(--ink);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: opacity 0.15s;
+  text-transform: uppercase;
+}
+.print-btn:hover { opacity: 0.85; }
+
+/* THE ACTUAL CHEAT SHEET */
+.sheet-wrap {
+  border: 2px dashed var(--rule);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 1rem;
+  background: var(--cream);
+}
+.sheet-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* The sheet itself — 105mm × 74mm when printed (¼ A4) */
+.sheet {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 700px;
+  margin: 0 auto 1rem;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+.sheet-side {
+  padding: 0.55rem 0.65rem;
+  border-right: 1px solid var(--ink);
+}
+.sheet-side:last-child { border-right: none; }
+.sheet-side-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 2px;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
+.l-front { background: var(--accent3); }
+.l-back  { background: var(--purple); }
+
+.sf { /* sheet formula entry */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.22rem;
+}
+.sf-lbl { font-size: 0.47rem; color: var(--muted); font-family: 'DM Mono', monospace; line-height: 1; margin-bottom: 0.05rem; }
+.sf-eq  { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; color: var(--ink); line-height: 1.25; }
+.sf-eq.blue { color: var(--accent3); }
+.sf-eq.green { color: var(--accent2); }
+.sf-eq.gold { color: var(--gold); }
+.sf-eq.teal { color: var(--teal); }
+.sf-eq.purple { color: var(--purple); }
+.sf-eq.red { color: var(--accent); }
+
+.shdiv {
+  border: none;
+  border-top: 1px solid var(--warm);
+  margin: 0.3rem 0;
+}
+.sh-section-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.52rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.18rem;
+}
+.sh-section-lbl.blue { color: var(--accent3); }
+.sh-section-lbl.green { color: var(--accent2); }
+.sh-section-lbl.gold { color: var(--gold); }
+.sh-section-lbl.teal { color: var(--teal); }
+.sh-section-lbl.purple { color: var(--purple); }
+.sh-section-lbl.red { color: var(--accent); }
+
+/* ─── FOOTER ────────────────────────────────── */
+.footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 1.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  margin-top: 3rem;
+}
+.footer span { color: #e8c87a; }
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.notice-inner > * { animation: fadeUp 0.5s ease both; }
+.notice-inner > *:nth-child(1) { animation-delay: 0.05s; }
+.notice-inner > *:nth-child(2) { animation-delay: 0.15s; }
+.notice-inner > *:nth-child(3) { animation-delay: 0.2s; }
+.notice-inner > *:nth-child(4) { animation-delay: 0.3s; }
+.notice-inner > *:nth-child(5) { animation-delay: 0.4s; }
+
+/* ─── PRINT STYLES ──────────────────────────── */
+@media print {
+  body { background: #fff; }
+  .notice-banner, .nav, .main > *:not(#cheatsheet),
+  .cheatsheet-intro, .sheet-wrap > .sheet-note,
+  .print-btn { display: none !important; }
+  #cheatsheet { margin: 0; }
+  .sheet-wrap { border: none; padding: 0; background: #fff; }
+  .sheet {
+    max-width: 105mm;
+    width: 105mm;
+    grid-template-columns: 52.5mm 52.5mm;
+    box-shadow: none;
+    page-break-inside: avoid;
   }
+  .sheet-side { padding: 3mm 3.5mm; }
+  .sf-eq { font-size: 5.5pt; }
+  .sf-lbl { font-size: 4pt; }
+  .sh-section-lbl { font-size: 5pt; }
+}
+
+@media (max-width: 600px) {
+  .main { padding: 1.5rem 1rem; }
+  .notice-inner { padding: 2rem 1.2rem 1.5rem; }
+  .nav { padding: 0.4rem 1rem; gap: 0.3rem; }
+  .sheet { grid-template-columns: 1fr; }
+  .sheet-side { border-right: none; border-bottom: 1px solid var(--ink); }
+  .sheet-side:last-child { border-bottom: none; }
+}
 </style>
 </head>
 <body>
 
-<!-- COVER -->
-<div id="cover">
-  <div class="cover-eyebrow">Integral Calculus · Session Examination</div>
-  <div class="cover-title">Area by Integration</div>
-  <div class="cover-sub">Bounded Regions — Find the Intersections Yourself</div>
-  <div class="cover-rule"></div>
-  <div class="cover-meta">
-    <div><em>Bank</em>50 questions total</div>
-    <div><em>Per Session</em>10 randomly selected questions</div>
-    <div><em>Focus</em>Curves bounded by lines, parabolas, cubics &amp; more</div>
-    <div><em>Time</em>20 minutes · 2 min per item</div>
-    <div><em>Scoring</em>1 point each · No partial credit</div>
-  </div>
-  <div class="cover-notice">
-    Intersection points and vertices are <strong>not given</strong>. You must set the functions equal, solve for the limits of integration, then compute the area.
-  </div>
-  <button id="start-btn" onclick="startExam()">Begin Session</button>
-  <div class="cover-fine">Timer begins immediately. It cannot be paused.</div>
-</div>
+<!-- ══════════ EXAM NOTICE ══════════ -->
+<div class="notice-banner">
+  <div class="notice-inner">
+    <div class="notice-eyebrow">WMSU · College of Engineering · Electrical Engineering Dept.</div>
+    <div class="notice-hed">Final <em>Examination</em><br>Notice &amp; Cram Guide</div>
+    <div class="notice-sub">Physics 1 · University Physics 13th Edition · Review All Materials</div>
 
-<!-- HEADER -->
-<div id="exam-header">
-  <div class="eh-label">Area by Integration — Session</div>
-  <div id="timer">20:00</div>
-  <div class="eh-prog">
-    <div id="prog-label">0 / 10 answered</div>
-    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-  </div>
-</div>
-
-<!-- EXAM -->
-<div id="exam-body">
-  <div id="quiz-container"></div>
-  <div id="sub-wrap">
-    <button id="sub-btn" disabled onclick="submitExam()">Submit Session</button>
-  </div>
-</div>
-
-<!-- RESULTS -->
-<div id="results">
-  <div class="res-wrap">
-    <div class="res-eyebrow">Session Results</div>
-    <div class="res-score" id="res-score">—</div>
-    <div class="res-denom">out of 10</div>
-    <div class="res-grade" id="res-grade"></div>
-    <div class="res-msg"   id="res-msg"></div>
-    <div class="res-stats">
-      <div><span class="sv" id="res-c">—</span>Correct</div>
-      <div><span class="sv" id="res-w">—</span>Wrong</div>
-      <div><span class="sv" id="res-t">—</span>Time Used</div>
-    </div>
-    <button id="retry-btn" onclick="location.reload()">New Session</button>
-  </div>
-</div>
-
-<!-- WRONG ANSWER OVERLAY -->
-<div id="wrong-answer-overlay" class="wrong-answer-overlay">
-  <div class="wrong-answer-text">You're Gay</div>
-</div>
-
-<script>
-// ═══════════════════════════════════════════════════════════════
-// QUESTION BANK — 50 questions
-// ═══════════════════════════════════════════════════════════════
-const BANK = [
-
-// ── 1. PARABOLA & LINE ──────────────────────────────────────────────────────
-{
-  topic:"Parabola & Line",
-  q:"Find the area of the region enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = x + 2</span>.",
-  hint:"Set x² = x + 2. Solve for the two x-values of intersection, then integrate (upper − lower).",
-  choices:["9/2","7/3","4","11/6"],
-  answer:"9/2",
-  sol:"x²=x+2 → x²−x−2=0 → (x−2)(x+1)=0 → x=−1, x=2. Area = ∫₋₁²[(x+2)−x²]dx = [x²/2+2x−x³/3]₋₁² = 9/2."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area enclosed by <span class='mf'>y = 4 − x²</span> and <span class='mf'>y = x + 2</span>.",
-  hint:"Set 4 − x² = x + 2 and find the intersection x-values first.",
-  choices:["9/2","7/2","5","4"],
-  answer:"9/2",
-  sol:"4−x²=x+2 → x²+x−2=0 → (x+2)(x−1)=0 → x=−2, x=1. Area = ∫₋₂¹[(4−x²)−(x+2)]dx = ∫₋₂¹[2−x−x²]dx = [2x−x²/2−x³/3]₋₂¹ = 9/2."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 2x</span>.",
-  hint:"Set x² = 2x. Factor to find where they intersect.",
-  choices:["4/3","2/3","1","8/3"],
-  answer:"4/3",
-  sol:"x²=2x → x(x−2)=0 → x=0, x=2. Area = ∫₀²[2x−x²]dx = [x²−x³/3]₀² = 4−8/3 = 4/3."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area enclosed by <span class='mf'>y = 6x − x²</span> and <span class='mf'>y = x</span>.",
-  hint:"Set 6x − x² = x. Factor the resulting equation for the limits.",
-  choices:["125/6","25/2","20","15"],
-  answer:"125/6",
-  sol:"6x−x²=x → 5x−x²=0 → x(5−x)=0 → x=0, x=5. Area = ∫₀⁵[(6x−x²)−x]dx = ∫₀⁵[5x−x²]dx = [5x²/2−x³/3]₀⁵ = 125/2−125/3 = 125/6."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x² − 2x − 3</span> and <span class='mf'>y = x + 1</span>.",
-  hint:"Set x²−2x−3 = x+1 and solve the quadratic for the two limits.",
-  choices:["125/6","32/3","21/2","18"],
-  answer:"125/6",
-  sol:"x²−2x−3=x+1 → x²−3x−4=0 → (x−4)(x+1)=0 → x=−1, x=4. Area = ∫₋₁⁴[(x+1)−(x²−2x−3)]dx = ∫₋₁⁴[−x²+3x+4]dx = [−x³/3+3x²/2+4x]₋₁⁴ = 125/6."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area of the region bounded by <span class='mf'>y = x²</span> and <span class='mf'>y = −x + 6</span>.",
-  hint:"Set x² = −x + 6. Solve the quadratic for the limits of integration.",
-  choices:["125/6","22/3","20","18"],
-  answer:"125/6",
-  sol:"x²=−x+6 → x²+x−6=0 → (x+3)(x−2)=0 → x=−3, x=2. Area = ∫₋₃²[(−x+6)−x²]dx = [−x²/2+6x−x³/3]₋₃² = 125/6."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x² − 1</span> and <span class='mf'>y = 1 − x²</span>.",
-  hint:"Set x²−1 = 1−x². Solve for the intersection x-values.",
-  choices:["8/3","4/3","16/3","2"],
-  answer:"8/3",
-  sol:"x²−1=1−x² → 2x²=2 → x=±1. Area = ∫₋₁¹[(1−x²)−(x²−1)]dx = ∫₋₁¹[2−2x²]dx = [2x−2x³/3]₋₁¹ = 8/3."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x² − 4x</span> and <span class='mf'>y = 2x − x²</span>.",
-  hint:"Set x²−4x = 2x−x². Factor to find where they intersect.",
-  choices:["9","8","36/4","12"],
-  answer:"9",
-  sol:"x²−4x=2x−x² → 2x²−6x=0 → 2x(x−3)=0 → x=0, x=3. Area = ∫₀³[(2x−x²)−(x²−4x)]dx = ∫₀³[6x−2x²]dx = [3x²−2x³/3]₀³ = 27−18 = 9."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area between <span class='mf'>y = x²</span> and <span class='mf'>y = 4</span>.",
-  hint:"Set x² = 4 to find the x-limits, then integrate the difference.",
-  choices:["32/3","16/3","8","64/3"],
-  answer:"32/3",
-  sol:"x²=4 → x=±2. Area = ∫₋₂²[4−x²]dx = [4x−x³/3]₋₂² = (8−8/3)−(−8+8/3) = 32/3."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 9</span>.",
-  hint:"Find where x² = 9 for your limits, then integrate top minus bottom.",
-  choices:["36","18","12","24"],
-  answer:"36",
-  sol:"x²=9 → x=±3. Area = ∫₋₃³[9−x²]dx = [9x−x³/3]₋₃³ = (27−9)−(−27+9) = 36."
-},
-
-// ── 2. TWO PARABOLAS ────────────────────────────────────────────────────────
-{
-  topic:"Two Parabolas",
-  q:"Find the area enclosed between <span class='mf'>y = x²</span> and <span class='mf'>y = √x</span>.",
-  hint:"Set x² = √x. Raise both sides to find x, then integrate √x − x².",
-  choices:["1/3","1/2","2/3","1/4"],
-  answer:"1/3",
-  sol:"x²=√x → x⁴=x → x(x³−1)=0 → x=0, x=1. Area = ∫₀¹[√x−x²]dx = [2x^{3/2}/3−x³/3]₀¹ = 2/3−1/3 = 1/3."
-},
-{
-  topic:"Two Parabolas",
-  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 2 − x²</span>.",
-  hint:"Set x² = 2 − x². Solve for x to get both limits.",
-  choices:["8/3","4/3","16/3","2"],
-  answer:"8/3",
-  sol:"2x²=2 → x=±1. Area = ∫₋₁¹[(2−x²)−x²]dx = ∫₋₁¹[2−2x²]dx = [2x−2x³/3]₋₁¹ = 8/3."
-},
-{
-  topic:"Two Parabolas",
-  q:"Find the area enclosed by <span class='mf'>y = x² − 2x</span> and <span class='mf'>y = −x² + 4</span>.",
-  hint:"Set x²−2x = −x²+4. Solve the resulting quadratic.",
-  choices:["9","16/3","18/5","32/3"],
-  answer:"9",
-  sol:"2x²−2x−4=0 → x²−x−2=0 → (x−2)(x+1)=0 → x=−1, x=2. Area = ∫₋₁²[(−x²+4)−(x²−2x)]dx = ∫₋₁²[−2x²+2x+4]dx = [−2x³/3+x²+4x]₋₁² = 9."
-},
-{
-  topic:"Two Parabolas",
-  q:"Find the area enclosed by <span class='mf'>y = 3x − x²</span> and <span class='mf'>y = x² − x</span>.",
-  hint:"Set 3x−x² = x²−x. Factor to find intersection x-values.",
-  choices:["8/3","16/3","4","10/3"],
-  answer:"8/3",
-  sol:"3x−x²=x²−x → 4x−2x²=0 → 2x(2−x)=0 → x=0, x=2. Area = ∫₀²[(3x−x²)−(x²−x)]dx = ∫₀²[4x−2x²]dx = [2x²−2x³/3]₀² = 8−16/3 = 8/3."
-},
-{
-  topic:"Two Parabolas",
-  q:"Find the area between <span class='mf'>y = x² + 1</span> and <span class='mf'>y = 3 − x²</span>.",
-  hint:"Set x²+1 = 3−x². Find where they intersect, then integrate the difference.",
-  choices:["8/3","4/3","4√2/3","2"],
-  answer:"8/3",
-  sol:"2x²=2 → x=±1. Area = ∫₋₁¹[(3−x²)−(x²+1)]dx = ∫₋₁¹[2−2x²]dx = 8/3."
-},
-{
-  topic:"Two Parabolas",
-  q:"Find the area enclosed by <span class='mf'>y = x²</span> and <span class='mf'>y = 4x − x²</span>.",
-  hint:"Set x² = 4x−x². Solve for the two x-limits.",
-  choices:["8/3","4/3","16/3","2"],
-  answer:"8/3",
-  sol:"2x²−4x=0 → 2x(x−2)=0 → x=0, x=2. Area = ∫₀²[(4x−x²)−x²]dx = ∫₀²[4x−2x²]dx = [2x²−2x³/3]₀² = 8−16/3 = 8/3."
-},
-
-// ── 3. CUBIC CURVES ──────────────────────────────────────────────────────────
-{
-  topic:"Cubic & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x³</span> and <span class='mf'>y = x</span> on [−1, 1].",
-  hint:"Set x³ = x. Find all roots. The curve changes which is on top at x = 0.",
-  choices:["1/2","1/4","3/4","1"],
-  answer:"1/2",
-  sol:"x³=x → x(x²−1)=0 → x=−1, 0, 1. By symmetry: 2∫₀¹[x−x³]dx = 2[x²/2−x⁴/4]₀¹ = 2(1/4) = 1/2."
-},
-{
-  topic:"Cubic & Line",
-  q:"Find the total area enclosed between <span class='mf'>y = x³ − x</span> and the x-axis.",
-  hint:"Set x³−x = 0. Factor to find all roots. Check sign in each sub-interval.",
-  choices:["1/2","1/4","1","3/4"],
-  answer:"1/2",
-  sol:"x³−x=0 → x(x−1)(x+1)=0 → roots at −1,0,1. By symmetry: 2∫₀¹[x−x³]dx = 1/2."
-},
-{
-  topic:"Cubic & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x³ − 4x</span> and the x-axis.",
-  hint:"Factor x³−4x = 0 completely. Determine sign on each sub-interval.",
-  choices:["4","8","2","6"],
-  answer:"8",
-  sol:"x³−4x=0 → x(x−2)(x+2)=0 → roots at −2,0,2. By symmetry: 2∫₀²|x³−4x|dx = 2·4 = 8."
-},
-{
-  topic:"Cubic & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x³ − x²</span> and the x-axis between <span class='mf'>x = 0</span> and <span class='mf'>x = 1</span>.",
-  hint:"Set x³−x² = 0. Factor. Check whether the curve is above or below the x-axis on [0,1].",
-  choices:["1/12","1/4","1/6","1/3"],
-  answer:"1/12",
-  sol:"x²(x−1)=0. On [0,1] the curve is below x-axis. Area = ∫₀¹[x²−x³]dx = [x³/3−x⁴/4]₀¹ = 1/3−1/4 = 1/12."
-},
-{
-  topic:"Cubic & Line",
-  q:"Find the area between <span class='mf'>y = x³ − 3x</span> and <span class='mf'>y = x</span>.",
-  hint:"Set x³−3x = x. Factor the resulting cubic completely for all limits.",
-  choices:["8","4","16","2"],
-  answer:"8",
-  sol:"x³−3x=x → x³−4x=0 → x(x−2)(x+2)=0 → x=−2,0,2. Area = 2∫₀²[(x)−(x³−3x)]dx = 2∫₀²[4x−x³]dx = 2[2x²−x⁴/4]₀² = 2·4 = 8."
-},
-
-// ── 4. HORIZONTAL STRIPS ─────────────────────────────────────────────────────
-{
-  topic:"Horizontal Strips",
-  q:"Find the area enclosed by <span class='mf'>x = y²</span> and <span class='mf'>x = y + 2</span> using horizontal strips.",
-  hint:"Set y² = y + 2. Solve for the y-limits, then integrate (right − left) in y.",
-  choices:["9/2","4","7/2","5"],
-  answer:"9/2",
-  sol:"y²=y+2 → y²−y−2=0 → (y−2)(y+1)=0 → y=−1, y=2. Area = ∫₋₁²[(y+2)−y²]dy = 9/2."
-},
-{
-  topic:"Horizontal Strips",
-  q:"Find the area bounded by <span class='mf'>x = y²</span> and <span class='mf'>x = 4</span> using horizontal strips.",
-  hint:"Set y² = 4 to find the y-limits. Integrate in y.",
-  choices:["32/3","16/3","8","64/3"],
-  answer:"32/3",
-  sol:"y²=4 → y=±2. Area = ∫₋₂²[4−y²]dy = [4y−y³/3]₋₂² = 32/3."
-},
-{
-  topic:"Horizontal Strips",
-  q:"Find the area bounded by <span class='mf'>x = y² − 2y</span> and <span class='mf'>x = y</span>.",
-  hint:"Set y²−2y = y. Solve for y to get the horizontal limits.",
-  choices:["9/2","7/2","11/6","5"],
-  answer:"9/2",
-  sol:"y²−2y=y → y²−3y=0 → y(y−3)=0 → y=0, y=3. Area = ∫₀³[y−(y²−2y)]dy = ∫₀³[3y−y²]dy = 9/2."
-},
-{
-  topic:"Horizontal Strips",
-  q:"Find the area enclosed by <span class='mf'>x = 4 − y²</span> and the y-axis.",
-  hint:"Set 4−y² = 0 for the y-limits. Integrate 4−y² from bottom to top.",
-  choices:["32/3","16/3","8","4"],
-  answer:"32/3",
-  sol:"4−y²=0 → y=±2. Area = ∫₋₂²[4−y²]dy = 32/3."
-},
-{
-  topic:"Horizontal Strips",
-  q:"Find the area enclosed by <span class='mf'>x = y² − 4</span> and <span class='mf'>x = 2y − y²</span> using horizontal strips.",
-  hint:"Set y²−4 = 2y−y². Solve for the two y-values where they cross.",
-  choices:["9","36/4","8","12"],
-  answer:"9",
-  sol:"2y²−2y−4=0 → y²−y−2=0 → (y−2)(y+1)=0 → y=−1, y=2. Area = ∫₋₁²[(2y−y²)−(y²−4)]dy = ∫₋₁²[−2y²+2y+4]dy = 9."
-},
-{
-  topic:"Horizontal Strips",
-  q:"Find the area enclosed by <span class='mf'>x = y²</span> and <span class='mf'>x = 6y − y²</span>.",
-  hint:"Set y² = 6y−y². Factor to find y-limits, then integrate right − left.",
-  choices:["9","18","36","12"],
-  answer:"9",
-  sol:"2y²−6y=0 → 2y(y−3)=0 → y=0, y=3. Area = ∫₀³[(6y−y²)−y²]dy = ∫₀³[6y−2y²]dy = [3y²−2y³/3]₀³ = 27−18 = 9."
-},
-
-// ── 5. PARABOLA & ROTATED PARABOLA ───────────────────────────────────────────
-{
-  topic:"Rotated Parabola & Curve",
-  q:"Find the area enclosed by <span class='mf'>y² = 4x</span> and <span class='mf'>x² = 4y</span>.",
-  hint:"Express both as y in terms of x. Set √(4x) = x²/4 and solve for x.",
-  choices:["16/3","8/3","32/3","4"],
-  answer:"16/3",
-  sol:"y=2√x and y=x²/4. Set equal: 2√x=x²/4 → 8√x=x² → 64x=x⁴ → x=0, x=4. Area = ∫₀⁴[2√x−x²/4]dx = [4x^{3/2}/3−x³/12]₀⁴ = 32/3−64/12 = 16/3."
-},
-{
-  topic:"Rotated Parabola & Curve",
-  q:"Find the area enclosed by <span class='mf'>y² = 2x</span> and <span class='mf'>y = x − 4</span> using horizontal strips.",
-  hint:"Write x = y²/2 and x = y+4. Set equal, solve for y to get horizontal limits.",
-  choices:["18","9","12","36"],
-  answer:"18",
-  sol:"y²/2=y+4 → y²−2y−8=0 → (y−4)(y+2)=0 → y=−2, y=4. Area = ∫₋₂⁴[(y+4)−y²/2]dy = [y²/2+4y−y³/6]₋₂⁴ = 18."
-},
-{
-  topic:"Rotated Parabola & Curve",
-  q:"Find the area enclosed by <span class='mf'>y² = 4x</span> and <span class='mf'>y = 2x − 4</span> using horizontal strips.",
-  hint:"Write x = y²/4 and x = (y+4)/2. Set equal to find y-limits.",
-  choices:["9","6","12","18"],
-  answer:"9",
-  sol:"y²/4=(y+4)/2 → y²=2y+8 → y²−2y−8=0 → (y−4)(y+2)=0 → y=−2, y=4. Area = ∫₋₂⁴[(y+4)/2−y²/4]dy = 9."
-},
-
-// ── 6. EXPONENTIAL CURVES ────────────────────────────────────────────────────
-{
-  topic:"Exponential Curves",
-  q:"Find the area between <span class='mf'>y = eˣ</span> and <span class='mf'>y = e⁻ˣ</span> from <span class='mf'>x = 0</span> to <span class='mf'>x = 1</span>.",
-  hint:"Determine which function is larger on [0,1], then integrate the difference.",
-  choices:["e + 1/e − 2","e − 1/e","e − 1","2e − 2"],
-  answer:"e + 1/e − 2",
-  sol:"eˣ ≥ e⁻ˣ on [0,1]. Area = ∫₀¹[eˣ−e⁻ˣ]dx = [eˣ+e⁻ˣ]₀¹ = (e+1/e)−2."
-},
-{
-  topic:"Exponential Curves",
-  q:"Find the area bounded by <span class='mf'>y = eˣ</span>, <span class='mf'>y = e⁻ˣ</span>, and <span class='mf'>x = 2</span>.",
-  hint:"eˣ = e⁻ˣ at x = 0. Integrate from that intersection to x = 2.",
-  choices:["e²+e⁻²−2","e²−e⁻²","e²−1","e²−2"],
-  answer:"e²+e⁻²−2",
-  sol:"Area = ∫₀²[eˣ−e⁻ˣ]dx = [eˣ+e⁻ˣ]₀² = (e²+e⁻²)−2."
-},
-{
-  topic:"Exponential Curves",
-  q:"Find the area enclosed by <span class='mf'>y = eˣ</span>, <span class='mf'>y = 1</span>, and <span class='mf'>x = 2</span>.",
-  hint:"Find where eˣ = 1 for the left limit. Then integrate eˣ − 1.",
-  choices:["e²−3","e²−1","e²−2","e²"],
-  answer:"e²−3",
-  sol:"eˣ=1 at x=0. Area = ∫₀²[eˣ−1]dx = [eˣ−x]₀² = (e²−2)−1 = e²−3."
-},
-{
-  topic:"Exponential Curves",
-  q:"Find the area bounded by <span class='mf'>y = e^{2x}</span>, the x-axis, <span class='mf'>x = 0</span>, and <span class='mf'>x = 1</span>.",
-  hint:"The curve is always above the x-axis. Integrate directly.",
-  choices:["(e²−1)/2","e²−1","(e²+1)/2","e²/2"],
-  answer:"(e²−1)/2",
-  sol:"∫₀¹e^{2x}dx = [e^{2x}/2]₀¹ = (e²−1)/2."
-},
-{
-  topic:"Exponential Curves",
-  q:"Find the area bounded by <span class='mf'>y = e^{−x}</span>, the x-axis, <span class='mf'>x = 0</span>, and <span class='mf'>x = 3</span>.",
-  hint:"The curve is positive. Integrate and remember d/dx(−e^{−x}) = e^{−x}.",
-  choices:["1 − e⁻³","e⁻³ − 1","1 + e⁻³","e³ − 1"],
-  answer:"1 − e⁻³",
-  sol:"∫₀³e^{−x}dx = [−e^{−x}]₀³ = 1−e⁻³."
-},
-
-// ── 7. LOGARITHMIC CURVES ────────────────────────────────────────────────────
-{
-  topic:"Logarithmic Curves",
-  q:"Find the area enclosed between <span class='mf'>y = ln x</span>, the x-axis, and <span class='mf'>x = e²</span>.",
-  hint:"Find where ln x = 0 for the left limit. Then integrate.",
-  choices:["e²+1","e²−1","2e²","e²"],
-  answer:"e²+1",
-  sol:"ln x=0 at x=1. Area = ∫₁^{e²}ln x dx = [x ln x−x]₁^{e²} = (2e²−e²)−(0−1) = e²+1."
-},
-{
-  topic:"Logarithmic Curves",
-  q:"Find the area under <span class='mf'>y = ln x</span>, above the x-axis, from <span class='mf'>x = 1</span> to <span class='mf'>x = e</span>.",
-  hint:"ln x ≥ 0 on [1, e]. Integrate using ∫ln x dx = x ln x − x + C.",
-  choices:["1","e−1","e−2","2"],
-  answer:"1",
-  sol:"∫₁ᵉln x dx = [x ln x−x]₁ᵉ = (e−e)−(0−1) = 1."
-},
-{
-  topic:"Logarithmic Curves",
-  q:"Find the area under <span class='mf'>y = 1/x</span> from <span class='mf'>x = 1</span> to <span class='mf'>x = e³</span>.",
-  hint:"∫1/x dx = ln x. Evaluate at the given limits.",
-  choices:["3","e³−1","ln e³","1/e³"],
-  answer:"3",
-  sol:"∫₁^{e³}(1/x)dx = [ln x]₁^{e³} = ln e³ = 3."
-},
-
-// ── 8. TRIGONOMETRIC CURVES ──────────────────────────────────────────────────
-{
-  topic:"Trig Curves",
-  q:"Find the area enclosed by <span class='mf'>y = sin x</span> and <span class='mf'>y = cos x</span> on [0, π/2].",
-  hint:"Set sin x = cos x to find where they cross inside [0, π/2]. Split the interval.",
-  choices:["2(√2−1)","√2−1","2−√2","1"],
-  answer:"2(√2−1)",
-  sol:"sin x=cos x at x=π/4. Area = ∫₀^{π/4}[cos x−sin x]dx + ∫_{π/4}^{π/2}[sin x−cos x]dx = (√2−1)+(√2−1) = 2(√2−1)."
-},
-{
-  topic:"Trig Curves",
-  q:"Find the area bounded by <span class='mf'>y = sin x</span>, the x-axis, <span class='mf'>x = 0</span> and <span class='mf'>x = π</span>.",
-  hint:"sin x ≥ 0 on [0, π]. Integrate directly.",
-  choices:["2","1","π","0"],
-  answer:"2",
-  sol:"∫₀^π sin x dx = [−cos x]₀^π = 1+1 = 2."
-},
-{
-  topic:"Trig Curves",
-  q:"Find the total area between <span class='mf'>y = sin x</span> and the x-axis on <span class='mf'>[0, 2π]</span>.",
-  hint:"sin x changes sign at x = π. Split the integral and take absolute values.",
-  choices:["4","2","0","π"],
-  answer:"4",
-  sol:"Area = ∫₀^π sin x dx + |∫_π^{2π} sin x dx| = 2+2 = 4."
-},
-{
-  topic:"Trig Curves",
-  q:"Find the area enclosed by <span class='mf'>y = cos x</span> and the x-axis on <span class='mf'>[0, 3π/2]</span>.",
-  hint:"cos x = 0 at x = π/2 and x = 3π/2. Identify the sign on each sub-interval.",
-  choices:["3","2","1","4"],
-  answer:"3",
-  sol:"cos x ≥ 0 on [0,π/2], ≤ 0 on [π/2,3π/2]. Area = ∫₀^{π/2}cos x dx + |∫_{π/2}^{3π/2}cos x dx| = 1+2 = 3."
-},
-{
-  topic:"Trig Curves",
-  q:"Find the area of the region in the first quadrant bounded by <span class='mf'>y = cos x</span>, <span class='mf'>y = sin x</span>, and the y-axis.",
-  hint:"In the first quadrant, cos x > sin x for x < π/4. Use x = 0 and x = π/4 as limits.",
-  choices:["√2−1","1−√2","√2","1"],
-  answer:"√2−1",
-  sol:"∫₀^{π/4}[cos x−sin x]dx = [sin x+cos x]₀^{π/4} = √2−1."
-},
-
-// ── 9. MIXED / HARDER ────────────────────────────────────────────────────────
-{
-  topic:"Mixed — Curve & Line",
-  q:"Find the area enclosed by <span class='mf'>y = x³ − x²</span> and <span class='mf'>y = x − 1</span>.",
-  hint:"Set x³−x² = x−1. Factor the resulting cubic (try rational roots: ±1).",
-  choices:["37/12","11/4","5/2","3"],
-  answer:"37/12",
-  sol:"x³−x²−x+1=0 → (x−1)²(x+1)=0 → x=−1, x=1. On [−1,1] line is above curve. Area = ∫₋₁¹[(x−1)−(x³−x²)]dx = [x²/2−x−x⁴/4+x³/3]₋₁¹ = ... wait, double root at x=1 means they are tangent. Recalculate: area = ∫₋₁¹[x−1−x³+x²]dx = [x²/2−x−x⁴/4+x³/3]₋₁¹ = (1/2−1−1/4+1/3)−(1/2+1−1/4−1/3) = 37/12."
-},
-{
-  topic:"Mixed — Horizontal",
-  q:"Find the area between <span class='mf'>x = y² + y</span> and <span class='mf'>x = 2y + 4</span> using horizontal strips.",
-  hint:"Set y²+y = 2y+4. Solve for y to find the limits, then integrate right − left.",
-  choices:["125/6","9/2","7","15/2"],
-  answer:"125/6",
-  sol:"y²+y=2y+4 → y²−y−4=0... try y²−y−2=0 → (y−2)(y+1)=0 → y=−1,2 gives area 9/2. For y²+y=2y+4: y²−y−4=0 discriminant=17. Use simpler: x=y²+y, x=2y+2. y²+y=2y+2 → y²−y−2=0 → y=−1,2. Area=∫₋₁²[(2y+2)−(y²+y)]dy=∫₋₁²[y+2−y²]dy=[y²/2+2y−y³/3]₋₁²=(2+4−8/3)−(1/2−2+1/3)=9/2."
-},
-{
-  topic:"Mixed — All Curve Types",
-  q:"Find the area enclosed by <span class='mf'>y = x³ − 3x</span> and <span class='mf'>y = −x² + x + 6</span>.",
-  hint:"Set x³−3x = −x²+x+6. Try integer values to factor the resulting cubic.",
-  choices:["253/12","20","16","15"],
-  answer:"253/12",
-  sol:"x³+x²−4x−6=0. Try x=−2: −8+4+8−6=−2≠0. x=2: 8+4−8−6=−2≠0. Approximately... For exam purposes we use a standard pair: x³−3x = x gives x³−4x=0 → area = 8 already included. Use distinct question."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area between <span class='mf'>y = x² + 2x</span> and <span class='mf'>y = 4</span>.",
-  hint:"Set x²+2x = 4. Complete the square or use the quadratic formula for limits.",
-  choices:["32/3","9","28/3","12"],
-  answer:"32/3",
-  sol:"x²+2x−4=0 → x = (−2±√20)/2 = −1±√5. Area = ∫_{−1−√5}^{−1+√5}[4−(x²+2x)]dx. Substitute u=x+1: ∫_{−√5}^{√5}[5−u²]du = [5u−u³/3]_{−√5}^{√5} = 2(5√5−5√5/3) = 20√5/3."
-},
-{
-  topic:"Two Curves — Area Formula",
-  q:"Find the area enclosed by <span class='mf'>y = x² − 4x + 3</span> and <span class='mf'>y = −x² + 4x − 3</span>.",
-  hint:"Set the two equations equal. Factor to find intersection x-values.",
-  choices:["8/3","16/3","4","32/3"],
-  answer:"8/3",
-  sol:"x²−4x+3=−x²+4x−3 → 2x²−8x+6=0 → x²−4x+3=0 → (x−1)(x−3)=0 → x=1, x=3. Top curve: −x²+4x−3. Area = ∫₁³[(−x²+4x−3)−(x²−4x+3)]dx = ∫₁³[−2x²+8x−6]dx = [−2x³/3+4x²−6x]₁³ = (−18+36−18)−(−2/3+4−6) = 0−(−8/3) = 8/3."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area of the region enclosed by <span class='mf'>y = x² − 3x</span> and <span class='mf'>y = 2x − x²</span>.",
-  hint:"Set x²−3x = 2x−x². Combine and factor to find where they intersect.",
-  choices:["125/6","20","15","25/2"],
-  answer:"125/6",
-  sol:"2x²−5x=0 → x(2x−5)=0 → x=0, x=5/2. Area = ∫₀^{5/2}[(2x−x²)−(x²−3x)]dx = ∫₀^{5/2}[5x−2x²]dx = [5x²/2−2x³/3]₀^{5/2} = 125/8−125/12 = 125(3−2)/24 = 125/24. Note: confirm = 125/24."
-},
-{
-  topic:"Parabola & Line",
-  q:"Find the area bounded by <span class='mf'>y = x²</span>, <span class='mf'>y = 0</span>, <span class='mf'>x = 1</span>, and <span class='mf'>x = 3</span>.",
-  hint:"No intersection computation needed here — limits are given. Integrate x² directly.",
-  choices:["26/3","8","9","28/3"],
-  answer:"26/3",
-  sol:"∫₁³x²dx = [x³/3]₁³ = 9−1/3 = 26/3."
-},
-{
-  topic:"Two Parabolas",
-  q:"Find the area enclosed by <span class='mf'>y = x² − 2x + 1</span> and <span class='mf'>y = 2x − x² − 1</span>.",
-  hint:"Both equal (x−1)² and −(x−1)²+0 respectively. Set equal to find x-limits.",
-  choices:["4/3","2/3","8/3","1"],
-  answer:"4/3",
-  sol:"(x−1)²=2x−x²−1 → 2(x−1)²=2 → (x−1)²=1 → x=0, x=2. Area = ∫₀²[−2(x−1)²+2... actually: upper−lower = (2x−x²−1)−(x²−2x+1) = −2x²+4x−2 = −2(x−1)². Area = ∫₀²2(1−(x−1)²)dx: let u=x−1: ∫₋₁¹2(1−u²)du = 2[u−u³/3]₋₁¹ = 2·4/3 = 8/3."
-}
-
-]; // end BANK
-
-// ═══════════════════════════════════════════════════════════════
-// EXAM STATE
-// ═══════════════════════════════════════════════════════════════
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length-1; i>0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]] = [a[j],a[i]];
-  }
-  return a;
-}
-
-const SESSION_QS = shuffle(BANK).slice(0, 10);
-let answered = 0;
-let score = 0;
-let timerInterval = null;
-let secondsLeft = 20 * 60;
-
-function fmt(s) {
-  const m = Math.floor(s/60), sec = s%60;
-  return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-}
-
-function startTimer() {
-  timerInterval = setInterval(() => {
-    secondsLeft--;
-    const el = document.getElementById('timer');
-    el.textContent = fmt(secondsLeft);
-    if (secondsLeft <= 300 && secondsLeft > 60) el.className = 'warn';
-    if (secondsLeft <= 60) el.className = 'danger';
-    if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(); }
-  }, 1000);
-}
-
-function startExam() {
-  document.getElementById('cover').style.display = 'none';
-  document.getElementById('exam-header').style.display = 'flex';
-  document.getElementById('exam-body').style.display = 'block';
-  buildQuiz();
-  startTimer();
-}
-
-function buildQuiz() {
-  const container = document.getElementById('quiz-container');
-  container.innerHTML = '';
-  SESSION_QS.forEach((q, idx) => {
-    const opts = shuffle(q.choices);
-    const card = document.createElement('div');
-    card.className = 'q-card';
-    card.innerHTML = `
-      <div class="q-meta">Question ${String(idx+1).padStart(2,'0')} &nbsp;&middot;&nbsp; ${q.topic}</div>
-      <div class="q-text">${q.q}</div>
-      <div class="hint-box">&#9998; Step 1: Find the intersection / boundary points by setting the functions equal and solving. Step 2: ${q.hint}</div>
-      <div class="choices" id="choices-${idx}">
-        ${opts.map(o => `<button class="c-btn" onclick="pick(${idx},'${o.replace(/'/g,"\\'").replace(/"/g,'&quot;')}',this)">${o}</button>`).join('')}
+    <div class="exam-details">
+      <div class="exam-detail">
+        <div class="exam-detail-label">Date</div>
+        <div class="exam-detail-value">Tuesday, May 6, 2025</div>
       </div>
-      <div class="feedback" id="fb-${idx}"></div>
-    `;
-    container.appendChild(card);
-  });
-}
+      <div class="exam-detail">
+        <div class="exam-detail-label">Duration</div>
+        <div class="exam-detail-value">1 hr 30 min</div>
+      </div>
+      <div class="exam-detail">
+        <div class="exam-detail-label">Format</div>
+        <div class="exam-detail-value">Multiple Choice (2 Parts)</div>
+      </div>
+      <div class="exam-detail">
+        <div class="exam-detail-label">Room</div>
+        <div class="exam-detail-value">CET 206</div>
+      </div>
+      <div class="exam-detail">
+        <div class="exam-detail-label">Cheat Sheet</div>
+        <div class="exam-detail-value">¼ A4, front &amp; back</div>
+      </div>
+    </div>
 
-function pick(idx, chosen, btn) {
-  const q = SESSION_QS[idx];
-  const choicesDiv = document.getElementById(`choices-${idx}`);
-  const fb = document.getElementById(`fb-${idx}`);
-  const allBtns = choicesDiv.querySelectorAll('.c-btn');
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-icon">🕐</div>
+        <div class="rule-text"><strong>Arrive 5 min early.</strong> Sit one seat apart. Booklets will be distributed — do not bring your own.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">🧮</div>
+        <div class="rule-text"><strong>Bring your own scientific calculator.</strong> Sharing calculators is strictly prohibited.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">📵</div>
+        <div class="rule-text"><strong>Phones off or silent</strong> and surrendered before exam starts. No exceptions.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">📄</div>
+        <div class="rule-text"><strong>Formula sheet:</strong> ¼ A4 paper only. Formulas, conversions, constants — both sides. Non-conforming sheets not allowed.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">⚠️</div>
+        <div class="rule-text"><strong>Zero tolerance for cheating.</strong> Caught cheating = automatic 0 for the Final Exam.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  allBtns.forEach(b => {
-    b.disabled = true;
-    if (b.textContent.trim() === q.answer) b.classList.add('ok');
-  });
+<!-- ══════════ NAV ══════════ -->
+<div class="nav">
+  <span class="nav-lbl">Jump →</span>
+  <a href="#nl">Newton's Laws</a>
+  <a href="#wk">Work &amp; Energy</a>
+  <a href="#pe">Potential Energy</a>
+  <a href="#fl">Fluids</a>
+  <a href="#th">Thermodynamics</a>
+  <a class="cheatsheet" href="#cheatsheet">📋 Print Cheat Sheet</a>
+</div>
 
-  const isCorrect = chosen === q.answer;
-  if (isCorrect) {
-    btn.classList.add('ok');
-    fb.className = 'feedback ok';
-    fb.innerHTML = '&#10003; Correct. &nbsp;' + q.sol;
-    score++;
-  } else {
-    btn.classList.add('bad');
-    fb.className = 'feedback bad';
-    fb.innerHTML = '&#10007; Incorrect. &nbsp;' + q.sol;
-    
-    // Show the "You're Gay" overlay
-    const overlay = document.getElementById('wrong-answer-overlay');
-    overlay.style.display = 'flex';
-    
-    // Hide the overlay after 3 seconds
-    setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 3000);
-  }
+<!-- ══════════ MAIN CONTENT ══════════ -->
+<div class="main">
 
-  answered++;
-  document.getElementById('prog-label').textContent = `${answered} / 10 answered`;
-  document.getElementById('prog-fill').style.width = (answered/10*100)+'%';
+<!-- ░░ NEWTON'S LAWS ░░ -->
+<div id="nl" class="t-nl">
+  <div class="ch-header t-nl">
+    <div class="ch-num">Part 1 · Conceptual</div>
+    <div class="ch-title">Newton's Laws of Motion</div>
+    <div class="ch-time">Ch. 4 &amp; 5</div>
+  </div>
 
-  if (answered === 10) {
-    document.getElementById('sub-btn').disabled = false;
-    setTimeout(() => document.getElementById('sub-btn').scrollIntoView({behavior:'smooth',block:'center'}), 300);
-  }
-}
+  <div class="alert info">
+    <div class="alert-icon">💡</div>
+    <div><strong>Exam focus:</strong> Expect conceptual MCQs on which law applies, what "equilibrium" means, and whether forces cancel. Problem-solving: FBD → axis → equations.</div>
+  </div>
 
-function submitExam() {
-  clearInterval(timerInterval);
-  const used = 20*60 - secondsLeft;
-  const m = Math.floor(used/60), s = used%60;
+  <div class="card-row">
+    <div class="ccard">
+      <div class="ccard-title">1st Law — Inertia</div>
+      <p>No net force = no change in motion. An object stays at rest or moves in a straight line at constant speed. Force is needed to <em>change</em> velocity, not to maintain it.</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">2nd Law — F = ma</div>
+      <p>Net force causes acceleration in the same direction. Treat each axis separately: <strong>ΣFx = max</strong> and <strong>ΣFy = may</strong>. If no acceleration on one axis → that ΣF = 0.</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">3rd Law — Action-Reaction</div>
+      <p>Forces come in equal-and-opposite pairs on <em>different</em> objects. They do NOT cancel each other in an FBD because they act on different bodies.</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Mass vs. Weight ⚠️</div>
+      <ul>
+        <li><strong>Mass (m)</strong>: kg, scalar, same everywhere</li>
+        <li><strong>Weight (w)</strong>: N, vector, w = mg</li>
+        <li>If given weight: m = w/g before using F = ma</li>
+        <li>g = 9.80 m/s² on Earth</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Equilibrium (1st Law Applied)</div>
+      <ul>
+        <li>At rest OR constant velocity → a = 0</li>
+        <li>ΣFx = 0 AND ΣFy = 0</li>
+        <li>"Constant velocity" on incline → net force = 0</li>
+        <li>Normal force on incline = mg·cos(θ)</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Friction</div>
+      <ul>
+        <li><strong>Static:</strong> fs ≤ μs·n, prevents motion, variable</li>
+        <li><strong>Kinetic:</strong> fk = μk·n, constant during sliding</li>
+        <li>μs > μk always (harder to start than keep moving)</li>
+        <li>Find n from ΣFy = 0 first, then compute fk</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Apparent Weight (Elevator)</div>
+      <ul>
+        <li>Accelerating up → n = m(g + a) → heavier</li>
+        <li>Accelerating down → n = m(g − a) → lighter</li>
+        <li>Free fall → n = 0 → weightless</li>
+        <li>Constant v → n = mg → normal</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Circular Motion</div>
+      <ul>
+        <li>Constant speed, changing direction = acceleration</li>
+        <li>a_rad = v²/R, always toward center</li>
+        <li>"Centripetal force" = net radial force, NOT a new force</li>
+        <li>Car on flat curve: fs = mv²/R → vmax = √(μs·g·R)</li>
+      </ul>
+    </div>
+  </div>
 
-  document.getElementById('exam-header').style.display = 'none';
-  document.getElementById('exam-body').style.display = 'none';
-  document.getElementById('results').style.display = 'block';
+  <div class="fbox t-nl">
+    <div class="fbox-head">Newton's Laws — Formula Bank</div>
+    <div class="fbox-grid">
+      <div class="fitem"><div class="flabel">Equilibrium</div><div class="feq">ΣFx = 0, ΣFy = 0</div></div>
+      <div class="fitem"><div class="flabel">2nd Law</div><div class="feq">ΣF = ma</div><div class="fnote">ΣFx=max, ΣFy=may</div></div>
+      <div class="fitem"><div class="flabel">Weight</div><div class="feq">w = mg</div><div class="fnote">g = 9.80 m/s²</div></div>
+      <div class="fitem"><div class="flabel">Net Force Magnitude</div><div class="feq">R = √(Rx²+Ry²)</div></div>
+      <div class="fitem"><div class="flabel">Direction</div><div class="feq">θ = arctan(Ry/Rx)</div></div>
+      <div class="fitem"><div class="flabel">Kinetic Friction</div><div class="feq">fk = μk·n</div></div>
+      <div class="fitem"><div class="flabel">Static Friction Max</div><div class="feq">fs,max = μs·n</div></div>
+      <div class="fitem"><div class="flabel">Centripetal Accel.</div><div class="feq">a = v²/R</div></div>
+      <div class="fitem"><div class="flabel">Net Radial Force</div><div class="feq">ΣF_rad = mv²/R</div></div>
+      <div class="fitem"><div class="flabel">Max Curve Speed</div><div class="feq">vmax = √(μs·g·R)</div></div>
+      <div class="fitem"><div class="flabel">Terminal Velocity</div><div class="feq">vt = √(mg/D)</div></div>
+      <div class="fitem"><div class="flabel">Drag Force</div><div class="feq">f = Dv²</div></div>
+    </div>
+  </div>
+</div>
 
-  const pct = score * 10;
-  let grade, msg;
-  if (pct >= 90)      { grade = 'EXCELLENT';    msg = 'Outstanding. You can find intersections and set up integrals fluently.'; }
-  else if (pct >= 80) { grade = 'VERY GOOD';    msg = 'Strong performance. Review any sign errors on cubic or split-interval problems.'; }
-  else if (pct >= 70) { grade = 'GOOD';         msg = 'Core understanding is there. Revisit how you find intersection limits.'; }
-  else if (pct >= 60) { grade = 'PASSING';      msg = 'Close. Practice setting up the integral step before choosing an answer.'; }
-  else                { grade = 'NEEDS REVIEW'; msg = 'Do not be discouraged. Study each solution carefully, then take a new session.'; }
+<!-- ░░ WORK & KE ░░ -->
+<div id="wk" class="t-wk">
+  <div class="ch-header t-wk">
+    <div class="ch-num">Part 1 &amp; 2</div>
+    <div class="ch-title">Work and Kinetic Energy</div>
+    <div class="ch-time">Ch. 6</div>
+  </div>
 
-  document.getElementById('res-score').textContent = score;
-  document.getElementById('res-grade').textContent = grade + ' — ' + pct + '%';
-  document.getElementById('res-msg').textContent = msg;
-  document.getElementById('res-c').textContent = score;
-  document.getElementById('res-w').textContent = 10 - score;
-  document.getElementById('res-t').textContent = m + 'm ' + String(s).padStart(2,'0') + 's';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-</script>
+  <div class="alert green">
+    <div class="alert-icon">💡</div>
+    <div><strong>Exam focus:</strong> Dot product definition of work, the Work-Energy Theorem, and how to handle work by varying forces (area under F-x graph / integration concept).</div>
+  </div>
+
+  <div class="card-row">
+    <div class="ccard">
+      <div class="ccard-title">Work (W)</div>
+      <p>Work = Force × displacement in the direction of force. W = F·d·cos(θ). θ is the angle between force and displacement. Perpendicular force does <strong>zero</strong> work. Work is a scalar (can be negative).</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Dot Product</div>
+      <ul>
+        <li>W = F⃗ · d⃗ = Fx·dx + Fy·dy</li>
+        <li>W = |F||d|cos(θ)</li>
+        <li>θ = 90° → W = 0 (normal force, centripetal)</li>
+        <li>θ = 180° → W negative (friction)</li>
+        <li>θ = 0° → W = Fd (max positive)</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Kinetic Energy &amp; Work-Energy Theorem</div>
+      <ul>
+        <li>K = ½mv²</li>
+        <li>W_total = ΔK = K₂ − K₁</li>
+        <li>Net work done on object = change in KE</li>
+        <li>If W_total = 0 → speed is constant</li>
+        <li>Units: Joules (J = N·m = kg·m²/s²)</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Varying Forces</div>
+      <ul>
+        <li>W = area under the F vs. x graph</li>
+        <li>Mathematically: W = ∫F·dx</li>
+        <li>Constant force: W = F·d (rectangle)</li>
+        <li>Spring force (F = kx): W = ½kx² (triangle)</li>
+        <li>Power: P = W/t = F·v (Watts)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fbox t-wk">
+    <div class="fbox-head">Work &amp; Kinetic Energy — Formula Bank</div>
+    <div class="fbox-grid">
+      <div class="fitem"><div class="flabel">Work (constant force)</div><div class="feq">W = F·d·cos(θ)</div></div>
+      <div class="fitem"><div class="flabel">Work (dot product)</div><div class="feq">W = F⃗ · d⃗</div><div class="fnote">= Fx·dx + Fy·dy</div></div>
+      <div class="fitem"><div class="flabel">Kinetic Energy</div><div class="feq">K = ½mv²</div></div>
+      <div class="fitem"><div class="flabel">Work-Energy Theorem</div><div class="feq">W_net = ΔK = K₂ − K₁</div></div>
+      <div class="fitem"><div class="flabel">Spring Work</div><div class="feq">W = ½kx²</div></div>
+      <div class="fitem"><div class="flabel">Power</div><div class="feq">P = W/t = F·v</div><div class="fnote">Units: Watts (W)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ POTENTIAL ENERGY ░░ -->
+<div id="pe" class="t-pe">
+  <div class="ch-header t-pe">
+    <div class="ch-num">Part 1 &amp; 2</div>
+    <div class="ch-title">Potential Energy &amp; Conservation of Energy</div>
+    <div class="ch-time">Ch. 7</div>
+  </div>
+
+  <div class="alert warn">
+    <div class="alert-icon">⚡</div>
+    <div><strong>Exam focus:</strong> Setting up energy equations, identifying when energy is conserved, finding friction force from energy deficit. Mass often cancels — confirm this when it does.</div>
+  </div>
+
+  <div class="card-row">
+    <div class="ccard">
+      <div class="ccard-title">Gravitational PE</div>
+      <p>U_grav = mgy. The reference y = 0 is your choice — pick whatever makes the math simplest. Only the <em>change</em> in height matters, not the path taken. PE is shared by the object + Earth.</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Conservation of Energy</div>
+      <p>When only gravity acts (no friction): <strong>K₁ + U₁ = K₂ + U₂</strong>. Total mechanical energy E = K + U is constant. This means what you gain in height you lose in speed, and vice versa.</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">With Friction (W_other)</div>
+      <ul>
+        <li>K₁ + U₁ + W_other = K₂ + U₂</li>
+        <li>Friction work: W_fric = −f·d (always negative)</li>
+        <li>Energy "lost" = f·d → solve for f</li>
+        <li>Positive W_other = engine/applied force adds energy</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Key Shortcuts</div>
+      <ul>
+        <li>Ball thrown up: y_max = v₁²/(2g)</li>
+        <li>Frictionless ramp of height h: v_bottom = √(2gh)</li>
+        <li>Both are mass-independent (m cancels)</li>
+        <li>At max height: v = 0, so K₂ = 0</li>
+        <li>At bottom of ramp: U₂ = 0 if y₂ = 0</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fbox t-pe">
+    <div class="fbox-head">Potential Energy &amp; Conservation — Formula Bank</div>
+    <div class="fbox-grid">
+      <div class="fitem"><div class="flabel">Gravitational PE</div><div class="feq">U = mgy</div></div>
+      <div class="fitem"><div class="flabel">Kinetic Energy</div><div class="feq">K = ½mv²</div></div>
+      <div class="fitem"><div class="flabel">Total Mech. Energy</div><div class="feq">E = K + U</div></div>
+      <div class="fitem"><div class="flabel">Conservation (no friction)</div><div class="feq">K₁ + U₁ = K₂ + U₂</div></div>
+      <div class="fitem"><div class="flabel">Work by Gravity</div><div class="feq">W_grav = U₁ − U₂ = −ΔU</div></div>
+      <div class="fitem"><div class="flabel">With Friction</div><div class="feq">K₁+U₁+W_other = K₂+U₂</div></div>
+      <div class="fitem"><div class="flabel">Friction Work</div><div class="feq">W_fric = −f·d</div></div>
+      <div class="fitem"><div class="flabel">Max Height (thrown up)</div><div class="feq">y_max = v²/(2g)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ FLUIDS ░░ -->
+<div id="fl" class="t-fl">
+  <div class="ch-header t-fl">
+    <div class="ch-num">Part 1 &amp; 2</div>
+    <div class="ch-title">Fluid Mechanics</div>
+    <div class="ch-time">Ch. 12</div>
+  </div>
+
+  <div class="alert info" style="border-color:var(--teal);background:rgba(13,115,119,0.06);">
+    <div class="alert-icon">🌊</div>
+    <div><strong>Exam focus:</strong> Density/SG calculations, pressure at depth, hydraulic lift (Pascal), finding buoyant force and apparent weight (Archimedes), continuity, and Bernoulli.</div>
+  </div>
+
+  <div class="card-row">
+    <div class="ccard">
+      <div class="ccard-title">Density, SG, Spec. Weight</div>
+      <ul>
+        <li>ρ = m/V (kg/m³), ρ_water = 1000 kg/m³</li>
+        <li>SG = ρ/ρ_water (dimensionless)</li>
+        <li>SG > 1 → sinks; SG < 1 → floats</li>
+        <li>γ = ρg = W/V (N/m³), specific weight</li>
+        <li>γ_water ≈ 9810 N/m³</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Pressure &amp; Depth</div>
+      <ul>
+        <li>p = F/A (Pa = N/m²)</li>
+        <li>Pressure increases with depth: p = p₀ + ρgh</li>
+        <li>Container shape does NOT matter</li>
+        <li>p_absolute = p_gauge + p_atm</li>
+        <li>p_atm ≈ 1.013 × 10⁵ Pa</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Pascal's Law</div>
+      <p>Pressure applied to enclosed fluid transmits equally everywhere. Hydraulic advantage: <strong>F₁/A₁ = F₂/A₂</strong>. Energy is conserved: small piston × large distance = large piston × small distance.</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Archimedes's Principle</div>
+      <ul>
+        <li>B = ρ_fluid · V_submerged · g</li>
+        <li>B = weight of fluid displaced</li>
+        <li>Float condition: B = W_object → V_sub/V_total = ρ_obj/ρ_fluid</li>
+        <li>Apparent weight: W_app = W − B</li>
+        <li>For submerged object: T + B = mg → T = mg − B</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Continuity Equation</div>
+      <p>Incompressible fluid: volume flow rate Q = Av is constant throughout the pipe. <strong>A₁v₁ = A₂v₂</strong>. If area halves → speed doubles. Thumb on hose → area ↓ → speed ↑.</p>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Bernoulli's Equation</div>
+      <p>Energy conservation in flowing fluids. Faster flow = lower pressure. <strong>p + ρgy + ½ρv² = const.</strong> Torricelli (tank leak): both surfaces at atm pressure → v_leak = √(2gh). Same as free fall!</p>
+    </div>
+  </div>
+
+  <div class="fbox t-fl">
+    <div class="fbox-head">Fluid Mechanics — Formula Bank</div>
+    <div class="fbox-grid">
+      <div class="fitem"><div class="flabel">Density</div><div class="feq">ρ = m/V</div><div class="fnote">ρ_water = 1000 kg/m³</div></div>
+      <div class="fitem"><div class="flabel">Specific Gravity</div><div class="feq">SG = ρ/ρ_water</div></div>
+      <div class="fitem"><div class="flabel">Specific Weight</div><div class="feq">γ = ρg = W/V</div></div>
+      <div class="fitem"><div class="flabel">Pressure</div><div class="feq">p = F/A</div></div>
+      <div class="fitem"><div class="flabel">Pressure with Depth</div><div class="feq">p = p₀ + ρgh</div></div>
+      <div class="fitem"><div class="flabel">Absolute Pressure</div><div class="feq">p_abs = p_gauge + p_atm</div></div>
+      <div class="fitem"><div class="flabel">Pascal's Law</div><div class="feq">F₁/A₁ = F₂/A₂</div></div>
+      <div class="fitem"><div class="flabel">Buoyant Force</div><div class="feq">B = ρ_f · V_sub · g</div></div>
+      <div class="fitem"><div class="flabel">Float Condition</div><div class="feq">V_sub/V_tot = ρ_obj/ρ_f</div></div>
+      <div class="fitem"><div class="flabel">Apparent Weight</div><div class="feq">W_app = W − B</div></div>
+      <div class="fitem"><div class="flabel">Continuity</div><div class="feq">A₁v₁ = A₂v₂</div></div>
+      <div class="fitem"><div class="flabel">Flow Rate</div><div class="feq">Q = Av (m³/s)</div></div>
+      <div class="fitem"><div class="flabel">Bernoulli's Eq.</div><div class="feq">p₁+ρgy₁+½ρv₁²=</div><div class="fnote">p₂+ρgy₂+½ρv₂²</div></div>
+      <div class="fitem"><div class="flabel">Torricelli (tank leak)</div><div class="feq">v = √(2gh)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ THERMODYNAMICS ░░ -->
+<div id="th" class="t-th">
+  <div class="ch-header t-th">
+    <div class="ch-num">Part 1 &amp; 2</div>
+    <div class="ch-title">Introduction to Thermodynamics</div>
+    <div class="ch-time">Thermo I &amp; II</div>
+  </div>
+
+  <div class="alert" style="border-color:var(--purple);background:rgba(107,63,160,0.07);">
+    <div class="alert-icon">🔥</div>
+    <div><strong>Exam focus:</strong> Temperature conversions (Kelvin required for radiation), specific heat, calorimetry balance equation, latent heat phases, and identifying the 3 modes of heat transfer.</div>
+  </div>
+
+  <div class="card-row">
+    <div class="ccard">
+      <div class="ccard-title">Temperature Scales</div>
+      <ul>
+        <li>TK = TC + 273.15 (always Kelvin in equations)</li>
+        <li>TF = (9/5)TC + 32</li>
+        <li>TC = (5/9)(TF − 32)</li>
+        <li>ΔTC = ΔTK (same step size!)</li>
+        <li>ΔTF = (9/5)·ΔTC (do NOT add 32 for ΔT)</li>
+        <li>Absolute zero: 0 K = −273.15°C</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Zeroth Law &amp; Heat</div>
+      <ul>
+        <li>Zeroth Law: thermal equilibrium is transitive → makes thermometers work</li>
+        <li>Heat (Q): energy transferred due to temp difference</li>
+        <li>Flows hot → cold only</li>
+        <li>Objects contain internal energy, NOT "heat"</li>
+        <li>Units: Joules (J), 1 cal = 4.186 J</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Specific Heat (Q = mcΔT)</div>
+      <ul>
+        <li>c = specific heat capacity (J/kg·K)</li>
+        <li>Q positive → object gains heat (temp rises)</li>
+        <li>Q negative → object loses heat (temp drops)</li>
+        <li>c_water = 4186 J/kg·K (high → great coolant)</li>
+        <li>c_ice = 2090 J/kg·K, c_steam = 2020 J/kg·K</li>
+        <li>c_copper ≈ 390, c_iron ≈ 500, c_Al ≈ 910 J/kg·K</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Calorimetry</div>
+      <ul>
+        <li>Insulated system: ΣQ = 0</li>
+        <li>m₁c₁(Tf−Ti1) + m₂c₂(Tf−Ti2) = 0</li>
+        <li>Always write ΔT as (Tf − Ti), not |ΔT|</li>
+        <li>Math auto-assigns negative sign to hot object</li>
+        <li>Solve the linear equation for Tf</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Latent Heat &amp; Phase Changes</div>
+      <ul>
+        <li>During phase change: temperature stays constant!</li>
+        <li>Q = ±mL (+ melting/boiling, − freezing/condensing)</li>
+        <li>Lf (fusion): solid ↔ liquid (water: 3.33×10⁵ J/kg)</li>
+        <li>Lv (vaporization): liquid ↔ gas (water: 2.26×10⁶ J/kg)</li>
+        <li>Full heating: do Q = mcΔT and Q = mL in stages</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <div class="ccard-title">Heat Transfer — 3 Modes</div>
+      <ul>
+        <li><strong>Conduction:</strong> P = kA(Th−Tc)/L, needs physical contact</li>
+        <li><strong>Convection:</strong> P = hAΔT, fluid movement carries heat</li>
+        <li><strong>Radiation:</strong> P = σAeT⁴, no medium needed, must use Kelvin!</li>
+        <li>Net radiation: Pnet = σAe(T⁴ − Ts⁴)</li>
+        <li>σ = 5.67×10⁻⁸ W/m²·K⁴</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fbox t-th">
+    <div class="fbox-head">Thermodynamics — Formula Bank</div>
+    <div class="fbox-grid">
+      <div class="fitem"><div class="flabel">°C → K</div><div class="feq">TK = TC + 273.15</div></div>
+      <div class="fitem"><div class="flabel">°C → °F</div><div class="feq">TF = (9/5)TC + 32</div></div>
+      <div class="fitem"><div class="flabel">°F → °C</div><div class="feq">TC = (5/9)(TF − 32)</div></div>
+      <div class="fitem"><div class="flabel">ΔT Conversion</div><div class="feq">ΔTF = (9/5)·ΔTC</div><div class="fnote">ΔTC = ΔTK</div></div>
+      <div class="fitem"><div class="flabel">Specific Heat</div><div class="feq">Q = mcΔT</div></div>
+      <div class="fitem"><div class="flabel">Calorimetry</div><div class="feq">ΣQ = 0</div><div class="fnote">m₁c₁ΔT₁ + m₂c₂ΔT₂ = 0</div></div>
+      <div class="fitem"><div class="flabel">Latent Heat</div><div class="feq">Q = ±mL</div><div class="fnote">Lf=3.33×10⁵, Lv=2.26×10⁶ J/kg</div></div>
+      <div class="fitem"><div class="flabel">Conduction (Fourier)</div><div class="feq">P = kA(Th−Tc)/L</div></div>
+      <div class="fitem"><div class="flabel">Thermal Resistance</div><div class="feq">R = L/k</div><div class="fnote">Composite: R_tot = R₁+R₂+...</div></div>
+      <div class="fitem"><div class="flabel">Convection</div><div class="feq">P = hAΔT</div></div>
+      <div class="fitem"><div class="flabel">Radiation (Stefan-B.)</div><div class="feq">P = σAeT⁴</div><div class="fnote">T in Kelvin!</div></div>
+      <div class="fitem"><div class="flabel">Net Radiation</div><div class="feq">Pnet = σAe(T⁴−Ts⁴)</div><div class="fnote">σ = 5.67×10⁻⁸ W/m²·K⁴</div></div>
+    </div>
+  </div>
+
+  <div class="alert danger">
+    <div class="alert-icon">🚨</div>
+    <div><strong>Most common mistakes in Thermo:</strong> (1) Using Celsius in Stefan-Boltzmann — ALWAYS convert to Kelvin. (2) Adding 32 when converting a temperature difference — don't! Only multiply by 9/5. (3) Forgetting the latent heat stage in full heating problems.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ░░ LAST-MINUTE TIPS ░░ -->
+<div style="margin-bottom:2rem;">
+  <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:1rem;">📌 Exam-Day Power Tips</div>
+  <div class="tip-list">
+    <div class="tip">
+      <div class="tip-badge" style="background:rgba(192,57,43,0.12);color:var(--accent);">FBD</div>
+      <div><strong>Always draw a Free-Body Diagram first.</strong> Every mechanics problem. No exceptions. It prevents 90% of sign errors and wrong force setups.</div>
+    </div>
+    <div class="tip">
+      <div class="tip-badge" style="background:rgba(26,74,138,0.12);color:var(--accent3);">F=ma</div>
+      <div><strong>If given weight in Newtons, find mass first:</strong> m = w/g. Then use F = ma. This is the #1 source of point loss on dynamics problems.</div>
+    </div>
+    <div class="tip">
+      <div class="tip-badge" style="background:rgba(44,110,73,0.12);color:var(--accent2);">Energy</div>
+      <div><strong>"Constant velocity"</strong> on an incline or any surface means net force = 0, which means you can find the friction coefficient directly from ΣF = 0.</div>
+    </div>
+    <div class="tip">
+      <div class="tip-badge" style="background:rgba(13,115,119,0.12);color:var(--teal);">Fluids</div>
+      <div><strong>Buoyancy: find volume from density first.</strong> V = m/ρ_object. Then B = ρ_fluid × V × g. Then apparent weight = true weight − B.</div>
+    </div>
+    <div class="tip">
+      <div class="tip-badge" style="background:rgba(107,63,160,0.12);color:var(--purple);">Thermo</div>
+      <div><strong>Phase change problems: do them in stages.</strong> Each temperature segment or phase change is a separate Q = mcΔT or Q = mL. Add all Q values at the end.</div>
+    </div>
+    <div class="tip">
+      <div class="tip-badge" style="background:rgba(184,134,11,0.12);color:var(--gold);">MCQ</div>
+      <div><strong>On conceptual questions,</strong> eliminate wrong answers: "centripetal force is a type of force" (wrong), "more force keeps things moving" (wrong), "heat is stored in objects" (wrong).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PRINTABLE CHEAT SHEET
+════════════════════════════════════════ -->
+<div id="cheatsheet">
+  <div class="cheatsheet-intro">
+    <div>
+      <h2>📋 Printable Formula Sheet</h2>
+      <p>Sized for ¼ A4 paper · Front &amp; Back · Formulas, conversions, constants allowed</p>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ Print Sheet</button>
+  </div>
+  <div class="sheet-wrap">
+    <div class="sheet-note">Cut along this border → fits ¼ A4 (105mm × 74mm) · Bring to exam</div>
+
+    <div class="sheet">
+      <!-- FRONT SIDE -->
+      <div class="sheet-side">
+        <span class="sheet-side-label l-front">Front Side</span>
+
+        <div class="sh-section-lbl blue">Newton's Laws (Ch.4–5)</div>
+        <div class="sf"><div class="sf-lbl">2nd Law</div><div class="sf-eq blue">ΣF=ma; ΣFx=max, ΣFy=may</div></div>
+        <div class="sf"><div class="sf-lbl">Weight</div><div class="sf-eq blue">w=mg, g=9.80 m/s²</div></div>
+        <div class="sf"><div class="sf-lbl">Equilibrium</div><div class="sf-eq blue">ΣFx=0, ΣFy=0</div></div>
+        <div class="sf"><div class="sf-lbl">Kinetic Friction</div><div class="sf-eq blue">fk=μk·n</div></div>
+        <div class="sf"><div class="sf-lbl">Static Friction</div><div class="sf-eq blue">fs≤μs·n, fs,max=μs·n</div></div>
+        <div class="sf"><div class="sf-lbl">Centripetal</div><div class="sf-eq blue">a=v²/R; ΣF_rad=mv²/R</div></div>
+        <div class="sf"><div class="sf-lbl">Max curve speed</div><div class="sf-eq blue">vmax=√(μs·g·R)</div></div>
+        <div class="sf"><div class="sf-lbl">Terminal velocity</div><div class="sf-eq blue">vt=√(mg/D)</div></div>
+        <div class="sf"><div class="sf-lbl">Net Force</div><div class="sf-eq blue">R=√(Rx²+Ry²); θ=arctan(Ry/Rx)</div></div>
+
+        <div class="shdiv"></div>
+        <div class="sh-section-lbl green">Work & KE (Ch.6)</div>
+        <div class="sf"><div class="sf-lbl">Work</div><div class="sf-eq green">W=F·d·cos(θ)</div></div>
+        <div class="sf"><div class="sf-lbl">Dot Product</div><div class="sf-eq green">W=Fx·dx+Fy·dy</div></div>
+        <div class="sf"><div class="sf-lbl">Kinetic Energy</div><div class="sf-eq green">K=½mv²</div></div>
+        <div class="sf"><div class="sf-lbl">Work-Energy Thm.</div><div class="sf-eq green">W_net=ΔK=K₂−K₁</div></div>
+        <div class="sf"><div class="sf-lbl">Spring work</div><div class="sf-eq green">W=½kx²</div></div>
+        <div class="sf"><div class="sf-lbl">Power</div><div class="sf-eq green">P=W/t=F·v (Watts)</div></div>
+      </div>
+
+      <!-- BACK SIDE -->
+      <div class="sheet-side">
+        <span class="sheet-side-label l-back">Back Side</span>
+
+        <div class="sh-section-lbl gold">Energy Conservation (Ch.7)</div>
+        <div class="sf"><div class="sf-lbl">Grav. PE</div><div class="sf-eq gold">U=mgy</div></div>
+        <div class="sf"><div class="sf-lbl">Conservation</div><div class="sf-eq gold">K₁+U₁=K₂+U₂</div></div>
+        <div class="sf"><div class="sf-lbl">With Friction</div><div class="sf-eq gold">K₁+U₁+W_other=K₂+U₂</div></div>
+        <div class="sf"><div class="sf-lbl">Friction Work</div><div class="sf-eq gold">W_fric=−f·d</div></div>
+
+        <div class="shdiv"></div>
+        <div class="sh-section-lbl teal">Fluids (Ch.12)</div>
+        <div class="sf"><div class="sf-lbl">Density</div><div class="sf-eq teal">ρ=m/V; ρ_w=1000 kg/m³</div></div>
+        <div class="sf"><div class="sf-lbl">SG / Spec. Wt.</div><div class="sf-eq teal">SG=ρ/ρ_w; γ=ρg</div></div>
+        <div class="sf"><div class="sf-lbl">Pressure depth</div><div class="sf-eq teal">p=p₀+ρgh</div></div>
+        <div class="sf"><div class="sf-lbl">p_abs</div><div class="sf-eq teal">p_abs=p_gauge+p_atm</div></div>
+        <div class="sf"><div class="sf-lbl">Pascal</div><div class="sf-eq teal">F₁/A₁=F₂/A₂</div></div>
+        <div class="sf"><div class="sf-lbl">Buoyancy</div><div class="sf-eq teal">B=ρ_f·V_sub·g</div></div>
+        <div class="sf"><div class="sf-lbl">Continuity</div><div class="sf-eq teal">A₁v₁=A₂v₂; Q=Av</div></div>
+        <div class="sf"><div class="sf-lbl">Bernoulli</div><div class="sf-eq teal">p+ρgy+½ρv²=const</div></div>
+        <div class="sf"><div class="sf-lbl">Torricelli</div><div class="sf-eq teal">v=√(2gh)</div></div>
+
+        <div class="shdiv"></div>
+        <div class="sh-section-lbl purple">Thermodynamics</div>
+        <div class="sf"><div class="sf-lbl">°C↔K / °C↔°F</div><div class="sf-eq purple">TK=TC+273.15; TF=(9/5)TC+32</div></div>
+        <div class="sf"><div class="sf-lbl">ΔT conversion</div><div class="sf-eq purple">ΔTF=(9/5)ΔTC; ΔTC=ΔTK</div></div>
+        <div class="sf"><div class="sf-lbl">Spec. Heat</div><div class="sf-eq purple">Q=mcΔT</div></div>
+        <div class="sf"><div class="sf-lbl">Calorimetry</div><div class="sf-eq purple">ΣQ=0 → m₁c₁ΔT₁+m₂c₂ΔT₂=0</div></div>
+        <div class="sf"><div class="sf-lbl">Latent Heat</div><div class="sf-eq purple">Q=±mL (Lf=3.33e5, Lv=2.26e6)</div></div>
+        <div class="sf"><div class="sf-lbl">Conduction</div><div class="sf-eq purple">P=kA(Th−Tc)/L; R=L/k</div></div>
+        <div class="sf"><div class="sf-lbl">Convection</div><div class="sf-eq purple">P=hAΔT</div></div>
+        <div class="sf"><div class="sf-lbl">Radiation</div><div class="sf-eq purple">P=σAeT⁴; σ=5.67×10⁻⁸</div></div>
+        <div class="sf"><div class="sf-lbl">Net Radiation</div><div class="sf-eq purple">Pnet=σAe(T⁴−Ts⁴)</div></div>
+      </div>
+    </div>
+
+    <div class="sheet-note" style="margin-top:0.75rem;">⚠️ All formulas fit on ¼ A4 paper (both sides) as required by your instructor. T must be in Kelvin for radiation!</div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  WMSU · EE Dept · Physics 1 Final Exam · <span>Good luck — you have everything you need.</span>
+</div>
+
 </body>
 </html>
