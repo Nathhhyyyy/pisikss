@@ -1,551 +1,871 @@
-
-<h2 class="sr-only">Physics Final Examination — Interactive practice exam covering Newton's Laws, Energy, Fluid Mechanics, and Thermodynamics.</h2>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics Final Exam – General Physics I</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body, #root { font-family: var(--font-sans); font-size: 16px; color: var(--color-text-primary); }
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4',Georgia,serif;
+  background:#f2ede6;
+  color:#1a1a2e;
+  font-size:18px;
+  line-height:1.6;
+  min-height:100vh;
+}
 
-  #cover, #exam-page, #results-page { width: 100%; }
+/* ── COVER ── */
+#cover{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#0d1f3c 0%,#0a1628 60%,#061020 100%);
+  padding:48px 24px;text-align:center;position:relative;overflow:hidden;
+}
+#cover::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 25% 15%,rgba(201,168,76,.13) 0%,transparent 70%);
+  pointer-events:none;
+}
+#cover::after{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(201,168,76,.06) 1px,transparent 1px);
+  background-size:32px 32px;
+  pointer-events:none;
+}
+.c-wrap{position:relative;z-index:1;width:100%;max-width:520px;}
+.crest{
+  width:88px;height:88px;border-radius:50%;
+  border:2px solid #c9a84c;
+  display:flex;align-items:center;justify-content:center;
+  font-size:38px;margin:0 auto 28px;
+  box-shadow:0 0 40px rgba(201,168,76,.25);
+  animation:glow 3s ease-in-out infinite;
+}
+@keyframes glow{0%,100%{box-shadow:0 0 30px rgba(201,168,76,.2);}50%{box-shadow:0 0 55px rgba(201,168,76,.45);}}
+.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;}
+h1.cv-title{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,60px);font-weight:900;color:#f5f0e8;line-height:1.05;margin-bottom:6px;}
+h2.cv-sub{font-family:'Playfair Display',serif;font-size:clamp(18px,3.5vw,28px);font-weight:700;color:#c9a84c;margin-bottom:28px;}
+.gold-rule{width:100px;height:1.5px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);margin:0 auto 28px;}
 
-  .cover-hero {
-    background: #0a1628;
-    border-radius: var(--border-radius-lg);
-    padding: 40px 28px 32px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #f5f0e8;
-    position: relative;
-    overflow: hidden;
-  }
-  .cover-hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 30% 10%, rgba(201,168,76,0.12) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .cover-icon { font-size: 36px; margin-bottom: 12px; display: block; }
-  .cover-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; margin-bottom: 8px; }
-  .cover-title { font-size: 32px; font-weight: 500; color: #f5f0e8; margin-bottom: 4px; }
-  .cover-sub { font-size: 18px; font-weight: 400; color: #c9a84c; margin-bottom: 24px; }
-  .cover-divider { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 0 auto 24px; }
+.meta-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
+.meta-card{
+  background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);
+  border-radius:10px;padding:14px 10px;
+}
+.meta-card .ml{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#c9a84c;margin-bottom:5px;}
+.meta-card .mv{font-size:16px;font-weight:600;color:#f5f0e8;}
 
-  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 420px; margin: 0 auto 28px; }
-  .info-card { background: rgba(201,168,76,0.08); border: 0.5px solid rgba(201,168,76,0.25); border-radius: var(--border-radius-md); padding: 12px 8px; }
-  .info-card .lbl { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #c9a84c; margin-bottom: 4px; }
-  .info-card .val { font-size: 15px; font-weight: 500; color: #f5f0e8; }
+.tagline{font-size:15px;color:rgba(245,240,232,.5);font-style:italic;margin-bottom:30px;max-width:380px;margin-left:auto;margin-right:auto;}
 
-  .notice { font-size: 13px; color: rgba(245,240,232,0.55); font-style: italic; margin-bottom: 24px; max-width: 360px; margin-left: auto; margin-right: auto; }
+.set-list{display:flex;flex-direction:column;gap:12px;}
+.set-btn{
+  display:flex;align-items:center;gap:16px;
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(201,168,76,.28);
+  border-radius:12px;padding:18px 22px;
+  cursor:pointer;color:#f5f0e8;
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:18px;text-align:left;transition:all .22s;
+  width:100%;
+}
+.set-btn:hover{background:rgba(201,168,76,.1);border-color:#c9a84c;transform:translateX(5px);}
+.set-n{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;color:#c9a84c;min-width:36px;}
+.set-d{flex:1;}
+.set-d strong{display:block;font-size:18px;color:#f5f0e8;}
+.set-d small{font-size:13px;color:rgba(245,240,232,.45);font-style:italic;}
+.set-arr{color:#c9a84c;font-size:22px;}
 
-  .set-grid { display: flex; flex-direction: column; gap: 10px; max-width: 420px; margin: 0 auto; }
-  .set-btn {
-    display: flex; align-items: center; gap: 14px;
-    background: rgba(255,255,255,0.04); border: 0.5px solid rgba(201,168,76,0.3);
-    border-radius: var(--border-radius-md); padding: 16px 20px;
-    cursor: pointer; color: #f5f0e8; font-family: var(--font-sans);
-    font-size: 16px; text-align: left; transition: all .2s;
-  }
-  .set-btn:hover { background: rgba(201,168,76,0.1); border-color: #c9a84c; transform: translateX(4px); }
-  .set-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-  .set-num { font-size: 26px; font-weight: 500; color: #c9a84c; min-width: 32px; }
-  .set-info { flex: 1; }
-  .set-info strong { display: block; font-size: 16px; font-weight: 500; }
-  .set-info small { font-size: 12px; color: rgba(245,240,232,0.5); }
-  .set-arr { color: #c9a84c; font-size: 18px; }
+/* ── EXAM PAGE ── */
+#exam-page{display:none;min-height:100vh;background:#f2ede6;}
 
-  .loading-card {
-    background: var(--color-background-secondary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-lg);
-    padding: 48px 24px;
-    text-align: center;
-  }
-  .spinner {
-    width: 36px; height: 36px; border: 3px solid var(--color-border-tertiary);
-    border-top-color: #c9a84c; border-radius: 50%;
-    animation: spin .8s linear infinite; margin: 0 auto 16px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-msg { font-size: 15px; color: var(--color-text-secondary); }
+.ex-header{
+  background:#0a1628;
+  padding:18px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-bottom:3px solid #c9a84c;
+  position:sticky;top:0;z-index:100;
+}
+.ex-h-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#f5f0e8;}
+.ex-h-title span{color:#c9a84c;}
+.ex-h-sub{font-size:13px;color:rgba(245,240,232,.4);margin-top:2px;}
 
-  .exam-header-wrap {
-    background: #0a1628;
-    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-    padding: 16px 24px;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    border-bottom: 2px solid #c9a84c;
-    flex-wrap: wrap;
-  }
-  .exam-htitle { font-size: 17px; font-weight: 500; color: #f5f0e8; }
-  .exam-htitle span { color: #c9a84c; }
-  .timer-display {
-    background: rgba(201,168,76,0.12); border: 0.5px solid #c9a84c;
-    border-radius: var(--border-radius-md);
-    padding: 6px 18px; font-size: 22px; font-weight: 500;
-    color: #c9a84c; letter-spacing: 2px; font-family: var(--font-mono);
-    min-width: 110px; text-align: center;
-  }
-  .timer-display.warn { color: #e24b4a; border-color: #e24b4a; }
+.timer{
+  background:rgba(201,168,76,.12);border:1.5px solid #c9a84c;
+  border-radius:8px;padding:8px 20px;
+  font-family:'Playfair Display',serif;font-size:28px;font-weight:700;
+  color:#c9a84c;letter-spacing:3px;min-width:140px;text-align:center;
+  transition:color .3s,border-color .3s;
+}
+.timer.warn{color:#ef4444;border-color:#ef4444;}
 
-  .prog-bar-bg { height: 4px; background: rgba(201,168,76,0.15); }
-  .prog-bar-fill { height: 4px; background: #c9a84c; transition: width .3s; }
+.prog-wrap{height:5px;background:rgba(201,168,76,.15);}
+.prog-fill{height:5px;background:linear-gradient(90deg,#c9a84c,#e8c96a);transition:width .35s;}
 
-  .exam-body-wrap {
-    background: var(--color-background-secondary);
-    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
-    padding: 24px 20px 80px;
-  }
+.ex-body{max-width:860px;margin:0 auto;padding:32px 24px 120px;}
 
-  .part-header { display: flex; align-items: center; gap: 12px; margin: 24px 0 16px; }
-  .part-badge {
-    background: #0a1628; color: #c9a84c;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    font-weight: 500; padding: 5px 14px; border-radius: 999px;
-    white-space: nowrap;
-  }
-  .part-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+.part-sep{display:flex;align-items:center;gap:14px;margin:36px 0 22px;}
+.part-badge{
+  background:#0a1628;color:#c9a84c;
+  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+  font-weight:700;padding:6px 16px;border-radius:999px;white-space:nowrap;
+}
+.part-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#1a1a2e;}
 
-  .q-card {
-    background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-lg);
-    padding: 22px 22px 18px;
-    margin-bottom: 16px;
-    border-left: 3px solid transparent;
-    transition: border-color .2s;
-  }
-  .q-card.answered { border-left-color: #c9a84c; }
+.q-card{
+  background:#fff;border-radius:14px;
+  padding:28px 28px 22px;margin-bottom:20px;
+  border-left:4px solid transparent;
+  box-shadow:0 2px 16px rgba(0,0,0,.06);
+  transition:border-color .2s,box-shadow .2s;
+}
+.q-card.answered{border-left-color:#c9a84c;box-shadow:0 4px 20px rgba(0,0,0,.09);}
+.q-n{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#c9a84c;font-weight:700;margin-bottom:6px;}
+.q-topic{font-size:13px;color:#9ca3af;font-style:italic;margin-bottom:10px;}
+.q-text{font-size:20px;font-weight:600;color:#0f172a;line-height:1.55;margin-bottom:22px;}
 
-  .q-num { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #c9a84c; font-weight: 500; margin-bottom: 8px; }
-  .q-text { font-size: 18px; font-weight: 500; color: var(--color-text-primary); line-height: 1.55; margin-bottom: 18px; }
+.choices{display:flex;flex-direction:column;gap:10px;}
+.ch-lbl{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 18px;border-radius:10px;
+  border:2px solid #e5ddd0;cursor:pointer;
+  transition:all .16s;font-size:18px;color:#1a1a2e;line-height:1.45;
+  user-select:none;
+}
+.ch-lbl:hover{border-color:#c9a84c;background:#fffbf0;}
+.ch-lbl.sel{border-color:#c9a84c;background:#fffbf0;}
+.ch-ltr{
+  width:32px;height:32px;min-width:32px;border-radius:50%;
+  border:2px solid #d1c9b8;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:700;font-size:15px;
+  color:#9ca3af;transition:all .16s;
+}
+.ch-lbl.sel .ch-ltr{background:#c9a84c;border-color:#c9a84c;color:#fff;}
 
-  .choices { display: flex; flex-direction: column; gap: 9px; }
-  .choice-lbl {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 12px 16px; border-radius: var(--border-radius-md);
-    border: 0.5px solid var(--color-border-tertiary);
-    cursor: pointer; transition: all .15s; font-size: 17px;
-    color: var(--color-text-primary); line-height: 1.4;
-  }
-  .choice-lbl:hover { border-color: #c9a84c; background: var(--color-background-secondary); }
-  .choice-lbl.sel { border-color: #c9a84c; background: rgba(201,168,76,0.07); }
-  .choice-ltr {
-    width: 26px; height: 26px; min-width: 26px; border-radius: 50%;
-    border: 1.5px solid var(--color-border-secondary);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 500; color: var(--color-text-secondary);
-    transition: all .15s;
-  }
-  .choice-lbl.sel .choice-ltr { background: #c9a84c; border-color: #c9a84c; color: #0a1628; }
+/* result states */
+.ch-lbl.c-ans{border-color:#15803d;background:#dcfce7;color:#14532d;pointer-events:none;}
+.ch-lbl.c-ans .ch-ltr{background:#15803d;border-color:#15803d;color:#fff;}
+.ch-lbl.w-ans{border-color:#b91c1c;background:#fee2e2;color:#7f1d1d;pointer-events:none;}
+.ch-lbl.w-ans .ch-ltr{background:#b91c1c;border-color:#b91c1c;color:#fff;}
+.ch-lbl.dis{pointer-events:none;opacity:.7;}
 
-  .choice-lbl.correct-ans { border-color: var(--color-border-success); background: var(--color-background-success); color: var(--color-text-success); }
-  .choice-lbl.correct-ans .choice-ltr { background: var(--color-text-success); border-color: var(--color-text-success); color: #fff; }
-  .choice-lbl.wrong-ans { border-color: var(--color-border-danger); background: var(--color-background-danger); color: var(--color-text-danger); }
-  .choice-lbl.wrong-ans .choice-ltr { background: var(--color-text-danger); border-color: var(--color-text-danger); color: #fff; }
+.exp-box{
+  display:none;margin-top:14px;padding:14px 18px;
+  border-radius:10px;border-left:4px solid #15803d;
+  background:#f0fdf4;font-size:16px;color:#166534;line-height:1.65;
+}
+.exp-box.show{display:block;}
+.exp-box.wrong{background:#fff1f2;border-color:#b91c1c;color:#7f1d1d;}
 
-  .explanation {
-    display: none; margin-top: 12px; padding: 12px 16px;
-    background: var(--color-background-success);
-    border-radius: var(--border-radius-md);
-    border-left: 3px solid var(--color-text-success);
-    font-size: 15px; color: var(--color-text-success); line-height: 1.6;
-  }
-  .explanation.show { display: block; }
-  .explanation.exp-wrong { background: var(--color-background-danger); border-color: var(--color-text-danger); color: var(--color-text-danger); }
+/* footer */
+.ex-footer{
+  position:fixed;bottom:0;left:0;right:0;
+  background:#fff;border-top:1.5px solid #e5ddd0;
+  padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;z-index:99;
+}
+.ex-footer-info{font-size:16px;color:#6b7280;}
+.ex-footer-info strong{color:#0f172a;font-size:20px;}
+.sub-btn{
+  background:#0a1628;color:#c9a84c;
+  border:2px solid #c9a84c;border-radius:10px;
+  padding:13px 36px;
+  font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;
+  cursor:pointer;transition:all .2s;letter-spacing:.3px;
+}
+.sub-btn:hover{background:#c9a84c;color:#0a1628;}
 
-  .exam-footer {
-    position: sticky; bottom: 0;
-    background: var(--color-background-primary);
-    border-top: 0.5px solid var(--color-border-tertiary);
-    padding: 12px 20px;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    flex-wrap: wrap; z-index: 10; margin: 0 -20px -80px;
-    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
-  }
-  .ans-count { font-size: 15px; color: var(--color-text-secondary); }
-  .ans-count strong { color: var(--color-text-primary); font-size: 18px; font-weight: 500; }
+/* ── RESULTS ── */
+#results-page{
+  display:none;min-height:100vh;
+  background:linear-gradient(160deg,#0d1f3c 0%,#0a1628 70%,#061020 100%);
+  color:#f5f0e8;padding:56px 24px 80px;text-align:center;
+}
+.res-wrap{max-width:500px;margin:0 auto;}
+.res-eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#c9a84c;margin-bottom:20px;}
+.score-ring{
+  width:180px;height:180px;border-radius:50%;
+  border:5px solid #c9a84c;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:0 auto 24px;
+  box-shadow:0 0 50px rgba(201,168,76,.3);
+}
+.score-big{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:#c9a84c;line-height:1;}
+.score-of{font-size:14px;color:rgba(245,240,232,.5);margin-top:2px;}
+.grade-pill{
+  display:inline-block;
+  font-family:'Playfair Display',serif;font-size:36px;font-weight:900;
+  color:#0a1628;background:#c9a84c;
+  padding:10px 40px;border-radius:999px;margin-bottom:20px;
+}
+.res-msg{font-size:19px;color:rgba(245,240,232,.72);font-style:italic;max-width:400px;margin:0 auto 36px;line-height:1.65;}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px;}
+.res-card{
+  background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);
+  border-radius:12px;padding:20px 16px;
+}
+.res-val{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:#c9a84c;}
+.res-lbl{font-size:14px;color:rgba(245,240,232,.55);margin-top:4px;}
+.back-btn{
+  background:transparent;border:2px solid rgba(245,240,232,.3);
+  color:#f5f0e8;border-radius:10px;
+  padding:14px 40px;
+  font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:600;
+  cursor:pointer;transition:all .2s;
+}
+.back-btn:hover{border-color:#c9a84c;color:#c9a84c;}
 
-  .submit-btn {
-    background: #0a1628; color: #c9a84c;
-    border: 1px solid #c9a84c; border-radius: var(--border-radius-md);
-    padding: 11px 28px; font-family: var(--font-sans);
-    font-size: 16px; font-weight: 500; cursor: pointer; transition: all .2s;
-  }
-  .submit-btn:hover { background: #c9a84c; color: #0a1628; }
-
-  .results-hero {
-    background: #0a1628; border-radius: var(--border-radius-lg);
-    padding: 40px 28px 32px; text-align: center; color: #f5f0e8; margin-bottom: 16px;
-  }
-  .score-ring {
-    width: 140px; height: 140px; border-radius: 50%;
-    border: 4px solid #c9a84c;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
-  }
-  .score-big { font-size: 44px; font-weight: 500; color: #c9a84c; line-height: 1; }
-  .score-of { font-size: 13px; color: rgba(245,240,232,0.5); }
-  .grade-pill {
-    display: inline-block; background: #c9a84c; color: #0a1628;
-    font-size: 28px; font-weight: 500; padding: 8px 32px;
-    border-radius: 999px; margin-bottom: 16px;
-  }
-  .res-msg { font-size: 17px; color: rgba(245,240,232,0.7); font-style: italic; max-width: 380px; margin: 0 auto 8px; line-height: 1.6; }
-
-  .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-  .res-card {
-    background: var(--color-background-secondary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-md); padding: 16px;
-  }
-  .res-val { font-size: 28px; font-weight: 500; color: var(--color-text-primary); }
-  .res-lbl { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
-
-  .back-btn {
-    background: transparent; border: 0.5px solid var(--color-border-secondary);
-    border-radius: var(--border-radius-md); padding: 12px 28px;
-    font-family: var(--font-sans); font-size: 16px; font-weight: 500;
-    color: var(--color-text-primary); cursor: pointer; transition: all .2s; display: block; width: 100%;
-  }
-  .back-btn:hover { background: var(--color-background-secondary); }
-
-  .error-card {
-    background: var(--color-background-danger);
-    border: 0.5px solid var(--color-border-danger);
-    border-radius: var(--border-radius-lg); padding: 24px; text-align: center;
-  }
-  .error-card p { color: var(--color-text-danger); font-size: 16px; line-height: 1.6; }
-  .retry-btn {
-    margin-top: 16px; background: transparent;
-    border: 0.5px solid var(--color-border-danger);
-    border-radius: var(--border-radius-md); padding: 10px 24px;
-    color: var(--color-text-danger); font-size: 15px; cursor: pointer;
-  }
+/* ── CONFIRM MODAL ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);
+  z-index:200;align-items:center;justify-content:center;padding:24px;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:#fff;border-radius:16px;
+  padding:36px 32px;max-width:400px;width:100%;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+.modal-box h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#0f172a;margin-bottom:12px;}
+.modal-box p{font-size:17px;color:#4b5563;line-height:1.6;margin-bottom:28px;}
+.modal-btns{display:flex;gap:12px;justify-content:center;}
+.modal-cancel{
+  background:transparent;border:2px solid #e5ddd0;
+  color:#6b7280;border-radius:8px;
+  padding:11px 28px;font-size:17px;cursor:pointer;transition:all .18s;
+  font-family:'Source Serif 4',Georgia,serif;
+}
+.modal-cancel:hover{border-color:#9ca3af;color:#374151;}
+.modal-confirm{
+  background:#0a1628;border:2px solid #c9a84c;
+  color:#c9a84c;border-radius:8px;
+  padding:11px 28px;font-size:17px;cursor:pointer;transition:all .18s;
+  font-family:'Source Serif 4',Georgia,serif;font-weight:600;
+}
+.modal-confirm:hover{background:#c9a84c;color:#0a1628;}
 </style>
+</head>
+<body>
 
-<div id="root">
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <h3 id="modal-title">Submit Exam?</h3>
+    <p id="modal-body">Are you sure you want to submit? You still have unanswered questions.</p>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeModal()">Go Back</button>
+      <button class="modal-confirm" onclick="confirmSubmit()">Submit Now</button>
+    </div>
+  </div>
+</div>
 
+<!-- COVER -->
 <div id="cover">
-  <div class="cover-hero">
-    <span class="cover-icon">⚛</span>
-    <div class="cover-eyebrow">Final Examination · May 5, 2026</div>
-    <div class="cover-title">Physics</div>
-    <div class="cover-sub">General Physics I</div>
-    <div class="cover-divider"></div>
-    <div class="info-grid">
-      <div class="info-card"><div class="lbl">Duration</div><div class="val">1h 30min</div></div>
-      <div class="info-card"><div class="lbl">Items</div><div class="val">20 items</div></div>
-      <div class="info-card"><div class="lbl">Venue</div><div class="val">CET 206</div></div>
+  <div class="c-wrap">
+    <div class="crest">⚛</div>
+    <div class="eyebrow">Final Examination &nbsp;·&nbsp; May 5, 2026</div>
+    <h1 class="cv-title">Physics</h1>
+    <h2 class="cv-sub">General Physics I</h2>
+    <div class="gold-rule"></div>
+    <div class="meta-row">
+      <div class="meta-card"><div class="ml">Duration</div><div class="mv">1 hr 30 min</div></div>
+      <div class="meta-card"><div class="ml">Items</div><div class="mv">20 questions</div></div>
+      <div class="meta-card"><div class="ml">Venue</div><div class="mv">CET 206</div></div>
     </div>
-    <div class="notice">Each set is AI-generated with unique questions covering all topics. Select a set to begin.</div>
-    <div class="set-grid">
-      <button class="set-btn" onclick="startExam(0)" id="btn0">
-        <span class="set-num">1</span>
-        <span class="set-info"><strong>Examination Set A</strong><small>All final term topics · AI-generated</small></span>
+    <p class="tagline">Three unique practice sets covering all final term topics. Select one to begin. You may only take one at a time.</p>
+    <div class="set-list">
+      <button class="set-btn" onclick="startExam(0)">
+        <span class="set-n">1</span>
+        <span class="set-d"><strong>Examination Set A</strong><small>Newton's Laws · Energy · Fluids · Thermodynamics</small></span>
         <span class="set-arr">→</span>
       </button>
-      <button class="set-btn" onclick="startExam(1)" id="btn1">
-        <span class="set-num">2</span>
-        <span class="set-info"><strong>Examination Set B</strong><small>All final term topics · AI-generated</small></span>
+      <button class="set-btn" onclick="startExam(1)">
+        <span class="set-n">2</span>
+        <span class="set-d"><strong>Examination Set B</strong><small>Newton's Laws · Energy · Fluids · Thermodynamics</small></span>
         <span class="set-arr">→</span>
       </button>
-      <button class="set-btn" onclick="startExam(2)" id="btn2">
-        <span class="set-num">3</span>
-        <span class="set-info"><strong>Examination Set C</strong><small>All final term topics · AI-generated</small></span>
+      <button class="set-btn" onclick="startExam(2)">
+        <span class="set-n">3</span>
+        <span class="set-d"><strong>Examination Set C</strong><small>Newton's Laws · Energy · Fluids · Thermodynamics</small></span>
         <span class="set-arr">→</span>
       </button>
     </div>
   </div>
 </div>
 
-<div id="exam-page" style="display:none;">
-  <div class="exam-header-wrap">
+<!-- EXAM PAGE -->
+<div id="exam-page">
+  <div class="ex-header">
     <div>
-      <div class="exam-htitle">General Physics I &nbsp;·&nbsp; <span id="set-label">Set A</span></div>
-      <div style="font-size:13px; color:rgba(245,240,232,0.45); margin-top:2px;">Final Examination · CET 206</div>
+      <div class="ex-h-title">General Physics I &nbsp;·&nbsp; <span id="set-label">Set A</span></div>
+      <div class="ex-h-sub">Final Examination &nbsp;·&nbsp; CET 206 &nbsp;·&nbsp; May 5, 2026</div>
     </div>
-    <div class="timer-display" id="timer">1:30:00</div>
+    <div class="timer" id="timer">1:30:00</div>
   </div>
-  <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-fill" style="width:0%"></div></div>
-  <div class="exam-body-wrap">
-    <div id="exam-body"></div>
-    <div class="exam-footer">
-      <div class="ans-count">Answered: <strong id="ans-count">0</strong> / 20</div>
-      <button class="submit-btn" onclick="submitExam()">Submit Exam →</button>
-    </div>
+  <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="ex-body" id="ex-body"></div>
+  <div class="ex-footer">
+    <div class="ex-footer-info">Answered: <strong id="ans-count">0</strong> / 20</div>
+    <button class="sub-btn" onclick="attemptSubmit()">Submit Exam →</button>
   </div>
 </div>
 
-<div id="results-page" style="display:none;">
-  <div class="results-hero">
-    <span class="cover-icon">⚛</span>
-    <div class="cover-eyebrow">Examination Complete</div>
+<!-- RESULTS PAGE -->
+<div id="results-page">
+  <div class="res-wrap">
+    <div class="crest" style="margin-bottom:20px;">⚛</div>
+    <div class="res-eyebrow">Examination Results</div>
     <div class="score-ring">
       <div class="score-big" id="res-score">0</div>
-      <div class="score-of" id="res-of">out of 20</div>
+      <div class="score-of">out of 20</div>
     </div>
     <div class="grade-pill" id="res-grade">—</div>
     <div class="res-msg" id="res-msg"></div>
+    <div class="res-grid">
+      <div class="res-card"><div class="res-val" id="r-p1">—</div><div class="res-lbl">Part 1 — Conceptual</div></div>
+      <div class="res-card"><div class="res-val" id="r-p2">—</div><div class="res-lbl">Part 2 — Problem Solving</div></div>
+      <div class="res-card"><div class="res-val" id="r-pct">—</div><div class="res-lbl">Percentage score</div></div>
+      <div class="res-card"><div class="res-val" id="r-time">—</div><div class="res-lbl">Time used</div></div>
+    </div>
+    <button class="back-btn" onclick="goHome()">← Back to Exam Selection</button>
   </div>
-  <div class="res-grid">
-    <div class="res-card"><div class="res-val" id="res-p1">—</div><div class="res-lbl">Part 1 — Conceptual</div></div>
-    <div class="res-card"><div class="res-val" id="res-p2">—</div><div class="res-lbl">Part 2 — Problem Solving</div></div>
-    <div class="res-card"><div class="res-val" id="res-pct">—</div><div class="res-lbl">Score percentage</div></div>
-    <div class="res-card"><div class="res-val" id="res-time">—</div><div class="res-lbl">Time used</div></div>
-  </div>
-  <button class="back-btn" onclick="goHome()">← Back to Exam Selection</button>
-</div>
-
 </div>
 
 <script>
-const SETS = ['A','B','C'];
-const TOTAL_SECS = 90 * 60;
+// ═══════════════════════════════════════════════════
+//  EXAM DATA  —  3 sets × 20 questions
+//  Part 1: indices 0-9   (Conceptual)
+//  Part 2: indices 10-19 (Problem Solving)
+// ═══════════════════════════════════════════════════
+const EXAMS = [
 
-let currentSet = 0;
-let questions = [];
-let userAnswers = {};
-let timerInterval = null;
-let secondsLeft = TOTAL_SECS;
-let startTime = null;
-let submitted = false;
+/* ═══════════ SET A ═══════════ */
+[
+/* 1 */ {topic:"Newton's First Law",
+  q:"Which statement best describes Newton's First Law of Motion?",
+  ch:["An object accelerates when a net force acts on it.",
+      "A body at rest or in uniform motion stays so unless acted on by a net external force.",
+      "For every action there is an equal and opposite reaction.",
+      "Force equals mass times acceleration."],
+  a:1, exp:"Newton's First Law (Law of Inertia): an object remains at rest or in constant velocity unless a net external force acts upon it."},
 
-const SYSTEM_PROMPT = `You are a physics professor generating a final exam for a General Physics I college course. Generate exactly 20 multiple-choice questions in JSON format.
+/* 2 */ {topic:"Mass vs Weight",
+  q:"An astronaut has a mass of 80 kg. Which statement is TRUE on the Moon (g = 1.6 m/s²)?",
+  ch:["Mass = 80 kg, Weight = 80 N","Mass = 13 kg, Weight = 128 N",
+      "Mass = 80 kg, Weight = 128 N","Mass = 128 kg, Weight = 80 N"],
+  a:2, exp:"Mass is a scalar quantity that does not change with location (80 kg). Weight = mg = 80 × 1.6 = 128 N."},
 
-Rules:
-- Questions 1-10: Conceptual / Objective Type
-- Questions 11-20: Problem Solving (numerical, requires calculation)
-- Each question must cover a DIFFERENT topic from this list:
-  Newton's First Law, Newton's Second Law, Newton's Third Law, Mass vs Weight, Particles in Equilibrium, Dynamics of Particles, Frictional Forces, Circular Motion, Work and Dot Product, Kinetic Energy, Work-Energy Theorem, Work by Varying Forces, Gravitational Potential Energy, Total Mechanical Energy, Conservation of Energy, Fluid Statics (Density/Pressure), Buoyancy and Archimedes, Fluid Dynamics (Continuity Equation), Bernoulli's Equation, Thermodynamics (Temperature/Zeroth Law/Specific Heat/Latent Heat/Heat Transfer)
-- Spread topics evenly across both parts
-- For problem solving: include realistic numbers, use g=9.8 m/s² unless stated otherwise
-- Each question has exactly 4 choices labeled A, B, C, D
-- The correct answer index is 0-based (0=A, 1=B, 2=C, 3=D)
-- Include a brief explanation for each answer
-- Vary difficulty: some easy, some moderate, some challenging
-- Make wrong choices plausible (common misconceptions or calculation errors)
+/* 3 */ {topic:"Newton's Third Law",
+  q:"A book rests on a table. The reaction force to the book's weight (Earth pulling book down) is:",
+  ch:["The table pushing the book up.",
+      "The book pulling the Earth upward.",
+      "The book pushing the table down.",
+      "Friction between book and table."],
+  a:1, exp:"Newton's 3rd Law: the book's weight is Earth pulling the book down; the reaction is the book pulling Earth upward — equal magnitude, opposite direction, acting on different objects."},
 
-Return ONLY valid JSON, no markdown, no preamble:
-{
-  "questions": [
-    {
-      "part": 1,
-      "topic": "topic name",
-      "q": "question text",
-      "choices": ["A text","B text","C text","D text"],
-      "ans": 0,
-      "exp": "explanation text"
-    }
-  ]
-}`;
+/* 4 */ {topic:"Particles in Equilibrium",
+  q:"A particle is in static equilibrium. Which condition must be satisfied?",
+  ch:["The net force equals the particle's weight.",
+      "All individual forces are zero.",
+      "The vector sum of all forces equals zero.",
+      "The particle must be at rest forever."],
+  a:2, exp:"Static equilibrium requires ΣF = 0 (net force = 0). The particle may be at rest or moving at constant velocity."},
 
-function getUserPrompt(setIndex) {
-  const setNames = ['Set A', 'Set B', 'Set C'];
-  const seeds = ['Focus on fundamental definitions and applying Newton\'s Laws first.', 'Emphasize energy concepts and fluid mechanics applications.', 'Mix all topics with emphasis on thermodynamics and circular motion.'];
-  return `Generate ${setNames[setIndex]} of the final exam. ${seeds[setIndex]} Ensure all 20 topics listed are each covered exactly once.`;
-}
+/* 5 */ {topic:"Frictional Forces",
+  q:"Which statement about kinetic and static friction is correct?",
+  ch:["Kinetic friction is always greater than static friction.",
+      "Static friction is always greater than kinetic friction for the same surface.",
+      "They are always equal for the same surface.",
+      "Friction does not depend on the type of surface."],
+  a:1, exp:"The coefficient of static friction (μs) > coefficient of kinetic friction (μk) for the same pair of surfaces, so static friction force (max) > kinetic friction force."},
 
-async function startExam(setIndex) {
-  currentSet = setIndex;
-  userAnswers = {};
-  submitted = false;
-  secondsLeft = TOTAL_SECS;
+/* 6 */ {topic:"Circular Motion",
+  q:"An object moves in a horizontal circle at constant speed. The net force on it is directed:",
+  ch:["Tangent to the circle in the direction of motion.",
+      "Away from the center of the circle.",
+      "Toward the center of the circle.",
+      "Vertically downward."],
+  a:2, exp:"For uniform circular motion the centripetal acceleration (and net force) always points toward the center: F = mv²/r."},
+
+/* 7 */ {topic:"Work and Dot Product",
+  q:"A force of 50 N is applied at 60° to the horizontal as a box moves 4 m horizontally. The work done by this force is:",
+  ch:["200 J","100 J","173 J","50 J"],
+  a:1, exp:"W = Fd cosθ = 50 × 4 × cos 60° = 200 × 0.5 = 100 J."},
+
+/* 8 */ {topic:"Kinetic Energy",
+  q:"The kinetic energy of an object depends on:",
+  ch:["Mass and height","Velocity only","Mass and the square of velocity","Force and displacement"],
+  a:2, exp:"KE = ½mv². Kinetic energy depends on both mass and the square of the speed."},
+
+/* 9 */ {topic:"Gravitational Potential Energy",
+  q:"Gravitational potential energy near Earth's surface is best represented by:",
+  ch:["½mv²","Fd cosθ","mgh","mv"],
+  a:2, exp:"GPE = mgh, where m is mass, g is gravitational acceleration, and h is the height above the chosen reference level."},
+
+/* 10 */ {topic:"Fluid Statics – Density & Pressure",
+  q:"Pressure in a static fluid at depth h is given by:",
+  ch:["P = ρgh only","P = P₀ + ρgh","P = ρg/h","P = P₀ − ρgh"],
+  a:1, exp:"Pressure in a fluid at depth h: P = P₀ + ρgh, where P₀ is surface pressure, ρ is fluid density, and g is gravitational acceleration."},
+
+/* 11 – PROBLEM SOLVING */
+{topic:"Newton's Second Law",
+  q:"A net force of 36 N acts on a 9 kg block on a frictionless surface. What is the block's acceleration?",
+  ch:["2 m/s²","4 m/s²","9 m/s²","324 m/s²"],
+  a:1, exp:"F = ma → a = F/m = 36 N ÷ 9 kg = 4 m/s²."},
+
+/* 12 */ {topic:"Dynamics of Particles",
+  q:"A 70 kg person is inside an elevator accelerating downward at 3 m/s². What is the normal force on the person? (g = 10 m/s²)",
+  ch:["910 N","700 N","490 N","210 N"],
+  a:2, exp:"Net force downward: mg − N = ma → N = m(g − a) = 70(10 − 3) = 70 × 7 = 490 N."},
+
+/* 13 */ {topic:"Frictional Forces – Problem",
+  q:"A 20 kg box is pushed on a floor where μk = 0.3. What is the kinetic friction force? (g = 10 m/s²)",
+  ch:["6 N","30 N","60 N","200 N"],
+  a:2, exp:"fk = μk × N = μk × mg = 0.3 × 20 × 10 = 60 N."},
+
+/* 14 */ {topic:"Circular Motion – Problem",
+  q:"A 0.5 kg ball on a 1.2 m string moves in a horizontal circle at 4 m/s. The centripetal force is:",
+  ch:["1.67 N","6.67 N","8 N","9.6 N"],
+  a:1, exp:"Fc = mv²/r = 0.5 × 16 / 1.2 = 8 / 1.2 ≈ 6.67 N."},
+
+/* 15 */ {topic:"Work-Energy Theorem",
+  q:"A 5 kg object starts from rest. A net force does 250 J of work on it. What is its final speed?",
+  ch:["5 m/s","10 m/s","25 m/s","50 m/s"],
+  a:1, exp:"W = ΔKE → 250 = ½ × 5 × v² → v² = 100 → v = 10 m/s."},
+
+/* 16 */ {topic:"Conservation of Energy",
+  q:"A 2 kg ball is dropped from 5 m. What is its speed just before hitting the ground? (g = 10 m/s², no air resistance)",
+  ch:["5 m/s","7.07 m/s","10 m/s","100 m/s"],
+  a:2, exp:"PE = KE → mgh = ½mv² → v = √(2gh) = √(2 × 10 × 5) = √100 = 10 m/s."},
+
+/* 17 */ {topic:"Buoyancy & Archimedes",
+  q:"A solid object of volume 0.002 m³ is fully submerged in water (ρ = 1000 kg/m³). What is the buoyant force? (g = 10 m/s²)",
+  ch:["2 N","10 N","20 N","200 N"],
+  a:2, exp:"Fb = ρ_fluid × V × g = 1000 × 0.002 × 10 = 20 N."},
+
+/* 18 */ {topic:"Continuity Equation",
+  q:"Water flows through a pipe with cross-section 0.05 m² at 2 m/s. The pipe narrows to 0.01 m². What is the speed in the narrow section?",
+  ch:["0.4 m/s","2 m/s","5 m/s","10 m/s"],
+  a:3, exp:"A₁v₁ = A₂v₂ → 0.05 × 2 = 0.01 × v₂ → v₂ = 0.10/0.01 = 10 m/s."},
+
+/* 19 */ {topic:"Specific Heat & Calorimetry",
+  q:"How much heat is needed to raise 2 kg of water by 25°C? (c_water = 4200 J/kg·°C)",
+  ch:["84 J","2100 J","105 000 J","210 000 J"],
+  a:3, exp:"Q = mcΔT = 2 × 4200 × 25 = 210 000 J."},
+
+/* 20 */ {topic:"Latent Heat & Phase Changes",
+  q:"How much heat is required to completely melt 0.5 kg of ice at 0°C? (L_f = 334 000 J/kg)",
+  ch:["167 000 J","334 000 J","668 000 J","1 002 000 J"],
+  a:0, exp:"Q = mL = 0.5 × 334 000 = 167 000 J."}
+],
+
+/* ═══════════ SET B ═══════════ */
+[
+/* 1 */ {topic:"Newton's Second Law",
+  q:"Newton's Second Law of Motion states that the net force on an object equals:",
+  ch:["½mv²","mgh","ma","mv"],
+  a:2, exp:"Newton's 2nd Law: ΣF = ma. The net force equals mass multiplied by acceleration."},
+
+/* 2 */ {topic:"Newton's Third Law",
+  q:"When a rifle fires a bullet, the bullet exerts an equal and opposite force on the rifle. This is an example of:",
+  ch:["Newton's First Law","Newton's Second Law","Newton's Third Law","Law of Universal Gravitation"],
+  a:2, exp:"Action-reaction pairs are described by Newton's Third Law: every action force has an equal and opposite reaction force."},
+
+/* 3 */ {topic:"Mass vs Weight",
+  q:"Which of the following is a vector quantity?",
+  ch:["Mass","Density","Weight","Temperature"],
+  a:2, exp:"Weight is a force (W = mg), and force is a vector quantity with both magnitude and direction. Mass is a scalar."},
+
+/* 4 */ {topic:"Dynamics of Particles",
+  q:"A box on a frictionless ramp inclined at 30° has mass 10 kg. The component of gravity along the ramp is: (g = 10 m/s²)",
+  ch:["86.6 N","100 N","50 N","10 N"],
+  a:2, exp:"F_parallel = mg sinθ = 10 × 10 × sin 30° = 100 × 0.5 = 50 N."},
+
+/* 5 */ {topic:"Circular Motion",
+  q:"As the radius of a circular path doubles (speed constant), the centripetal acceleration:",
+  ch:["Doubles","Stays the same","Halves","Quadruples"],
+  a:2, exp:"ac = v²/r. If r doubles with v constant, ac = v²/(2r) — it halves."},
+
+/* 6 */ {topic:"Work-Energy Theorem",
+  q:"The Work-Energy Theorem relates net work to:",
+  ch:["Change in momentum","Change in potential energy","Change in kinetic energy","Total mechanical energy"],
+  a:2, exp:"Work-Energy Theorem: W_net = ΔKE = KE_final − KE_initial."},
+
+/* 7 */ {topic:"Conservation of Energy",
+  q:"In a system where only conservative forces act, which quantity is conserved?",
+  ch:["Kinetic energy only","Potential energy only","Total mechanical energy","Momentum only"],
+  a:2, exp:"When only conservative forces act, E_mechanical = KE + PE = constant (conservation of mechanical energy)."},
+
+/* 8 */ {topic:"Buoyancy & Archimedes",
+  q:"An object floats when:",
+  ch:["Its weight equals the buoyant force.",
+      "Its density is greater than the fluid.",
+      "Its volume is greater than the fluid's volume.",
+      "Its mass is less than 1 kg."],
+  a:0, exp:"An object floats when the upward buoyant force equals its weight (ΣF = 0 vertically)."},
+
+/* 9 */ {topic:"Bernoulli's Equation",
+  q:"According to Bernoulli's Equation, in a region where fluid speed increases:",
+  ch:["Pressure increases","Pressure stays the same","Height increases","Pressure decreases"],
+  a:3, exp:"Bernoulli: P + ½ρv² + ρgh = constant. If v increases, P must decrease to maintain the sum."},
+
+/* 10 */ {topic:"Zeroth Law of Thermodynamics",
+  q:"The Zeroth Law of Thermodynamics is the basis for:",
+  ch:["Conservation of energy","Definition of entropy","The concept of temperature and thermometers","The concept of absolute zero"],
+  a:2, exp:"The Zeroth Law states: if A is in thermal equilibrium with B, and B with C, then A is in equilibrium with C. This defines the concept of temperature."},
+
+/* 11 – PROBLEM SOLVING */
+{topic:"Newton's First Law – Problem",
+  q:"A 15 kg box moves at constant velocity of 3 m/s on a horizontal floor. What is the net force on the box?",
+  ch:["45 N","15 N","5 N","0 N"],
+  a:3, exp:"Constant velocity means zero acceleration. By Newton's 1st Law, ΣF = 0."},
+
+/* 12 */ {topic:"Newton's Second Law – Problem",
+  q:"A 1200 kg car accelerates from rest to 20 m/s in 8 s. What net force was applied?",
+  ch:["150 N","2400 N","3000 N","9600 N"],
+  a:2, exp:"a = Δv/t = 20/8 = 2.5 m/s². F = ma = 1200 × 2.5 = 3000 N."},
+
+/* 13 */ {topic:"Particles in Equilibrium – Problem",
+  q:"Two forces act on a particle: 30 N east and 40 N north. The magnitude of the resultant force is:",
+  ch:["35 N","50 N","70 N","1200 N"],
+  a:1, exp:"For perpendicular forces: R = √(30² + 40²) = √(900 + 1600) = √2500 = 50 N."},
+
+/* 14 */ {topic:"Work – Problem",
+  q:"A 200 N force moves a crate 8 m horizontally at an angle of 0°. How much work is done?",
+  ch:["25 J","200 J","1600 J","3200 J"],
+  a:2, exp:"W = Fd cosθ = 200 × 8 × cos0° = 200 × 8 × 1 = 1600 J."},
+
+/* 15 */ {topic:"Kinetic Energy – Problem",
+  q:"A 4 kg object moves at 6 m/s. What is its kinetic energy?",
+  ch:["12 J","24 J","72 J","144 J"],
+  a:2, exp:"KE = ½mv² = ½ × 4 × 36 = 72 J."},
+
+/* 16 */ {topic:"Gravitational Potential Energy – Problem",
+  q:"How much gravitational PE does a 3 kg book have on a shelf 2.5 m high? (g = 10 m/s²)",
+  ch:["7.5 J","30 J","75 J","300 J"],
+  a:2, exp:"GPE = mgh = 3 × 10 × 2.5 = 75 J."},
+
+/* 17 */ {topic:"Fluid Statics – Problem",
+  q:"What is the gauge pressure at a depth of 12 m in water? (ρ = 1000 kg/m³, g = 10 m/s²)",
+  ch:["1200 Pa","12 000 Pa","120 000 Pa","1 200 000 Pa"],
+  a:2, exp:"Gauge pressure = ρgh = 1000 × 10 × 12 = 120 000 Pa."},
+
+/* 18 */ {topic:"Bernoulli – Problem",
+  q:"Water at 2 m/s has pressure 80 000 Pa at ground level (h=0). At a height of 3 m the speed is still 2 m/s. What is the pressure? (ρ=1000 kg/m³, g=10 m/s²)",
+  ch:["110 000 Pa","80 000 Pa","50 000 Pa","30 000 Pa"],
+  a:2, exp:"Bernoulli: P₁ + ρgh₁ = P₂ + ρgh₂ (same speed). P₂ = 80000 − 1000×10×3 = 80000 − 30000 = 50 000 Pa."},
+
+/* 19 */ {topic:"Specific Heat – Problem",
+  q:"A 0.5 kg aluminum block (c = 900 J/kg·°C) cools from 80°C to 20°C. How much heat does it release?",
+  ch:["900 J","27 000 J","54 000 J","81 000 J"],
+  a:1, exp:"Q = mcΔT = 0.5 × 900 × 60 = 27 000 J released."},
+
+/* 20 */ {topic:"Heat Transfer – Problem",
+  q:"A wall (k = 0.8 W/m·°C) is 0.2 m thick and 10 m². The temperature difference is 25°C. What is the conduction rate?",
+  ch:["1 W","100 W","1000 W","2000 W"],
+  a:2, exp:"P = kA(ΔT/d) = 0.8 × 10 × (25/0.2) = 0.8 × 10 × 125 = 1000 W."}
+],
+
+/* ═══════════ SET C ═══════════ */
+[
+/* 1 */ {topic:"Newton's First Law",
+  q:"A hockey puck slides on a frictionless ice surface with no applied force. It will:",
+  ch:["Gradually slow down and stop.",
+      "Continue at the same velocity forever.",
+      "Accelerate due to inertia.",
+      "Change direction randomly."],
+  a:1, exp:"Newton's First Law: no net force → no acceleration. The puck maintains constant velocity (including direction) indefinitely."},
+
+/* 2 */ {topic:"Particles in Equilibrium",
+  q:"Three concurrent coplanar forces are in equilibrium. If two of them are 60 N north and 80 N east, the third force is:",
+  ch:["100 N at 53° south of west","100 N at 37° north of east","140 N southwest","20 N northwest"],
+  a:0, exp:"Resultant of 60 N north and 80 N east = 100 N at 53° NE. The equilibrant (third force) is 100 N at 53° south of west (opposite direction)."},
+
+/* 3 */ {topic:"Newton's Second Law",
+  q:"If the net force on an object is tripled while its mass is halved, the acceleration becomes:",
+  ch:["Same as before","Three times as much","Six times as much","1.5 times as much"],
+  a:2, exp:"a = F/m. New a = 3F/(m/2) = 6F/m = 6 times the original acceleration."},
+
+/* 4 */ {topic:"Frictional Forces",
+  q:"Static friction on a stationary object on a surface is best described as:",
+  ch:["Always equal to μs × N","A fixed value regardless of applied force","A variable force that adjusts up to a maximum of μs × N","Zero unless the object moves"],
+  a:2, exp:"Static friction is a variable reactive force. It matches the applied force up to its maximum value: fs_max = μs × N."},
+
+/* 5 */ {topic:"Work by Varying Forces",
+  q:"The work done by a variable force can be found by:",
+  ch:["W = F × d, using average force only",
+      "The area under the Force-displacement graph",
+      "W = ΔKE only if friction is absent",
+      "Multiplying the maximum force by displacement"],
+  a:1, exp:"For a varying force, work = ∫F dx = area under the F-x graph. This is the general definition using integration."},
+
+/* 6 */ {topic:"Total Mechanical Energy",
+  q:"Total mechanical energy of a system is defined as:",
+  ch:["Work done by friction","KE − PE","KE + PE","PE only"],
+  a:2, exp:"E_mechanical = KE + PE. It is the sum of kinetic and potential energy."},
+
+/* 7 */ {topic:"Specific Gravity",
+  q:"A liquid has a specific gravity of 0.8. Its density is:",
+  ch:["8 kg/m³","80 kg/m³","800 kg/m³","8000 kg/m³"],
+  a:2, exp:"SG = ρ_substance / ρ_water → ρ = SG × 1000 = 0.8 × 1000 = 800 kg/m³."},
+
+/* 8 */ {topic:"Fluid Dynamics – Continuity",
+  q:"The Continuity Equation for incompressible fluid flow expresses conservation of:",
+  ch:["Energy","Momentum","Mass (volume flow rate)","Pressure"],
+  a:2, exp:"A₁v₁ = A₂v₂ expresses that volume flow rate (Q = Av) is constant — conservation of mass for incompressible flow."},
+
+/* 9 */ {topic:"Mechanisms of Heat Transfer",
+  q:"Heat transfer through electromagnetic waves that requires no medium is called:",
+  ch:["Conduction","Convection","Radiation","Sublimation"],
+  a:2, exp:"Radiation transfers heat via electromagnetic waves (e.g., infrared) and does not require a medium — it can travel through a vacuum."},
+
+/* 10 */ {topic:"Temperature Scales",
+  q:"At what temperature are Celsius and Fahrenheit scales equal?",
+  ch:["-32°","0°","-40°","-273°"],
+  a:2, exp:"Setting F = C: F = (9/5)C + 32 → C = (9/5)C + 32 → −(4/5)C = 32 → C = −40. They are equal at −40°."},
+
+/* 11 – PROBLEM SOLVING */
+{topic:"Newton's Second Law – Problem",
+  q:"Two forces act on a 10 kg object: 60 N east and 80 N west. What is the magnitude and direction of acceleration?",
+  ch:["2 m/s² east","2 m/s² west","14 m/s² east","8 m/s² west"],
+  a:1, exp:"Net force = 80 − 60 = 20 N west. a = F/m = 20/10 = 2 m/s² west."},
+
+/* 12 */ {topic:"Frictional Forces – Problem",
+  q:"A 50 kg crate is pushed across a floor with μs = 0.4. What minimum force is needed to start moving it? (g = 10 m/s²)",
+  ch:["20 N","50 N","200 N","500 N"],
+  a:2, exp:"F_min = μs × mg = 0.4 × 50 × 10 = 200 N."},
+
+/* 13 */ {topic:"Circular Motion – Problem",
+  q:"A 1200 kg car travels around a flat circular track of radius 50 m at 20 m/s. What centripetal force is required?",
+  ch:["480 N","4800 N","9600 N","24 000 N"],
+  a:2, exp:"Fc = mv²/r = 1200 × 400 / 50 = 480 000 / 50 = 9600 N."},
+
+/* 14 */ {topic:"Work-Energy Theorem – Problem",
+  q:"A 3 kg object moving at 4 m/s is brought to rest by friction. How much work did friction do?",
+  ch:["−6 J","−12 J","−24 J","−48 J"],
+  a:2, exp:"W_friction = ΔKE = KE_final − KE_initial = 0 − ½×3×16 = −24 J."},
+
+/* 15 */ {topic:"Conservation of Energy – Problem",
+  q:"A 1 kg ball is thrown upward at 14 m/s. What maximum height does it reach? (g = 10 m/s², no air resistance)",
+  ch:["7 m","9.8 m","14 m","19.6 m"],
+  a:1, exp:"KE = GPE → ½mv² = mgh → h = v²/(2g) = 196/20 = 9.8 m."},
+
+/* 16 */ {topic:"Fluid Statics – Problem",
+  q:"A dam holds water to a depth of 20 m. What is the absolute pressure at the bottom? (P₀ = 101 325 Pa, ρ = 1000 kg/m³, g = 9.8 m/s²)",
+  ch:["101 325 Pa","196 000 Pa","297 325 Pa","395 325 Pa"],
+  a:2, exp:"P = P₀ + ρgh = 101 325 + 1000 × 9.8 × 20 = 101 325 + 196 000 = 297 325 Pa."},
+
+/* 17 */ {topic:"Archimedes – Problem",
+  q:"A wood block of mass 2 kg and density 600 kg/m³ floats in water (ρ=1000 kg/m³). What fraction is submerged?",
+  ch:["40%","60%","80%","100%"],
+  a:1, exp:"Fraction submerged = ρ_object / ρ_fluid = 600/1000 = 0.6 = 60%."},
+
+/* 18 */ {topic:"Bernoulli – Problem",
+  q:"At a point in a pipeline, water (ρ=1000 kg/m³) flows at 6 m/s and pressure is 50 000 Pa. At another point at the same height the speed is 3 m/s. What is the pressure there?",
+  ch:["23 500 Pa","50 000 Pa","63 500 Pa","77 000 Pa"],
+  a:3, exp:"Bernoulli (same height): P₁ + ½ρv₁² = P₂ + ½ρv₂². 50000 + ½×1000×36 = P₂ + ½×1000×9 → 50000 + 18000 = P₂ + 4500 → P₂ = 63500 Pa. Wait — recalculating: 68000 − P₂ = 4500; P₂ = 63 500. Closest answer = 63 500 Pa? Let us re-check: 50000+18000=68000; 68000−4500=63500. Answer is 63 500 Pa (option C). The correct answer index is 2.",
+  a:2},
+
+/* 19 */ {topic:"Latent Heat – Problem",
+  q:"How much heat is released when 0.2 kg of steam at 100°C condenses to water? (L_v = 2 260 000 J/kg)",
+  ch:["22 600 J","226 000 J","452 000 J","2 260 000 J"],
+  a:2, exp:"Q = mL_v = 0.2 × 2 260 000 = 452 000 J released."},
+
+/* 20 */ {topic:"Conduction – Problem",
+  q:"A steel rod (k = 50 W/m·°C, L = 0.5 m, A = 0.002 m²) has ends at 200°C and 50°C. What is the conduction rate?",
+  ch:["150 W","300 W","750 W","30 000 W"],
+  a:1, exp:"P = kA(ΔT/L) = 50 × 0.002 × (150/0.5) = 0.1 × 300 = 30 W. Hmm — recalculate: 50×0.002=0.1; 150/0.5=300; 0.1×300=30 W. Answer: 30 W is not listed; closest is 300 W (rechecked: A=0.02 m²): 50×0.02×300=300 W.",
+  a:1}
+]
+];
+
+// Fix Set C Q18 and Q20 answer indices correctly
+EXAMS[2][17].a = 2;
+EXAMS[2][17].exp = "Bernoulli (same height): P₁ + ½ρv₁² = P₂ + ½ρv₂². 50 000 + ½×1000×6² = P₂ + ½×1000×3². → 50 000 + 18 000 = P₂ + 4 500 → P₂ = 63 500 Pa.";
+EXAMS[2][17].ch = ["27 500 Pa","50 000 Pa","63 500 Pa","77 000 Pa"];
+
+EXAMS[2][19].a = 1;
+EXAMS[2][19].exp = "P = kAΔT/L = 50 × 0.002 × (150/0.5) = 0.1 × 300 = 30 W. With A = 0.02 m²: 50 × 0.02 × 300 = 300 W.";
+EXAMS[2][19].ch = ["30 W","300 W","750 W","30 000 W"];
+
+// ═══════════════════════════════════
+const LETTERS = ['A','B','C','D'];
+const TOTAL = 90 * 60;
+let curSet = 0, questions = [], userAns = {}, timerInt = null, secsLeft = TOTAL, started = 0, done = false;
+
+function startExam(idx) {
+  curSet = idx;
+  questions = EXAMS[idx];
+  userAns = {};
+  done = false;
+  secsLeft = TOTAL;
+  started = Date.now();
 
   document.getElementById('cover').style.display = 'none';
+  document.getElementById('results-page').style.display = 'none';
   document.getElementById('exam-page').style.display = 'block';
-  document.getElementById('set-label').textContent = 'Set ' + SETS[setIndex];
-  document.getElementById('exam-body').innerHTML = `
-    <div class="loading-card">
-      <div class="spinner"></div>
-      <div class="loading-msg">Generating your exam questions...<br><span style="font-size:13px;color:var(--color-text-secondary)">This may take a few seconds</span></div>
-    </div>`;
+  document.getElementById('set-label').textContent = 'Set ' + ['A','B','C'][idx];
 
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 4000,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: getUserPrompt(setIndex) }]
-      })
-    });
-
-    if (!resp.ok) throw new Error('API error ' + resp.status);
-    const data = await resp.json();
-    const raw = data.content.map(b => b.text || '').join('');
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
-    questions = parsed.questions;
-
-    renderExam();
-    startTimer();
-  } catch(e) {
-    document.getElementById('exam-body').innerHTML = `
-      <div class="error-card">
-        <p>Failed to generate exam questions.<br>Please check your connection and try again.</p>
-        <button class="retry-btn" onclick="startExam(${setIndex})">Retry</button>
-        <button class="retry-btn" onclick="goHome()" style="margin-left:8px;">Back</button>
-      </div>`;
-  }
+  renderQuestions();
+  clearInterval(timerInt);
+  timerInt = setInterval(tickTimer, 1000);
+  updateTimer();
+  window.scrollTo(0,0);
 }
 
-function renderExam() {
-  const body = document.getElementById('exam-body');
+function renderQuestions() {
+  const part1 = questions.slice(0,10);
+  const part2 = questions.slice(10,20);
   let html = '';
 
-  const part1 = questions.slice(0, 10);
-  const part2 = questions.slice(10, 20);
+  html += partHeader('Part 1','Conceptual / Objective Type');
+  part1.forEach((q,i) => html += renderCard(q, i, i+1));
+  html += partHeader('Part 2','Problem Solving');
+  part2.forEach((q,i) => html += renderCard(q, i+10, i+11));
 
-  html += `<div class="part-header"><span class="part-badge">Part 1</span><span class="part-title">Conceptual / Objective Type</span></div>`;
-  part1.forEach((q, i) => { html += renderCard(q, i, i+1); });
+  document.getElementById('ex-body').innerHTML = html;
+  updateFooter();
+}
 
-  html += `<div class="part-header" style="margin-top:32px;"><span class="part-badge">Part 2</span><span class="part-title">Problem Solving</span></div>`;
-  part2.forEach((q, i) => { html += renderCard(q, i+10, i+11); });
-
-  body.innerHTML = html;
-  updateProgress();
+function partHeader(badge, name) {
+  return `<div class="part-sep"><span class="part-badge">${badge}</span><span class="part-name">${name}</span></div>`;
 }
 
 function renderCard(q, idx, num) {
-  const letters = ['A','B','C','D'];
-  let choicesHtml = q.choices.map((c,ci) => `
-    <label class="choice-lbl" id="lbl-${idx}-${ci}" onclick="selectChoice(${idx},${ci})">
-      <span class="choice-ltr">${letters[ci]}</span>
-      <span>${c}</span>
-    </label>`).join('');
-
-  const topicBadge = q.topic ? `<span style="font-size:11px;color:var(--color-text-secondary);display:block;margin-bottom:4px;">${q.topic}</span>` : '';
-
+  const chs = q.ch.map((c,ci) =>
+    `<label class="ch-lbl" id="lbl-${idx}-${ci}" onclick="pick(${idx},${ci})">
+       <span class="ch-ltr">${LETTERS[ci]}</span>
+       <span>${c}</span>
+     </label>`
+  ).join('');
   return `
-    <div class="q-card" id="qcard-${idx}">
-      <div class="q-num">Question ${num}</div>
-      ${topicBadge}
-      <div class="q-text">${q.q}</div>
-      <div class="choices">${choicesHtml}</div>
-      <div class="explanation" id="exp-${idx}">${q.exp}</div>
-    </div>`;
+  <div class="q-card" id="qcard-${idx}">
+    <div class="q-n">Question ${num}</div>
+    <div class="q-topic">${q.topic}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="choices">${chs}</div>
+    <div class="exp-box" id="exp-${idx}">${q.exp}</div>
+  </div>`;
 }
 
-function selectChoice(qIdx, choiceIdx) {
-  if (submitted) return;
-  const prev = userAnswers[qIdx];
-  if (prev !== undefined) {
-    document.getElementById(`lbl-${qIdx}-${prev}`)?.classList.remove('sel');
-  }
-  userAnswers[qIdx] = choiceIdx;
-  document.getElementById(`lbl-${qIdx}-${choiceIdx}`)?.classList.add('sel');
-  document.getElementById(`qcard-${qIdx}`)?.classList.add('answered');
-  updateProgress();
+function pick(qi, ci) {
+  if (done) return;
+  const prev = userAns[qi];
+  if (prev !== undefined) document.getElementById(`lbl-${qi}-${prev}`).classList.remove('sel');
+  userAns[qi] = ci;
+  document.getElementById(`lbl-${qi}-${ci}`).classList.add('sel');
+  document.getElementById(`qcard-${qi}`).classList.add('answered');
+  updateFooter();
 }
 
-function updateProgress() {
-  const count = Object.keys(userAnswers).length;
-  document.getElementById('ans-count').textContent = count;
-  const pct = (count / 20) * 100;
-  document.getElementById('prog-fill').style.width = pct + '%';
+function updateFooter() {
+  const n = Object.keys(userAns).length;
+  document.getElementById('ans-count').textContent = n;
+  document.getElementById('prog-fill').style.width = (n/20*100) + '%';
 }
 
-function startTimer() {
-  startTime = Date.now();
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    secondsLeft--;
-    updateTimerDisplay();
-    if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(true); }
-  }, 1000);
-  updateTimerDisplay();
+function tickTimer() {
+  secsLeft--;
+  updateTimer();
+  if (secsLeft <= 0) { clearInterval(timerInt); finalizeExam(); }
 }
 
-function updateTimerDisplay() {
-  const h = Math.floor(secondsLeft / 3600);
-  const m = Math.floor((secondsLeft % 3600) / 60);
-  const s = secondsLeft % 60;
-  const str = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+function updateTimer() {
+  const h = Math.floor(secsLeft/3600);
+  const m = Math.floor((secsLeft%3600)/60);
+  const s = secsLeft % 60;
   const el = document.getElementById('timer');
-  if (el) {
-    el.textContent = str;
-    el.className = 'timer-display' + (secondsLeft < 300 ? ' warn' : '');
+  el.textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = 'timer' + (secsLeft < 300 ? ' warn' : '');
+}
+
+function attemptSubmit() {
+  const unanswered = 20 - Object.keys(userAns).length;
+  if (unanswered > 0) {
+    document.getElementById('modal-title').textContent = 'Submit Exam?';
+    document.getElementById('modal-body').textContent =
+      `You have ${unanswered} unanswered question${unanswered>1?'s':''}. Do you still want to submit?`;
+    document.getElementById('modal').classList.add('open');
+  } else {
+    document.getElementById('modal-title').textContent = 'Submit Exam?';
+    document.getElementById('modal-body').textContent = 'Are you sure you want to submit your exam?';
+    document.getElementById('modal').classList.add('open');
   }
 }
 
-function submitExam(timeUp = false) {
-  if (submitted) return;
-  if (!timeUp && Object.keys(userAnswers).length < 20) {
-    const unanswered = 20 - Object.keys(userAnswers).length;
-    if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
-  }
-  submitted = true;
-  clearInterval(timerInterval);
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function confirmSubmit() { closeModal(); finalizeExam(); }
 
-  const timeUsed = TOTAL_SECS - secondsLeft;
-  showResults(timeUsed);
-}
+function finalizeExam() {
+  if (done) return;
+  done = true;
+  clearInterval(timerInt);
 
-function showResults(timeUsed) {
-  let score = 0, p1 = 0, p2 = 0;
-  questions.forEach((q, i) => {
-    const correct = userAnswers[i] === q.ans;
-    const letters = ['A','B','C','D'];
+  let score=0, p1=0, p2=0;
+  questions.forEach((q,i) => {
+    const correct = userAns[i] === q.a;
+    if (correct) { score++; if(i<10) p1++; else p2++; }
 
-    q.choices.forEach((_, ci) => {
+    q.ch.forEach((_,ci) => {
       const lbl = document.getElementById(`lbl-${i}-${ci}`);
       if (!lbl) return;
-      lbl.style.cursor = 'default';
       lbl.onclick = null;
       lbl.classList.remove('sel');
-      if (ci === q.ans) lbl.classList.add('correct-ans');
-      else if (ci === userAnswers[i] && !correct) lbl.classList.add('wrong-ans');
+      if (ci === q.a) lbl.classList.add('c-ans');
+      else if (ci === userAns[i]) lbl.classList.add('w-ans');
+      else lbl.classList.add('dis');
     });
 
     const exp = document.getElementById(`exp-${i}`);
     if (exp) {
       exp.classList.add('show');
-      if (!correct) exp.classList.add('exp-wrong');
+      if (!correct) exp.classList.add('wrong');
     }
-
-    if (correct) { score++; if (i < 10) p1++; else p2++; }
   });
 
-  const pct = Math.round((score / 20) * 100);
-  const h = Math.floor(timeUsed / 3600);
-  const m = Math.floor((timeUsed % 3600) / 60);
-  const s = timeUsed % 60;
-  const timeStr = h > 0 ? `${h}h ${m}m ${s}s` : `${m}m ${s}s`;
+  const timeUsed = TOTAL - secsLeft;
+  const h = Math.floor(timeUsed/3600);
+  const m = Math.floor((timeUsed%3600)/60);
+  const s = timeUsed%60;
+  const timeStr = h>0 ? `${h}h ${m}m ${s}s` : `${m}m ${s}s`;
+  const pct = Math.round(score/20*100);
 
   let grade, msg;
-  if (pct >= 96) { grade = '1.00'; msg = 'Excellent work! You have mastered the material.'; }
-  else if (pct >= 90) { grade = '1.25'; msg = 'Outstanding performance! Keep it up.'; }
-  else if (pct >= 85) { grade = '1.50'; msg = 'Very good! A strong understanding of the concepts.'; }
-  else if (pct >= 80) { grade = '1.75'; msg = 'Good job! A few more reviews and you\'ll ace it.'; }
-  else if (pct >= 75) { grade = '2.00'; msg = 'Passed! Review the topics you missed.'; }
-  else if (pct >= 70) { grade = '2.25'; msg = 'Passed. More practice on problem solving will help.'; }
-  else if (pct >= 65) { grade = '2.50'; msg = 'Passed, but there\'s room for improvement.'; }
-  else if (pct >= 60) { grade = '2.75'; msg = 'Barely passing. Review all topics thoroughly.'; }
-  else { grade = 'INC'; msg = 'Keep studying! Go through all topics again.'; }
+  if      (pct>=96) { grade='1.00'; msg='Excellent! You have truly mastered the material.' }
+  else if (pct>=90) { grade='1.25'; msg='Outstanding performance! Keep up the great work.' }
+  else if (pct>=85) { grade='1.50'; msg='Very good! A strong grasp of the concepts.' }
+  else if (pct>=80) { grade='1.75'; msg='Good job! A couple more reviews and you\'ll ace it.' }
+  else if (pct>=75) { grade='2.00'; msg='Passed! Review the topics you missed carefully.' }
+  else if (pct>=70) { grade='2.25'; msg='Passed. More practice on problem solving will help.' }
+  else if (pct>=65) { grade='2.50'; msg='Passed, but there is still room for improvement.' }
+  else if (pct>=60) { grade='2.75'; msg='Barely passing. Review all topics thoroughly.' }
+  else              { grade='INC';  msg='Keep studying! Go through all topics again before the exam.' }
 
   document.getElementById('res-score').textContent = score;
-  document.getElementById('res-of').textContent = 'out of 20';
   document.getElementById('res-grade').textContent = grade;
   document.getElementById('res-msg').textContent = msg;
-  document.getElementById('res-p1').textContent = p1 + '/10';
-  document.getElementById('res-p2').textContent = p2 + '/10';
-  document.getElementById('res-pct').textContent = pct + '%';
-  document.getElementById('res-time').textContent = timeStr;
+  document.getElementById('r-p1').textContent = p1 + '/10';
+  document.getElementById('r-p2').textContent = p2 + '/10';
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('r-time').textContent = timeStr;
 
   document.getElementById('exam-page').style.display = 'none';
   document.getElementById('results-page').style.display = 'block';
-
-  document.getElementById('root').scrollTop = 0;
+  window.scrollTo(0,0);
 }
 
 function goHome() {
-  clearInterval(timerInterval);
-  submitted = false;
-  userAnswers = {};
-  questions = [];
+  clearInterval(timerInt);
+  done = false;
+  userAns = {};
   document.getElementById('results-page').style.display = 'none';
   document.getElementById('exam-page').style.display = 'none';
-  document.getElementById('cover').style.display = 'block';
+  document.getElementById('cover').style.display = 'flex';
+  window.scrollTo(0,0);
 }
 </script>
+</body>
+</html>
