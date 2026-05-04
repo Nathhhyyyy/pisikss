@@ -1,1128 +1,551 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physics 1 — Final Exam Cram Guide | WMSU EE</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<h2 class="sr-only">Physics Final Examination — Interactive practice exam covering Newton's Laws, Energy, Fluid Mechanics, and Thermodynamics.</h2>
+
 <style>
-/* ─── ROOT ─────────────────────────────────── */
-:root {
-  --ink:     #1a1208;
-  --paper:   #faf7f2;
-  --cream:   #f3ede1;
-  --warm:    #e8dcc8;
-  --rule:    #c8b89a;
-  --muted:   #8a7a66;
-  --accent:  #c0392b;
-  --accent2: #2c6e49;
-  --accent3: #1a4a8a;
-  --gold:    #b8860b;
-  --purple:  #6b3fa0;
-  --teal:    #0d7377;
-  --orange:  #c0580a;
-  --red:     #c0392b;
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body, #root { font-family: var(--font-sans); font-size: 16px; color: var(--color-text-primary); }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+  #cover, #exam-page, #results-page { width: 100%; }
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-}
-
-/* ─── EXAM NOTICE BANNER ────────────────────── */
-.notice-banner {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-}
-.notice-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 3rem 2.5rem 2.5rem;
-  position: relative;
-  z-index: 1;
-}
-.notice-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 40px,
-      rgba(255,255,255,0.015) 40px,
-      rgba(255,255,255,0.015) 41px
-    );
-}
-.notice-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--rule);
-  margin-bottom: 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.notice-eyebrow::before,
-.notice-eyebrow::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(255,255,255,0.15);
-}
-.notice-eyebrow::before { flex: 0 0 30px; }
-
-.notice-hed {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.5rem;
-}
-.notice-hed em {
-  font-style: italic;
-  color: #e8c87a;
-}
-.notice-sub {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.55);
-  font-family: 'DM Mono', monospace;
-  margin-bottom: 2rem;
-}
-
-/* EXAM DETAILS ROW */
-.exam-details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 2rem;
-}
-.exam-detail {
-  background: rgba(255,255,255,0.04);
-  padding: 1rem 1.2rem;
-}
-.exam-detail-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 0.25rem;
-}
-.exam-detail-value {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #e8c87a;
-}
-
-/* RULES GRID */
-.rules-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.75rem;
-}
-.rule-card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 6px;
-  padding: 0.85rem 1rem;
-  display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
-}
-.rule-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-.rule-text { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
-.rule-text strong { color: #fff; }
-
-/* ─── NAV ───────────────────────────────────── */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--ink);
-  padding: 0.5rem 2rem;
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  align-items: center;
-  border-bottom: 2px solid #e8c87a;
-}
-.nav-lbl {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.58rem;
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-right: 0.5rem;
-}
-.nav a {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.65);
-  text-decoration: none;
-  padding: 3px 9px;
-  border-radius: 3px;
-  border: 1px solid rgba(255,255,255,0.15);
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.nav a:hover, .nav a.active { background: rgba(232,200,122,0.15); color: #e8c87a; border-color: #e8c87a; }
-.nav a.cheatsheet {
-  margin-left: auto;
-  background: #e8c87a;
-  color: var(--ink);
-  border-color: #e8c87a;
-  font-weight: 600;
-}
-
-/* ─── MAIN ──────────────────────────────────── */
-.main { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; }
-
-/* ─── CHAPTER HEADERS ───────────────────────── */
-.ch-header {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-top: 3.5rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 2px solid;
-}
-.ch-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 500;
-  padding: 2px 8px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-.ch-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  flex: 1;
-}
-.ch-time {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--muted);
-}
-
-/* COLOR THEMES PER CHAPTER */
-.t-nl  { border-color: var(--accent3); }
-.t-nl  .ch-num { background: rgba(26,74,138,0.12); color: var(--accent3); }
-.t-nl  .ch-title { color: var(--accent3); }
-
-.t-wk  { border-color: var(--accent2); }
-.t-wk  .ch-num { background: rgba(44,110,73,0.12); color: var(--accent2); }
-.t-wk  .ch-title { color: var(--accent2); }
-
-.t-pe  { border-color: var(--gold); }
-.t-pe  .ch-num { background: rgba(184,134,11,0.12); color: var(--gold); }
-.t-pe  .ch-title { color: var(--gold); }
-
-.t-fl  { border-color: var(--teal); }
-.t-fl  .ch-num { background: rgba(13,115,119,0.12); color: var(--teal); }
-.t-fl  .ch-title { color: var(--teal); }
-
-.t-th  { border-color: var(--purple); }
-.t-th  .ch-num { background: rgba(107,63,160,0.12); color: var(--purple); }
-.t-th  .ch-title { color: var(--purple); }
-
-/* ─── CONCEPT CARDS ─────────────────────────── */
-.card-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-.ccard {
-  background: var(--cream);
-  border: 1px solid var(--warm);
-  border-radius: 8px;
-  padding: 1.1rem 1.2rem;
-}
-.ccard-title {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.6rem;
-}
-.t-nl .ccard-title { color: var(--accent3); }
-.t-wk .ccard-title { color: var(--accent2); }
-.t-pe .ccard-title { color: var(--gold); }
-.t-fl .ccard-title { color: var(--teal); }
-.t-th .ccard-title { color: var(--purple); }
-
-.ccard p { font-size: 0.85rem; line-height: 1.65; }
-.ccard ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
-.ccard ul li { font-size: 0.83rem; line-height: 1.55; padding-left: 1rem; position: relative; }
-.ccard ul li::before { content: '—'; position: absolute; left: 0; color: var(--rule); }
-
-/* ─── FORMULA PANELS ────────────────────────── */
-.fbox {
-  border: 1px solid var(--warm);
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-.fbox-head {
-  padding: 0.5rem 1rem;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-.t-nl .fbox-head { background: rgba(26,74,138,0.1); color: var(--accent3); }
-.t-wk .fbox-head { background: rgba(44,110,73,0.1); color: var(--accent2); }
-.t-pe .fbox-head { background: rgba(184,134,11,0.1); color: var(--gold); }
-.t-fl .fbox-head { background: rgba(13,115,119,0.1); color: var(--teal); }
-.t-th .fbox-head { background: rgba(107,63,160,0.1); color: var(--purple); }
-
-.fbox-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0;
-  background: var(--warm);
-}
-.fitem {
-  background: var(--paper);
-  padding: 0.75rem 1rem;
-  border-right: 1px solid var(--warm);
-  border-bottom: 1px solid var(--warm);
-}
-.fitem:last-child { border-right: none; }
-.flabel { font-size: 0.67rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-bottom: 0.2rem; }
-.feq {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--ink);
-}
-.fnote { font-size: 0.65rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 0.15rem; }
-
-/* ─── ALERT BOXES ───────────────────────────── */
-.alert {
-  border-radius: 6px;
-  padding: 0.8rem 1rem;
-  margin-bottom: 1rem;
-  display: flex;
-  gap: 0.65rem;
-  font-size: 0.83rem;
-  line-height: 1.6;
-  border-left: 3px solid;
-}
-.alert-icon { flex-shrink: 0; }
-.alert.warn { background: rgba(184,134,11,0.08); border-color: var(--gold); }
-.alert.danger { background: rgba(192,57,43,0.07); border-color: var(--accent); }
-.alert.info { background: rgba(26,74,138,0.06); border-color: var(--accent3); }
-.alert.green { background: rgba(44,110,73,0.07); border-color: var(--accent2); }
-
-/* ─── DIVIDER ───────────────────────────────── */
-.divider { border: none; border-top: 1px solid var(--warm); margin: 2rem 0; }
-
-/* ─── TIPS ──────────────────────────────────── */
-.tip-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
-.tip {
-  background: var(--cream);
-  border: 1px solid var(--warm);
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
-  display: flex;
-  gap: 0.75rem;
-  font-size: 0.83rem;
-  line-height: 1.6;
-}
-.tip-badge {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  font-weight: 500;
-  padding: 2px 7px;
-  border-radius: 3px;
-  flex-shrink: 0;
-  height: fit-content;
-  margin-top: 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ═══════════════════════════════════════════════════
-   PRINTABLE CHEAT SHEET — ¼ A4 PAPER
-   ═══════════════════════════════════════════════════ */
-#cheatsheet { margin-top: 3rem; }
-.cheatsheet-intro {
-  background: var(--ink);
-  color: var(--paper);
-  border-radius: 10px 10px 0 0;
-  padding: 1.2rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.cheatsheet-intro h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  flex: 1;
-}
-.cheatsheet-intro p { font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
-.print-btn {
-  background: #e8c87a;
-  color: var(--ink);
-  border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 5px;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: opacity 0.15s;
-  text-transform: uppercase;
-}
-.print-btn:hover { opacity: 0.85; }
-
-/* THE ACTUAL CHEAT SHEET */
-.sheet-wrap {
-  border: 2px dashed var(--rule);
-  border-top: none;
-  border-radius: 0 0 10px 10px;
-  padding: 1rem;
-  background: var(--cream);
-}
-.sheet-note {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--muted);
-  text-align: center;
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.05em;
-}
-
-/* The sheet itself — 105mm × 74mm when printed (¼ A4) */
-.sheet {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border: 1px solid var(--ink);
-  border-radius: 4px;
-  overflow: hidden;
-  max-width: 700px;
-  margin: 0 auto 1rem;
-  background: #fff;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-}
-.sheet-side {
-  padding: 0.55rem 0.65rem;
-  border-right: 1px solid var(--ink);
-}
-.sheet-side:last-child { border-right: none; }
-.sheet-side-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.5rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #fff;
-  padding: 1px 6px;
-  border-radius: 2px;
-  margin-bottom: 0.4rem;
-  display: inline-block;
-}
-.l-front { background: var(--accent3); }
-.l-back  { background: var(--purple); }
-
-.sf { /* sheet formula entry */
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.22rem;
-}
-.sf-lbl { font-size: 0.47rem; color: var(--muted); font-family: 'DM Mono', monospace; line-height: 1; margin-bottom: 0.05rem; }
-.sf-eq  { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; color: var(--ink); line-height: 1.25; }
-.sf-eq.blue { color: var(--accent3); }
-.sf-eq.green { color: var(--accent2); }
-.sf-eq.gold { color: var(--gold); }
-.sf-eq.teal { color: var(--teal); }
-.sf-eq.purple { color: var(--purple); }
-.sf-eq.red { color: var(--accent); }
-
-.shdiv {
-  border: none;
-  border-top: 1px solid var(--warm);
-  margin: 0.3rem 0;
-}
-.sh-section-lbl {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.52rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.18rem;
-}
-.sh-section-lbl.blue { color: var(--accent3); }
-.sh-section-lbl.green { color: var(--accent2); }
-.sh-section-lbl.gold { color: var(--gold); }
-.sh-section-lbl.teal { color: var(--teal); }
-.sh-section-lbl.purple { color: var(--purple); }
-.sh-section-lbl.red { color: var(--accent); }
-
-/* ─── FOOTER ────────────────────────────────── */
-.footer {
-  background: var(--ink);
-  color: rgba(255,255,255,0.45);
-  text-align: center;
-  padding: 1.5rem;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.05em;
-  margin-top: 3rem;
-}
-.footer span { color: #e8c87a; }
-
-/* ─── ANIMATIONS ─────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.notice-inner > * { animation: fadeUp 0.5s ease both; }
-.notice-inner > *:nth-child(1) { animation-delay: 0.05s; }
-.notice-inner > *:nth-child(2) { animation-delay: 0.15s; }
-.notice-inner > *:nth-child(3) { animation-delay: 0.2s; }
-.notice-inner > *:nth-child(4) { animation-delay: 0.3s; }
-.notice-inner > *:nth-child(5) { animation-delay: 0.4s; }
-
-/* ─── PRINT STYLES ──────────────────────────── */
-@media print {
-  body { background: #fff; }
-  .notice-banner, .nav, .main > *:not(#cheatsheet),
-  .cheatsheet-intro, .sheet-wrap > .sheet-note,
-  .print-btn { display: none !important; }
-  #cheatsheet { margin: 0; }
-  .sheet-wrap { border: none; padding: 0; background: #fff; }
-  .sheet {
-    max-width: 105mm;
-    width: 105mm;
-    grid-template-columns: 52.5mm 52.5mm;
-    box-shadow: none;
-    page-break-inside: avoid;
+  .cover-hero {
+    background: #0a1628;
+    border-radius: var(--border-radius-lg);
+    padding: 40px 28px 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f5f0e8;
+    position: relative;
+    overflow: hidden;
   }
-  .sheet-side { padding: 3mm 3.5mm; }
-  .sf-eq { font-size: 5.5pt; }
-  .sf-lbl { font-size: 4pt; }
-  .sh-section-lbl { font-size: 5pt; }
-}
+  .cover-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 10%, rgba(201,168,76,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+  .cover-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; margin-bottom: 8px; }
+  .cover-title { font-size: 32px; font-weight: 500; color: #f5f0e8; margin-bottom: 4px; }
+  .cover-sub { font-size: 18px; font-weight: 400; color: #c9a84c; margin-bottom: 24px; }
+  .cover-divider { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 0 auto 24px; }
 
-@media (max-width: 600px) {
-  .main { padding: 1.5rem 1rem; }
-  .notice-inner { padding: 2rem 1.2rem 1.5rem; }
-  .nav { padding: 0.4rem 1rem; gap: 0.3rem; }
-  .sheet { grid-template-columns: 1fr; }
-  .sheet-side { border-right: none; border-bottom: 1px solid var(--ink); }
-  .sheet-side:last-child { border-bottom: none; }
-}
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 420px; margin: 0 auto 28px; }
+  .info-card { background: rgba(201,168,76,0.08); border: 0.5px solid rgba(201,168,76,0.25); border-radius: var(--border-radius-md); padding: 12px 8px; }
+  .info-card .lbl { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #c9a84c; margin-bottom: 4px; }
+  .info-card .val { font-size: 15px; font-weight: 500; color: #f5f0e8; }
+
+  .notice { font-size: 13px; color: rgba(245,240,232,0.55); font-style: italic; margin-bottom: 24px; max-width: 360px; margin-left: auto; margin-right: auto; }
+
+  .set-grid { display: flex; flex-direction: column; gap: 10px; max-width: 420px; margin: 0 auto; }
+  .set-btn {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.04); border: 0.5px solid rgba(201,168,76,0.3);
+    border-radius: var(--border-radius-md); padding: 16px 20px;
+    cursor: pointer; color: #f5f0e8; font-family: var(--font-sans);
+    font-size: 16px; text-align: left; transition: all .2s;
+  }
+  .set-btn:hover { background: rgba(201,168,76,0.1); border-color: #c9a84c; transform: translateX(4px); }
+  .set-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+  .set-num { font-size: 26px; font-weight: 500; color: #c9a84c; min-width: 32px; }
+  .set-info { flex: 1; }
+  .set-info strong { display: block; font-size: 16px; font-weight: 500; }
+  .set-info small { font-size: 12px; color: rgba(245,240,232,0.5); }
+  .set-arr { color: #c9a84c; font-size: 18px; }
+
+  .loading-card {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .spinner {
+    width: 36px; height: 36px; border: 3px solid var(--color-border-tertiary);
+    border-top-color: #c9a84c; border-radius: 50%;
+    animation: spin .8s linear infinite; margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-msg { font-size: 15px; color: var(--color-text-secondary); }
+
+  .exam-header-wrap {
+    background: #0a1628;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border-bottom: 2px solid #c9a84c;
+    flex-wrap: wrap;
+  }
+  .exam-htitle { font-size: 17px; font-weight: 500; color: #f5f0e8; }
+  .exam-htitle span { color: #c9a84c; }
+  .timer-display {
+    background: rgba(201,168,76,0.12); border: 0.5px solid #c9a84c;
+    border-radius: var(--border-radius-md);
+    padding: 6px 18px; font-size: 22px; font-weight: 500;
+    color: #c9a84c; letter-spacing: 2px; font-family: var(--font-mono);
+    min-width: 110px; text-align: center;
+  }
+  .timer-display.warn { color: #e24b4a; border-color: #e24b4a; }
+
+  .prog-bar-bg { height: 4px; background: rgba(201,168,76,0.15); }
+  .prog-bar-fill { height: 4px; background: #c9a84c; transition: width .3s; }
+
+  .exam-body-wrap {
+    background: var(--color-background-secondary);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+    padding: 24px 20px 80px;
+  }
+
+  .part-header { display: flex; align-items: center; gap: 12px; margin: 24px 0 16px; }
+  .part-badge {
+    background: #0a1628; color: #c9a84c;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 500; padding: 5px 14px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .part-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+
+  .q-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 22px 22px 18px;
+    margin-bottom: 16px;
+    border-left: 3px solid transparent;
+    transition: border-color .2s;
+  }
+  .q-card.answered { border-left-color: #c9a84c; }
+
+  .q-num { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #c9a84c; font-weight: 500; margin-bottom: 8px; }
+  .q-text { font-size: 18px; font-weight: 500; color: var(--color-text-primary); line-height: 1.55; margin-bottom: 18px; }
+
+  .choices { display: flex; flex-direction: column; gap: 9px; }
+  .choice-lbl {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px; border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+    cursor: pointer; transition: all .15s; font-size: 17px;
+    color: var(--color-text-primary); line-height: 1.4;
+  }
+  .choice-lbl:hover { border-color: #c9a84c; background: var(--color-background-secondary); }
+  .choice-lbl.sel { border-color: #c9a84c; background: rgba(201,168,76,0.07); }
+  .choice-ltr {
+    width: 26px; height: 26px; min-width: 26px; border-radius: 50%;
+    border: 1.5px solid var(--color-border-secondary);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; color: var(--color-text-secondary);
+    transition: all .15s;
+  }
+  .choice-lbl.sel .choice-ltr { background: #c9a84c; border-color: #c9a84c; color: #0a1628; }
+
+  .choice-lbl.correct-ans { border-color: var(--color-border-success); background: var(--color-background-success); color: var(--color-text-success); }
+  .choice-lbl.correct-ans .choice-ltr { background: var(--color-text-success); border-color: var(--color-text-success); color: #fff; }
+  .choice-lbl.wrong-ans { border-color: var(--color-border-danger); background: var(--color-background-danger); color: var(--color-text-danger); }
+  .choice-lbl.wrong-ans .choice-ltr { background: var(--color-text-danger); border-color: var(--color-text-danger); color: #fff; }
+
+  .explanation {
+    display: none; margin-top: 12px; padding: 12px 16px;
+    background: var(--color-background-success);
+    border-radius: var(--border-radius-md);
+    border-left: 3px solid var(--color-text-success);
+    font-size: 15px; color: var(--color-text-success); line-height: 1.6;
+  }
+  .explanation.show { display: block; }
+  .explanation.exp-wrong { background: var(--color-background-danger); border-color: var(--color-text-danger); color: var(--color-text-danger); }
+
+  .exam-footer {
+    position: sticky; bottom: 0;
+    background: var(--color-background-primary);
+    border-top: 0.5px solid var(--color-border-tertiary);
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    flex-wrap: wrap; z-index: 10; margin: 0 -20px -80px;
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+  }
+  .ans-count { font-size: 15px; color: var(--color-text-secondary); }
+  .ans-count strong { color: var(--color-text-primary); font-size: 18px; font-weight: 500; }
+
+  .submit-btn {
+    background: #0a1628; color: #c9a84c;
+    border: 1px solid #c9a84c; border-radius: var(--border-radius-md);
+    padding: 11px 28px; font-family: var(--font-sans);
+    font-size: 16px; font-weight: 500; cursor: pointer; transition: all .2s;
+  }
+  .submit-btn:hover { background: #c9a84c; color: #0a1628; }
+
+  .results-hero {
+    background: #0a1628; border-radius: var(--border-radius-lg);
+    padding: 40px 28px 32px; text-align: center; color: #f5f0e8; margin-bottom: 16px;
+  }
+  .score-ring {
+    width: 140px; height: 140px; border-radius: 50%;
+    border: 4px solid #c9a84c;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .score-big { font-size: 44px; font-weight: 500; color: #c9a84c; line-height: 1; }
+  .score-of { font-size: 13px; color: rgba(245,240,232,0.5); }
+  .grade-pill {
+    display: inline-block; background: #c9a84c; color: #0a1628;
+    font-size: 28px; font-weight: 500; padding: 8px 32px;
+    border-radius: 999px; margin-bottom: 16px;
+  }
+  .res-msg { font-size: 17px; color: rgba(245,240,232,0.7); font-style: italic; max-width: 380px; margin: 0 auto 8px; line-height: 1.6; }
+
+  .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .res-card {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md); padding: 16px;
+  }
+  .res-val { font-size: 28px; font-weight: 500; color: var(--color-text-primary); }
+  .res-lbl { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
+
+  .back-btn {
+    background: transparent; border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md); padding: 12px 28px;
+    font-family: var(--font-sans); font-size: 16px; font-weight: 500;
+    color: var(--color-text-primary); cursor: pointer; transition: all .2s; display: block; width: 100%;
+  }
+  .back-btn:hover { background: var(--color-background-secondary); }
+
+  .error-card {
+    background: var(--color-background-danger);
+    border: 0.5px solid var(--color-border-danger);
+    border-radius: var(--border-radius-lg); padding: 24px; text-align: center;
+  }
+  .error-card p { color: var(--color-text-danger); font-size: 16px; line-height: 1.6; }
+  .retry-btn {
+    margin-top: 16px; background: transparent;
+    border: 0.5px solid var(--color-border-danger);
+    border-radius: var(--border-radius-md); padding: 10px 24px;
+    color: var(--color-text-danger); font-size: 15px; cursor: pointer;
+  }
 </style>
-</head>
-<body>
 
-<!-- ══════════ EXAM NOTICE ══════════ -->
-<div class="notice-banner">
-  <div class="notice-inner">
-    <div class="notice-eyebrow">WMSU · College of Engineering · Electrical Engineering Dept.</div>
-    <div class="notice-hed">Final <em>Examination</em><br>Notice &amp; Cram Guide</div>
-    <div class="notice-sub">Physics 1 · University Physics 13th Edition · Review All Materials</div>
+<div id="root">
 
-    <div class="exam-details">
-      <div class="exam-detail">
-        <div class="exam-detail-label">Date</div>
-        <div class="exam-detail-value">Tuesday, May 6, 2025</div>
-      </div>
-      <div class="exam-detail">
-        <div class="exam-detail-label">Duration</div>
-        <div class="exam-detail-value">1 hr 30 min</div>
-      </div>
-      <div class="exam-detail">
-        <div class="exam-detail-label">Format</div>
-        <div class="exam-detail-value">Multiple Choice (2 Parts)</div>
-      </div>
-      <div class="exam-detail">
-        <div class="exam-detail-label">Room</div>
-        <div class="exam-detail-value">CET 206</div>
-      </div>
-      <div class="exam-detail">
-        <div class="exam-detail-label">Cheat Sheet</div>
-        <div class="exam-detail-value">¼ A4, front &amp; back</div>
-      </div>
+<div id="cover">
+  <div class="cover-hero">
+    <span class="cover-icon">⚛</span>
+    <div class="cover-eyebrow">Final Examination · May 5, 2026</div>
+    <div class="cover-title">Physics</div>
+    <div class="cover-sub">General Physics I</div>
+    <div class="cover-divider"></div>
+    <div class="info-grid">
+      <div class="info-card"><div class="lbl">Duration</div><div class="val">1h 30min</div></div>
+      <div class="info-card"><div class="lbl">Items</div><div class="val">20 items</div></div>
+      <div class="info-card"><div class="lbl">Venue</div><div class="val">CET 206</div></div>
     </div>
-
-    <div class="rules-grid">
-      <div class="rule-card">
-        <div class="rule-icon">🕐</div>
-        <div class="rule-text"><strong>Arrive 5 min early.</strong> Sit one seat apart. Booklets will be distributed — do not bring your own.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-icon">🧮</div>
-        <div class="rule-text"><strong>Bring your own scientific calculator.</strong> Sharing calculators is strictly prohibited.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-icon">📵</div>
-        <div class="rule-text"><strong>Phones off or silent</strong> and surrendered before exam starts. No exceptions.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-icon">📄</div>
-        <div class="rule-text"><strong>Formula sheet:</strong> ¼ A4 paper only. Formulas, conversions, constants — both sides. Non-conforming sheets not allowed.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-icon">⚠️</div>
-        <div class="rule-text"><strong>Zero tolerance for cheating.</strong> Caught cheating = automatic 0 for the Final Exam.</div>
-      </div>
+    <div class="notice">Each set is AI-generated with unique questions covering all topics. Select a set to begin.</div>
+    <div class="set-grid">
+      <button class="set-btn" onclick="startExam(0)" id="btn0">
+        <span class="set-num">1</span>
+        <span class="set-info"><strong>Examination Set A</strong><small>All final term topics · AI-generated</small></span>
+        <span class="set-arr">→</span>
+      </button>
+      <button class="set-btn" onclick="startExam(1)" id="btn1">
+        <span class="set-num">2</span>
+        <span class="set-info"><strong>Examination Set B</strong><small>All final term topics · AI-generated</small></span>
+        <span class="set-arr">→</span>
+      </button>
+      <button class="set-btn" onclick="startExam(2)" id="btn2">
+        <span class="set-num">3</span>
+        <span class="set-info"><strong>Examination Set C</strong><small>All final term topics · AI-generated</small></span>
+        <span class="set-arr">→</span>
+      </button>
     </div>
   </div>
 </div>
 
-<!-- ══════════ NAV ══════════ -->
-<div class="nav">
-  <span class="nav-lbl">Jump →</span>
-  <a href="#nl">Newton's Laws</a>
-  <a href="#wk">Work &amp; Energy</a>
-  <a href="#pe">Potential Energy</a>
-  <a href="#fl">Fluids</a>
-  <a href="#th">Thermodynamics</a>
-  <a class="cheatsheet" href="#cheatsheet">📋 Print Cheat Sheet</a>
-</div>
-
-<!-- ══════════ MAIN CONTENT ══════════ -->
-<div class="main">
-
-<!-- ░░ NEWTON'S LAWS ░░ -->
-<div id="nl" class="t-nl">
-  <div class="ch-header t-nl">
-    <div class="ch-num">Part 1 · Conceptual</div>
-    <div class="ch-title">Newton's Laws of Motion</div>
-    <div class="ch-time">Ch. 4 &amp; 5</div>
-  </div>
-
-  <div class="alert info">
-    <div class="alert-icon">💡</div>
-    <div><strong>Exam focus:</strong> Expect conceptual MCQs on which law applies, what "equilibrium" means, and whether forces cancel. Problem-solving: FBD → axis → equations.</div>
-  </div>
-
-  <div class="card-row">
-    <div class="ccard">
-      <div class="ccard-title">1st Law — Inertia</div>
-      <p>No net force = no change in motion. An object stays at rest or moves in a straight line at constant speed. Force is needed to <em>change</em> velocity, not to maintain it.</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">2nd Law — F = ma</div>
-      <p>Net force causes acceleration in the same direction. Treat each axis separately: <strong>ΣFx = max</strong> and <strong>ΣFy = may</strong>. If no acceleration on one axis → that ΣF = 0.</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">3rd Law — Action-Reaction</div>
-      <p>Forces come in equal-and-opposite pairs on <em>different</em> objects. They do NOT cancel each other in an FBD because they act on different bodies.</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Mass vs. Weight ⚠️</div>
-      <ul>
-        <li><strong>Mass (m)</strong>: kg, scalar, same everywhere</li>
-        <li><strong>Weight (w)</strong>: N, vector, w = mg</li>
-        <li>If given weight: m = w/g before using F = ma</li>
-        <li>g = 9.80 m/s² on Earth</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Equilibrium (1st Law Applied)</div>
-      <ul>
-        <li>At rest OR constant velocity → a = 0</li>
-        <li>ΣFx = 0 AND ΣFy = 0</li>
-        <li>"Constant velocity" on incline → net force = 0</li>
-        <li>Normal force on incline = mg·cos(θ)</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Friction</div>
-      <ul>
-        <li><strong>Static:</strong> fs ≤ μs·n, prevents motion, variable</li>
-        <li><strong>Kinetic:</strong> fk = μk·n, constant during sliding</li>
-        <li>μs > μk always (harder to start than keep moving)</li>
-        <li>Find n from ΣFy = 0 first, then compute fk</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Apparent Weight (Elevator)</div>
-      <ul>
-        <li>Accelerating up → n = m(g + a) → heavier</li>
-        <li>Accelerating down → n = m(g − a) → lighter</li>
-        <li>Free fall → n = 0 → weightless</li>
-        <li>Constant v → n = mg → normal</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Circular Motion</div>
-      <ul>
-        <li>Constant speed, changing direction = acceleration</li>
-        <li>a_rad = v²/R, always toward center</li>
-        <li>"Centripetal force" = net radial force, NOT a new force</li>
-        <li>Car on flat curve: fs = mv²/R → vmax = √(μs·g·R)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="fbox t-nl">
-    <div class="fbox-head">Newton's Laws — Formula Bank</div>
-    <div class="fbox-grid">
-      <div class="fitem"><div class="flabel">Equilibrium</div><div class="feq">ΣFx = 0, ΣFy = 0</div></div>
-      <div class="fitem"><div class="flabel">2nd Law</div><div class="feq">ΣF = ma</div><div class="fnote">ΣFx=max, ΣFy=may</div></div>
-      <div class="fitem"><div class="flabel">Weight</div><div class="feq">w = mg</div><div class="fnote">g = 9.80 m/s²</div></div>
-      <div class="fitem"><div class="flabel">Net Force Magnitude</div><div class="feq">R = √(Rx²+Ry²)</div></div>
-      <div class="fitem"><div class="flabel">Direction</div><div class="feq">θ = arctan(Ry/Rx)</div></div>
-      <div class="fitem"><div class="flabel">Kinetic Friction</div><div class="feq">fk = μk·n</div></div>
-      <div class="fitem"><div class="flabel">Static Friction Max</div><div class="feq">fs,max = μs·n</div></div>
-      <div class="fitem"><div class="flabel">Centripetal Accel.</div><div class="feq">a = v²/R</div></div>
-      <div class="fitem"><div class="flabel">Net Radial Force</div><div class="feq">ΣF_rad = mv²/R</div></div>
-      <div class="fitem"><div class="flabel">Max Curve Speed</div><div class="feq">vmax = √(μs·g·R)</div></div>
-      <div class="fitem"><div class="flabel">Terminal Velocity</div><div class="feq">vt = √(mg/D)</div></div>
-      <div class="fitem"><div class="flabel">Drag Force</div><div class="feq">f = Dv²</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ░░ WORK & KE ░░ -->
-<div id="wk" class="t-wk">
-  <div class="ch-header t-wk">
-    <div class="ch-num">Part 1 &amp; 2</div>
-    <div class="ch-title">Work and Kinetic Energy</div>
-    <div class="ch-time">Ch. 6</div>
-  </div>
-
-  <div class="alert green">
-    <div class="alert-icon">💡</div>
-    <div><strong>Exam focus:</strong> Dot product definition of work, the Work-Energy Theorem, and how to handle work by varying forces (area under F-x graph / integration concept).</div>
-  </div>
-
-  <div class="card-row">
-    <div class="ccard">
-      <div class="ccard-title">Work (W)</div>
-      <p>Work = Force × displacement in the direction of force. W = F·d·cos(θ). θ is the angle between force and displacement. Perpendicular force does <strong>zero</strong> work. Work is a scalar (can be negative).</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Dot Product</div>
-      <ul>
-        <li>W = F⃗ · d⃗ = Fx·dx + Fy·dy</li>
-        <li>W = |F||d|cos(θ)</li>
-        <li>θ = 90° → W = 0 (normal force, centripetal)</li>
-        <li>θ = 180° → W negative (friction)</li>
-        <li>θ = 0° → W = Fd (max positive)</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Kinetic Energy &amp; Work-Energy Theorem</div>
-      <ul>
-        <li>K = ½mv²</li>
-        <li>W_total = ΔK = K₂ − K₁</li>
-        <li>Net work done on object = change in KE</li>
-        <li>If W_total = 0 → speed is constant</li>
-        <li>Units: Joules (J = N·m = kg·m²/s²)</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Varying Forces</div>
-      <ul>
-        <li>W = area under the F vs. x graph</li>
-        <li>Mathematically: W = ∫F·dx</li>
-        <li>Constant force: W = F·d (rectangle)</li>
-        <li>Spring force (F = kx): W = ½kx² (triangle)</li>
-        <li>Power: P = W/t = F·v (Watts)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="fbox t-wk">
-    <div class="fbox-head">Work &amp; Kinetic Energy — Formula Bank</div>
-    <div class="fbox-grid">
-      <div class="fitem"><div class="flabel">Work (constant force)</div><div class="feq">W = F·d·cos(θ)</div></div>
-      <div class="fitem"><div class="flabel">Work (dot product)</div><div class="feq">W = F⃗ · d⃗</div><div class="fnote">= Fx·dx + Fy·dy</div></div>
-      <div class="fitem"><div class="flabel">Kinetic Energy</div><div class="feq">K = ½mv²</div></div>
-      <div class="fitem"><div class="flabel">Work-Energy Theorem</div><div class="feq">W_net = ΔK = K₂ − K₁</div></div>
-      <div class="fitem"><div class="flabel">Spring Work</div><div class="feq">W = ½kx²</div></div>
-      <div class="fitem"><div class="flabel">Power</div><div class="feq">P = W/t = F·v</div><div class="fnote">Units: Watts (W)</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ░░ POTENTIAL ENERGY ░░ -->
-<div id="pe" class="t-pe">
-  <div class="ch-header t-pe">
-    <div class="ch-num">Part 1 &amp; 2</div>
-    <div class="ch-title">Potential Energy &amp; Conservation of Energy</div>
-    <div class="ch-time">Ch. 7</div>
-  </div>
-
-  <div class="alert warn">
-    <div class="alert-icon">⚡</div>
-    <div><strong>Exam focus:</strong> Setting up energy equations, identifying when energy is conserved, finding friction force from energy deficit. Mass often cancels — confirm this when it does.</div>
-  </div>
-
-  <div class="card-row">
-    <div class="ccard">
-      <div class="ccard-title">Gravitational PE</div>
-      <p>U_grav = mgy. The reference y = 0 is your choice — pick whatever makes the math simplest. Only the <em>change</em> in height matters, not the path taken. PE is shared by the object + Earth.</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Conservation of Energy</div>
-      <p>When only gravity acts (no friction): <strong>K₁ + U₁ = K₂ + U₂</strong>. Total mechanical energy E = K + U is constant. This means what you gain in height you lose in speed, and vice versa.</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">With Friction (W_other)</div>
-      <ul>
-        <li>K₁ + U₁ + W_other = K₂ + U₂</li>
-        <li>Friction work: W_fric = −f·d (always negative)</li>
-        <li>Energy "lost" = f·d → solve for f</li>
-        <li>Positive W_other = engine/applied force adds energy</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Key Shortcuts</div>
-      <ul>
-        <li>Ball thrown up: y_max = v₁²/(2g)</li>
-        <li>Frictionless ramp of height h: v_bottom = √(2gh)</li>
-        <li>Both are mass-independent (m cancels)</li>
-        <li>At max height: v = 0, so K₂ = 0</li>
-        <li>At bottom of ramp: U₂ = 0 if y₂ = 0</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="fbox t-pe">
-    <div class="fbox-head">Potential Energy &amp; Conservation — Formula Bank</div>
-    <div class="fbox-grid">
-      <div class="fitem"><div class="flabel">Gravitational PE</div><div class="feq">U = mgy</div></div>
-      <div class="fitem"><div class="flabel">Kinetic Energy</div><div class="feq">K = ½mv²</div></div>
-      <div class="fitem"><div class="flabel">Total Mech. Energy</div><div class="feq">E = K + U</div></div>
-      <div class="fitem"><div class="flabel">Conservation (no friction)</div><div class="feq">K₁ + U₁ = K₂ + U₂</div></div>
-      <div class="fitem"><div class="flabel">Work by Gravity</div><div class="feq">W_grav = U₁ − U₂ = −ΔU</div></div>
-      <div class="fitem"><div class="flabel">With Friction</div><div class="feq">K₁+U₁+W_other = K₂+U₂</div></div>
-      <div class="fitem"><div class="flabel">Friction Work</div><div class="feq">W_fric = −f·d</div></div>
-      <div class="fitem"><div class="flabel">Max Height (thrown up)</div><div class="feq">y_max = v²/(2g)</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ░░ FLUIDS ░░ -->
-<div id="fl" class="t-fl">
-  <div class="ch-header t-fl">
-    <div class="ch-num">Part 1 &amp; 2</div>
-    <div class="ch-title">Fluid Mechanics</div>
-    <div class="ch-time">Ch. 12</div>
-  </div>
-
-  <div class="alert info" style="border-color:var(--teal);background:rgba(13,115,119,0.06);">
-    <div class="alert-icon">🌊</div>
-    <div><strong>Exam focus:</strong> Density/SG calculations, pressure at depth, hydraulic lift (Pascal), finding buoyant force and apparent weight (Archimedes), continuity, and Bernoulli.</div>
-  </div>
-
-  <div class="card-row">
-    <div class="ccard">
-      <div class="ccard-title">Density, SG, Spec. Weight</div>
-      <ul>
-        <li>ρ = m/V (kg/m³), ρ_water = 1000 kg/m³</li>
-        <li>SG = ρ/ρ_water (dimensionless)</li>
-        <li>SG > 1 → sinks; SG < 1 → floats</li>
-        <li>γ = ρg = W/V (N/m³), specific weight</li>
-        <li>γ_water ≈ 9810 N/m³</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Pressure &amp; Depth</div>
-      <ul>
-        <li>p = F/A (Pa = N/m²)</li>
-        <li>Pressure increases with depth: p = p₀ + ρgh</li>
-        <li>Container shape does NOT matter</li>
-        <li>p_absolute = p_gauge + p_atm</li>
-        <li>p_atm ≈ 1.013 × 10⁵ Pa</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Pascal's Law</div>
-      <p>Pressure applied to enclosed fluid transmits equally everywhere. Hydraulic advantage: <strong>F₁/A₁ = F₂/A₂</strong>. Energy is conserved: small piston × large distance = large piston × small distance.</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Archimedes's Principle</div>
-      <ul>
-        <li>B = ρ_fluid · V_submerged · g</li>
-        <li>B = weight of fluid displaced</li>
-        <li>Float condition: B = W_object → V_sub/V_total = ρ_obj/ρ_fluid</li>
-        <li>Apparent weight: W_app = W − B</li>
-        <li>For submerged object: T + B = mg → T = mg − B</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Continuity Equation</div>
-      <p>Incompressible fluid: volume flow rate Q = Av is constant throughout the pipe. <strong>A₁v₁ = A₂v₂</strong>. If area halves → speed doubles. Thumb on hose → area ↓ → speed ↑.</p>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Bernoulli's Equation</div>
-      <p>Energy conservation in flowing fluids. Faster flow = lower pressure. <strong>p + ρgy + ½ρv² = const.</strong> Torricelli (tank leak): both surfaces at atm pressure → v_leak = √(2gh). Same as free fall!</p>
-    </div>
-  </div>
-
-  <div class="fbox t-fl">
-    <div class="fbox-head">Fluid Mechanics — Formula Bank</div>
-    <div class="fbox-grid">
-      <div class="fitem"><div class="flabel">Density</div><div class="feq">ρ = m/V</div><div class="fnote">ρ_water = 1000 kg/m³</div></div>
-      <div class="fitem"><div class="flabel">Specific Gravity</div><div class="feq">SG = ρ/ρ_water</div></div>
-      <div class="fitem"><div class="flabel">Specific Weight</div><div class="feq">γ = ρg = W/V</div></div>
-      <div class="fitem"><div class="flabel">Pressure</div><div class="feq">p = F/A</div></div>
-      <div class="fitem"><div class="flabel">Pressure with Depth</div><div class="feq">p = p₀ + ρgh</div></div>
-      <div class="fitem"><div class="flabel">Absolute Pressure</div><div class="feq">p_abs = p_gauge + p_atm</div></div>
-      <div class="fitem"><div class="flabel">Pascal's Law</div><div class="feq">F₁/A₁ = F₂/A₂</div></div>
-      <div class="fitem"><div class="flabel">Buoyant Force</div><div class="feq">B = ρ_f · V_sub · g</div></div>
-      <div class="fitem"><div class="flabel">Float Condition</div><div class="feq">V_sub/V_tot = ρ_obj/ρ_f</div></div>
-      <div class="fitem"><div class="flabel">Apparent Weight</div><div class="feq">W_app = W − B</div></div>
-      <div class="fitem"><div class="flabel">Continuity</div><div class="feq">A₁v₁ = A₂v₂</div></div>
-      <div class="fitem"><div class="flabel">Flow Rate</div><div class="feq">Q = Av (m³/s)</div></div>
-      <div class="fitem"><div class="flabel">Bernoulli's Eq.</div><div class="feq">p₁+ρgy₁+½ρv₁²=</div><div class="fnote">p₂+ρgy₂+½ρv₂²</div></div>
-      <div class="fitem"><div class="flabel">Torricelli (tank leak)</div><div class="feq">v = √(2gh)</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ░░ THERMODYNAMICS ░░ -->
-<div id="th" class="t-th">
-  <div class="ch-header t-th">
-    <div class="ch-num">Part 1 &amp; 2</div>
-    <div class="ch-title">Introduction to Thermodynamics</div>
-    <div class="ch-time">Thermo I &amp; II</div>
-  </div>
-
-  <div class="alert" style="border-color:var(--purple);background:rgba(107,63,160,0.07);">
-    <div class="alert-icon">🔥</div>
-    <div><strong>Exam focus:</strong> Temperature conversions (Kelvin required for radiation), specific heat, calorimetry balance equation, latent heat phases, and identifying the 3 modes of heat transfer.</div>
-  </div>
-
-  <div class="card-row">
-    <div class="ccard">
-      <div class="ccard-title">Temperature Scales</div>
-      <ul>
-        <li>TK = TC + 273.15 (always Kelvin in equations)</li>
-        <li>TF = (9/5)TC + 32</li>
-        <li>TC = (5/9)(TF − 32)</li>
-        <li>ΔTC = ΔTK (same step size!)</li>
-        <li>ΔTF = (9/5)·ΔTC (do NOT add 32 for ΔT)</li>
-        <li>Absolute zero: 0 K = −273.15°C</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Zeroth Law &amp; Heat</div>
-      <ul>
-        <li>Zeroth Law: thermal equilibrium is transitive → makes thermometers work</li>
-        <li>Heat (Q): energy transferred due to temp difference</li>
-        <li>Flows hot → cold only</li>
-        <li>Objects contain internal energy, NOT "heat"</li>
-        <li>Units: Joules (J), 1 cal = 4.186 J</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Specific Heat (Q = mcΔT)</div>
-      <ul>
-        <li>c = specific heat capacity (J/kg·K)</li>
-        <li>Q positive → object gains heat (temp rises)</li>
-        <li>Q negative → object loses heat (temp drops)</li>
-        <li>c_water = 4186 J/kg·K (high → great coolant)</li>
-        <li>c_ice = 2090 J/kg·K, c_steam = 2020 J/kg·K</li>
-        <li>c_copper ≈ 390, c_iron ≈ 500, c_Al ≈ 910 J/kg·K</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Calorimetry</div>
-      <ul>
-        <li>Insulated system: ΣQ = 0</li>
-        <li>m₁c₁(Tf−Ti1) + m₂c₂(Tf−Ti2) = 0</li>
-        <li>Always write ΔT as (Tf − Ti), not |ΔT|</li>
-        <li>Math auto-assigns negative sign to hot object</li>
-        <li>Solve the linear equation for Tf</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Latent Heat &amp; Phase Changes</div>
-      <ul>
-        <li>During phase change: temperature stays constant!</li>
-        <li>Q = ±mL (+ melting/boiling, − freezing/condensing)</li>
-        <li>Lf (fusion): solid ↔ liquid (water: 3.33×10⁵ J/kg)</li>
-        <li>Lv (vaporization): liquid ↔ gas (water: 2.26×10⁶ J/kg)</li>
-        <li>Full heating: do Q = mcΔT and Q = mL in stages</li>
-      </ul>
-    </div>
-    <div class="ccard">
-      <div class="ccard-title">Heat Transfer — 3 Modes</div>
-      <ul>
-        <li><strong>Conduction:</strong> P = kA(Th−Tc)/L, needs physical contact</li>
-        <li><strong>Convection:</strong> P = hAΔT, fluid movement carries heat</li>
-        <li><strong>Radiation:</strong> P = σAeT⁴, no medium needed, must use Kelvin!</li>
-        <li>Net radiation: Pnet = σAe(T⁴ − Ts⁴)</li>
-        <li>σ = 5.67×10⁻⁸ W/m²·K⁴</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="fbox t-th">
-    <div class="fbox-head">Thermodynamics — Formula Bank</div>
-    <div class="fbox-grid">
-      <div class="fitem"><div class="flabel">°C → K</div><div class="feq">TK = TC + 273.15</div></div>
-      <div class="fitem"><div class="flabel">°C → °F</div><div class="feq">TF = (9/5)TC + 32</div></div>
-      <div class="fitem"><div class="flabel">°F → °C</div><div class="feq">TC = (5/9)(TF − 32)</div></div>
-      <div class="fitem"><div class="flabel">ΔT Conversion</div><div class="feq">ΔTF = (9/5)·ΔTC</div><div class="fnote">ΔTC = ΔTK</div></div>
-      <div class="fitem"><div class="flabel">Specific Heat</div><div class="feq">Q = mcΔT</div></div>
-      <div class="fitem"><div class="flabel">Calorimetry</div><div class="feq">ΣQ = 0</div><div class="fnote">m₁c₁ΔT₁ + m₂c₂ΔT₂ = 0</div></div>
-      <div class="fitem"><div class="flabel">Latent Heat</div><div class="feq">Q = ±mL</div><div class="fnote">Lf=3.33×10⁵, Lv=2.26×10⁶ J/kg</div></div>
-      <div class="fitem"><div class="flabel">Conduction (Fourier)</div><div class="feq">P = kA(Th−Tc)/L</div></div>
-      <div class="fitem"><div class="flabel">Thermal Resistance</div><div class="feq">R = L/k</div><div class="fnote">Composite: R_tot = R₁+R₂+...</div></div>
-      <div class="fitem"><div class="flabel">Convection</div><div class="feq">P = hAΔT</div></div>
-      <div class="fitem"><div class="flabel">Radiation (Stefan-B.)</div><div class="feq">P = σAeT⁴</div><div class="fnote">T in Kelvin!</div></div>
-      <div class="fitem"><div class="flabel">Net Radiation</div><div class="feq">Pnet = σAe(T⁴−Ts⁴)</div><div class="fnote">σ = 5.67×10⁻⁸ W/m²·K⁴</div></div>
-    </div>
-  </div>
-
-  <div class="alert danger">
-    <div class="alert-icon">🚨</div>
-    <div><strong>Most common mistakes in Thermo:</strong> (1) Using Celsius in Stefan-Boltzmann — ALWAYS convert to Kelvin. (2) Adding 32 when converting a temperature difference — don't! Only multiply by 9/5. (3) Forgetting the latent heat stage in full heating problems.</div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- ░░ LAST-MINUTE TIPS ░░ -->
-<div style="margin-bottom:2rem;">
-  <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:1rem;">📌 Exam-Day Power Tips</div>
-  <div class="tip-list">
-    <div class="tip">
-      <div class="tip-badge" style="background:rgba(192,57,43,0.12);color:var(--accent);">FBD</div>
-      <div><strong>Always draw a Free-Body Diagram first.</strong> Every mechanics problem. No exceptions. It prevents 90% of sign errors and wrong force setups.</div>
-    </div>
-    <div class="tip">
-      <div class="tip-badge" style="background:rgba(26,74,138,0.12);color:var(--accent3);">F=ma</div>
-      <div><strong>If given weight in Newtons, find mass first:</strong> m = w/g. Then use F = ma. This is the #1 source of point loss on dynamics problems.</div>
-    </div>
-    <div class="tip">
-      <div class="tip-badge" style="background:rgba(44,110,73,0.12);color:var(--accent2);">Energy</div>
-      <div><strong>"Constant velocity"</strong> on an incline or any surface means net force = 0, which means you can find the friction coefficient directly from ΣF = 0.</div>
-    </div>
-    <div class="tip">
-      <div class="tip-badge" style="background:rgba(13,115,119,0.12);color:var(--teal);">Fluids</div>
-      <div><strong>Buoyancy: find volume from density first.</strong> V = m/ρ_object. Then B = ρ_fluid × V × g. Then apparent weight = true weight − B.</div>
-    </div>
-    <div class="tip">
-      <div class="tip-badge" style="background:rgba(107,63,160,0.12);color:var(--purple);">Thermo</div>
-      <div><strong>Phase change problems: do them in stages.</strong> Each temperature segment or phase change is a separate Q = mcΔT or Q = mL. Add all Q values at the end.</div>
-    </div>
-    <div class="tip">
-      <div class="tip-badge" style="background:rgba(184,134,11,0.12);color:var(--gold);">MCQ</div>
-      <div><strong>On conceptual questions,</strong> eliminate wrong answers: "centripetal force is a type of force" (wrong), "more force keeps things moving" (wrong), "heat is stored in objects" (wrong).</div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     PRINTABLE CHEAT SHEET
-════════════════════════════════════════ -->
-<div id="cheatsheet">
-  <div class="cheatsheet-intro">
+<div id="exam-page" style="display:none;">
+  <div class="exam-header-wrap">
     <div>
-      <h2>📋 Printable Formula Sheet</h2>
-      <p>Sized for ¼ A4 paper · Front &amp; Back · Formulas, conversions, constants allowed</p>
+      <div class="exam-htitle">General Physics I &nbsp;·&nbsp; <span id="set-label">Set A</span></div>
+      <div style="font-size:13px; color:rgba(245,240,232,0.45); margin-top:2px;">Final Examination · CET 206</div>
     </div>
-    <button class="print-btn" onclick="window.print()">🖨️ Print Sheet</button>
+    <div class="timer-display" id="timer">1:30:00</div>
   </div>
-  <div class="sheet-wrap">
-    <div class="sheet-note">Cut along this border → fits ¼ A4 (105mm × 74mm) · Bring to exam</div>
-
-    <div class="sheet">
-      <!-- FRONT SIDE -->
-      <div class="sheet-side">
-        <span class="sheet-side-label l-front">Front Side</span>
-
-        <div class="sh-section-lbl blue">Newton's Laws (Ch.4–5)</div>
-        <div class="sf"><div class="sf-lbl">2nd Law</div><div class="sf-eq blue">ΣF=ma; ΣFx=max, ΣFy=may</div></div>
-        <div class="sf"><div class="sf-lbl">Weight</div><div class="sf-eq blue">w=mg, g=9.80 m/s²</div></div>
-        <div class="sf"><div class="sf-lbl">Equilibrium</div><div class="sf-eq blue">ΣFx=0, ΣFy=0</div></div>
-        <div class="sf"><div class="sf-lbl">Kinetic Friction</div><div class="sf-eq blue">fk=μk·n</div></div>
-        <div class="sf"><div class="sf-lbl">Static Friction</div><div class="sf-eq blue">fs≤μs·n, fs,max=μs·n</div></div>
-        <div class="sf"><div class="sf-lbl">Centripetal</div><div class="sf-eq blue">a=v²/R; ΣF_rad=mv²/R</div></div>
-        <div class="sf"><div class="sf-lbl">Max curve speed</div><div class="sf-eq blue">vmax=√(μs·g·R)</div></div>
-        <div class="sf"><div class="sf-lbl">Terminal velocity</div><div class="sf-eq blue">vt=√(mg/D)</div></div>
-        <div class="sf"><div class="sf-lbl">Net Force</div><div class="sf-eq blue">R=√(Rx²+Ry²); θ=arctan(Ry/Rx)</div></div>
-
-        <div class="shdiv"></div>
-        <div class="sh-section-lbl green">Work & KE (Ch.6)</div>
-        <div class="sf"><div class="sf-lbl">Work</div><div class="sf-eq green">W=F·d·cos(θ)</div></div>
-        <div class="sf"><div class="sf-lbl">Dot Product</div><div class="sf-eq green">W=Fx·dx+Fy·dy</div></div>
-        <div class="sf"><div class="sf-lbl">Kinetic Energy</div><div class="sf-eq green">K=½mv²</div></div>
-        <div class="sf"><div class="sf-lbl">Work-Energy Thm.</div><div class="sf-eq green">W_net=ΔK=K₂−K₁</div></div>
-        <div class="sf"><div class="sf-lbl">Spring work</div><div class="sf-eq green">W=½kx²</div></div>
-        <div class="sf"><div class="sf-lbl">Power</div><div class="sf-eq green">P=W/t=F·v (Watts)</div></div>
-      </div>
-
-      <!-- BACK SIDE -->
-      <div class="sheet-side">
-        <span class="sheet-side-label l-back">Back Side</span>
-
-        <div class="sh-section-lbl gold">Energy Conservation (Ch.7)</div>
-        <div class="sf"><div class="sf-lbl">Grav. PE</div><div class="sf-eq gold">U=mgy</div></div>
-        <div class="sf"><div class="sf-lbl">Conservation</div><div class="sf-eq gold">K₁+U₁=K₂+U₂</div></div>
-        <div class="sf"><div class="sf-lbl">With Friction</div><div class="sf-eq gold">K₁+U₁+W_other=K₂+U₂</div></div>
-        <div class="sf"><div class="sf-lbl">Friction Work</div><div class="sf-eq gold">W_fric=−f·d</div></div>
-
-        <div class="shdiv"></div>
-        <div class="sh-section-lbl teal">Fluids (Ch.12)</div>
-        <div class="sf"><div class="sf-lbl">Density</div><div class="sf-eq teal">ρ=m/V; ρ_w=1000 kg/m³</div></div>
-        <div class="sf"><div class="sf-lbl">SG / Spec. Wt.</div><div class="sf-eq teal">SG=ρ/ρ_w; γ=ρg</div></div>
-        <div class="sf"><div class="sf-lbl">Pressure depth</div><div class="sf-eq teal">p=p₀+ρgh</div></div>
-        <div class="sf"><div class="sf-lbl">p_abs</div><div class="sf-eq teal">p_abs=p_gauge+p_atm</div></div>
-        <div class="sf"><div class="sf-lbl">Pascal</div><div class="sf-eq teal">F₁/A₁=F₂/A₂</div></div>
-        <div class="sf"><div class="sf-lbl">Buoyancy</div><div class="sf-eq teal">B=ρ_f·V_sub·g</div></div>
-        <div class="sf"><div class="sf-lbl">Continuity</div><div class="sf-eq teal">A₁v₁=A₂v₂; Q=Av</div></div>
-        <div class="sf"><div class="sf-lbl">Bernoulli</div><div class="sf-eq teal">p+ρgy+½ρv²=const</div></div>
-        <div class="sf"><div class="sf-lbl">Torricelli</div><div class="sf-eq teal">v=√(2gh)</div></div>
-
-        <div class="shdiv"></div>
-        <div class="sh-section-lbl purple">Thermodynamics</div>
-        <div class="sf"><div class="sf-lbl">°C↔K / °C↔°F</div><div class="sf-eq purple">TK=TC+273.15; TF=(9/5)TC+32</div></div>
-        <div class="sf"><div class="sf-lbl">ΔT conversion</div><div class="sf-eq purple">ΔTF=(9/5)ΔTC; ΔTC=ΔTK</div></div>
-        <div class="sf"><div class="sf-lbl">Spec. Heat</div><div class="sf-eq purple">Q=mcΔT</div></div>
-        <div class="sf"><div class="sf-lbl">Calorimetry</div><div class="sf-eq purple">ΣQ=0 → m₁c₁ΔT₁+m₂c₂ΔT₂=0</div></div>
-        <div class="sf"><div class="sf-lbl">Latent Heat</div><div class="sf-eq purple">Q=±mL (Lf=3.33e5, Lv=2.26e6)</div></div>
-        <div class="sf"><div class="sf-lbl">Conduction</div><div class="sf-eq purple">P=kA(Th−Tc)/L; R=L/k</div></div>
-        <div class="sf"><div class="sf-lbl">Convection</div><div class="sf-eq purple">P=hAΔT</div></div>
-        <div class="sf"><div class="sf-lbl">Radiation</div><div class="sf-eq purple">P=σAeT⁴; σ=5.67×10⁻⁸</div></div>
-        <div class="sf"><div class="sf-lbl">Net Radiation</div><div class="sf-eq purple">Pnet=σAe(T⁴−Ts⁴)</div></div>
-      </div>
+  <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="exam-body-wrap">
+    <div id="exam-body"></div>
+    <div class="exam-footer">
+      <div class="ans-count">Answered: <strong id="ans-count">0</strong> / 20</div>
+      <button class="submit-btn" onclick="submitExam()">Submit Exam →</button>
     </div>
-
-    <div class="sheet-note" style="margin-top:0.75rem;">⚠️ All formulas fit on ¼ A4 paper (both sides) as required by your instructor. T must be in Kelvin for radiation!</div>
   </div>
 </div>
 
-</div><!-- /main -->
-
-<div class="footer">
-  WMSU · EE Dept · Physics 1 Final Exam · <span>Good luck — you have everything you need.</span>
+<div id="results-page" style="display:none;">
+  <div class="results-hero">
+    <span class="cover-icon">⚛</span>
+    <div class="cover-eyebrow">Examination Complete</div>
+    <div class="score-ring">
+      <div class="score-big" id="res-score">0</div>
+      <div class="score-of" id="res-of">out of 20</div>
+    </div>
+    <div class="grade-pill" id="res-grade">—</div>
+    <div class="res-msg" id="res-msg"></div>
+  </div>
+  <div class="res-grid">
+    <div class="res-card"><div class="res-val" id="res-p1">—</div><div class="res-lbl">Part 1 — Conceptual</div></div>
+    <div class="res-card"><div class="res-val" id="res-p2">—</div><div class="res-lbl">Part 2 — Problem Solving</div></div>
+    <div class="res-card"><div class="res-val" id="res-pct">—</div><div class="res-lbl">Score percentage</div></div>
+    <div class="res-card"><div class="res-val" id="res-time">—</div><div class="res-lbl">Time used</div></div>
+  </div>
+  <button class="back-btn" onclick="goHome()">← Back to Exam Selection</button>
 </div>
 
-</body>
-</html>
+</div>
+
+<script>
+const SETS = ['A','B','C'];
+const TOTAL_SECS = 90 * 60;
+
+let currentSet = 0;
+let questions = [];
+let userAnswers = {};
+let timerInterval = null;
+let secondsLeft = TOTAL_SECS;
+let startTime = null;
+let submitted = false;
+
+const SYSTEM_PROMPT = `You are a physics professor generating a final exam for a General Physics I college course. Generate exactly 20 multiple-choice questions in JSON format.
+
+Rules:
+- Questions 1-10: Conceptual / Objective Type
+- Questions 11-20: Problem Solving (numerical, requires calculation)
+- Each question must cover a DIFFERENT topic from this list:
+  Newton's First Law, Newton's Second Law, Newton's Third Law, Mass vs Weight, Particles in Equilibrium, Dynamics of Particles, Frictional Forces, Circular Motion, Work and Dot Product, Kinetic Energy, Work-Energy Theorem, Work by Varying Forces, Gravitational Potential Energy, Total Mechanical Energy, Conservation of Energy, Fluid Statics (Density/Pressure), Buoyancy and Archimedes, Fluid Dynamics (Continuity Equation), Bernoulli's Equation, Thermodynamics (Temperature/Zeroth Law/Specific Heat/Latent Heat/Heat Transfer)
+- Spread topics evenly across both parts
+- For problem solving: include realistic numbers, use g=9.8 m/s² unless stated otherwise
+- Each question has exactly 4 choices labeled A, B, C, D
+- The correct answer index is 0-based (0=A, 1=B, 2=C, 3=D)
+- Include a brief explanation for each answer
+- Vary difficulty: some easy, some moderate, some challenging
+- Make wrong choices plausible (common misconceptions or calculation errors)
+
+Return ONLY valid JSON, no markdown, no preamble:
+{
+  "questions": [
+    {
+      "part": 1,
+      "topic": "topic name",
+      "q": "question text",
+      "choices": ["A text","B text","C text","D text"],
+      "ans": 0,
+      "exp": "explanation text"
+    }
+  ]
+}`;
+
+function getUserPrompt(setIndex) {
+  const setNames = ['Set A', 'Set B', 'Set C'];
+  const seeds = ['Focus on fundamental definitions and applying Newton\'s Laws first.', 'Emphasize energy concepts and fluid mechanics applications.', 'Mix all topics with emphasis on thermodynamics and circular motion.'];
+  return `Generate ${setNames[setIndex]} of the final exam. ${seeds[setIndex]} Ensure all 20 topics listed are each covered exactly once.`;
+}
+
+async function startExam(setIndex) {
+  currentSet = setIndex;
+  userAnswers = {};
+  submitted = false;
+  secondsLeft = TOTAL_SECS;
+
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('exam-page').style.display = 'block';
+  document.getElementById('set-label').textContent = 'Set ' + SETS[setIndex];
+  document.getElementById('exam-body').innerHTML = `
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <div class="loading-msg">Generating your exam questions...<br><span style="font-size:13px;color:var(--color-text-secondary)">This may take a few seconds</span></div>
+    </div>`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: getUserPrompt(setIndex) }]
+      })
+    });
+
+    if (!resp.ok) throw new Error('API error ' + resp.status);
+    const data = await resp.json();
+    const raw = data.content.map(b => b.text || '').join('');
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    questions = parsed.questions;
+
+    renderExam();
+    startTimer();
+  } catch(e) {
+    document.getElementById('exam-body').innerHTML = `
+      <div class="error-card">
+        <p>Failed to generate exam questions.<br>Please check your connection and try again.</p>
+        <button class="retry-btn" onclick="startExam(${setIndex})">Retry</button>
+        <button class="retry-btn" onclick="goHome()" style="margin-left:8px;">Back</button>
+      </div>`;
+  }
+}
+
+function renderExam() {
+  const body = document.getElementById('exam-body');
+  let html = '';
+
+  const part1 = questions.slice(0, 10);
+  const part2 = questions.slice(10, 20);
+
+  html += `<div class="part-header"><span class="part-badge">Part 1</span><span class="part-title">Conceptual / Objective Type</span></div>`;
+  part1.forEach((q, i) => { html += renderCard(q, i, i+1); });
+
+  html += `<div class="part-header" style="margin-top:32px;"><span class="part-badge">Part 2</span><span class="part-title">Problem Solving</span></div>`;
+  part2.forEach((q, i) => { html += renderCard(q, i+10, i+11); });
+
+  body.innerHTML = html;
+  updateProgress();
+}
+
+function renderCard(q, idx, num) {
+  const letters = ['A','B','C','D'];
+  let choicesHtml = q.choices.map((c,ci) => `
+    <label class="choice-lbl" id="lbl-${idx}-${ci}" onclick="selectChoice(${idx},${ci})">
+      <span class="choice-ltr">${letters[ci]}</span>
+      <span>${c}</span>
+    </label>`).join('');
+
+  const topicBadge = q.topic ? `<span style="font-size:11px;color:var(--color-text-secondary);display:block;margin-bottom:4px;">${q.topic}</span>` : '';
+
+  return `
+    <div class="q-card" id="qcard-${idx}">
+      <div class="q-num">Question ${num}</div>
+      ${topicBadge}
+      <div class="q-text">${q.q}</div>
+      <div class="choices">${choicesHtml}</div>
+      <div class="explanation" id="exp-${idx}">${q.exp}</div>
+    </div>`;
+}
+
+function selectChoice(qIdx, choiceIdx) {
+  if (submitted) return;
+  const prev = userAnswers[qIdx];
+  if (prev !== undefined) {
+    document.getElementById(`lbl-${qIdx}-${prev}`)?.classList.remove('sel');
+  }
+  userAnswers[qIdx] = choiceIdx;
+  document.getElementById(`lbl-${qIdx}-${choiceIdx}`)?.classList.add('sel');
+  document.getElementById(`qcard-${qIdx}`)?.classList.add('answered');
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(userAnswers).length;
+  document.getElementById('ans-count').textContent = count;
+  const pct = (count / 20) * 100;
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+function startTimer() {
+  startTime = Date.now();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(true); }
+  }, 1000);
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const h = Math.floor(secondsLeft / 3600);
+  const m = Math.floor((secondsLeft % 3600) / 60);
+  const s = secondsLeft % 60;
+  const str = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const el = document.getElementById('timer');
+  if (el) {
+    el.textContent = str;
+    el.className = 'timer-display' + (secondsLeft < 300 ? ' warn' : '');
+  }
+}
+
+function submitExam(timeUp = false) {
+  if (submitted) return;
+  if (!timeUp && Object.keys(userAnswers).length < 20) {
+    const unanswered = 20 - Object.keys(userAnswers).length;
+    if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
+  }
+  submitted = true;
+  clearInterval(timerInterval);
+
+  const timeUsed = TOTAL_SECS - secondsLeft;
+  showResults(timeUsed);
+}
+
+function showResults(timeUsed) {
+  let score = 0, p1 = 0, p2 = 0;
+  questions.forEach((q, i) => {
+    const correct = userAnswers[i] === q.ans;
+    const letters = ['A','B','C','D'];
+
+    q.choices.forEach((_, ci) => {
+      const lbl = document.getElementById(`lbl-${i}-${ci}`);
+      if (!lbl) return;
+      lbl.style.cursor = 'default';
+      lbl.onclick = null;
+      lbl.classList.remove('sel');
+      if (ci === q.ans) lbl.classList.add('correct-ans');
+      else if (ci === userAnswers[i] && !correct) lbl.classList.add('wrong-ans');
+    });
+
+    const exp = document.getElementById(`exp-${i}`);
+    if (exp) {
+      exp.classList.add('show');
+      if (!correct) exp.classList.add('exp-wrong');
+    }
+
+    if (correct) { score++; if (i < 10) p1++; else p2++; }
+  });
+
+  const pct = Math.round((score / 20) * 100);
+  const h = Math.floor(timeUsed / 3600);
+  const m = Math.floor((timeUsed % 3600) / 60);
+  const s = timeUsed % 60;
+  const timeStr = h > 0 ? `${h}h ${m}m ${s}s` : `${m}m ${s}s`;
+
+  let grade, msg;
+  if (pct >= 96) { grade = '1.00'; msg = 'Excellent work! You have mastered the material.'; }
+  else if (pct >= 90) { grade = '1.25'; msg = 'Outstanding performance! Keep it up.'; }
+  else if (pct >= 85) { grade = '1.50'; msg = 'Very good! A strong understanding of the concepts.'; }
+  else if (pct >= 80) { grade = '1.75'; msg = 'Good job! A few more reviews and you\'ll ace it.'; }
+  else if (pct >= 75) { grade = '2.00'; msg = 'Passed! Review the topics you missed.'; }
+  else if (pct >= 70) { grade = '2.25'; msg = 'Passed. More practice on problem solving will help.'; }
+  else if (pct >= 65) { grade = '2.50'; msg = 'Passed, but there\'s room for improvement.'; }
+  else if (pct >= 60) { grade = '2.75'; msg = 'Barely passing. Review all topics thoroughly.'; }
+  else { grade = 'INC'; msg = 'Keep studying! Go through all topics again.'; }
+
+  document.getElementById('res-score').textContent = score;
+  document.getElementById('res-of').textContent = 'out of 20';
+  document.getElementById('res-grade').textContent = grade;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-p1').textContent = p1 + '/10';
+  document.getElementById('res-p2').textContent = p2 + '/10';
+  document.getElementById('res-pct').textContent = pct + '%';
+  document.getElementById('res-time').textContent = timeStr;
+
+  document.getElementById('exam-page').style.display = 'none';
+  document.getElementById('results-page').style.display = 'block';
+
+  document.getElementById('root').scrollTop = 0;
+}
+
+function goHome() {
+  clearInterval(timerInterval);
+  submitted = false;
+  userAnswers = {};
+  questions = [];
+  document.getElementById('results-page').style.display = 'none';
+  document.getElementById('exam-page').style.display = 'none';
+  document.getElementById('cover').style.display = 'block';
+}
+</script>
